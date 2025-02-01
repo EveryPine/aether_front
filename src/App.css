@@ -1,8 +1,15 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+} */
+
+#root {
+  width: 100%; /* 전체 화면 폭 사용 */
+  height: 100%; /* 전체 화면 높이 사용 */
+  margin: 0;
+  padding: 0; /* 패딩 제거 */
 }
 
 .logo {

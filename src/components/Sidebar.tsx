@@ -88,7 +88,6 @@ const Sidebar: React.FC = () => {
         <img src={AetherLogo} alt="Logo" style={{ width: "24px", height: "24px" }} />
       </div>
     </div>
-
   );
 };
 export default Sidebar;
