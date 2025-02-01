@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FaDashcube } from "react-icons/fa"; // 대시 아이콘 사용
 
 interface TaskCardProps {
   title: string;
