@@ -1,39 +1,94 @@
+//Sidebar.tsx
 import React from "react";
-
+import Profile from "../assets/Profile.svg";
+import Alarm from "../assets/Alarm.svg";
+import Search from "../assets/Vector.svg";
+import Dash from "../assets/Dash.svg";
+import Setting from "../assets/Setting.svg";
+import AetherLogo from "../assets/Aether-logo.svg";
 const Sidebar: React.FC = () => {
   return (
-    <div className="w-16 bg-gray-50 h-full flex flex-col items-center py-6 shadow-md">
-      {/* 프로필 */}
-      <div className="mb-8">
-        <img
-          src="/assets/profile.svg"
-          alt="Profile"
-          className="w-12 h-12 rounded-full"
-        />
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "72px",
+        height: "100vh", // 뷰포트 기준 높이
+        alignSelf: "stretch",
+        padding: "28px 24px 48px 24px",
+      }}
+    >
+      {/* 상단 프로필 및 아이콘 */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        {/* 프로필 아이콘 */}
+        <div
+          style={{
+            marginBottom: "28px",
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          <img
+            src={Profile} // 프로필 이미지 경로
+            alt="Profile"
+            style={{
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+
+        {/* 아이콘들 */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "100%",
+            gap: "20px",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+            <img src={Alarm} alt="Alarm" style={{ width: "24px", height: "24px" }} />
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+            <img src={Search} alt="Search" style={{ width: "24px", height: "24px" }} />
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+            <img src={Dash} alt="Dash" style={{ width: "24px", height: "24px" }} />
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+            <img src={Setting} alt="Setting" style={{ width: "24px", height: "24px" }} />
+          </div>
+        </div>
       </div>
 
-      {/* 아이콘 리스트 */}
-      <div className="flex flex-col space-y-8">
-        <button className="text-gray-400 hover:text-red-500">
-          <img src="/assets/bell.svg" alt="Notification" className="w-6 h-6" />
-        </button>
-        <button className="text-gray-400 hover:text-red-500">
-          <img src="/assets/search.svg" alt="Search" className="w-6 h-6" />
-        </button>
-        <button className="text-gray-400 hover:text-red-500">
-          <img src="/assets/dashboard.svg" alt="Dashboard" className="w-6 h-6" />
-        </button>
-        <button className="text-gray-400 hover:text-red-500">
-          <img src="/assets/settings.svg" alt="Settings" className="w-6 h-6" />
-        </button>
-      </div>
-
-      {/* 하단 삼각형 아이콘 */}
-      <div className="mt-auto">
-        <img src="/assets/triangle.svg" alt="Triangle" className="w-6 h-6" />
+      {/* 하단 로고 */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+          flexGrow: 1,
+          alignItems: "flex-end", 
+          paddingBottom: "70px", 
+        }}
+      >
+        <img src={AetherLogo} alt="Logo" style={{ width: "24px", height: "24px" }} />
       </div>
     </div>
+
   );
 };
-
 export default Sidebar;
