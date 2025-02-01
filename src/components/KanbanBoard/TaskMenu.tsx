@@ -7,7 +7,7 @@ import Edit from "../../assets/Edit.svg"
 
 const TaskMenu: React.FC = () => {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", gap: "20px", padding: "40px" }}>
+    <div style={{ display: "flex", justifyContent: "space-between", gap: "20px", padding: "40px"}}>
       {/* 왼쪽 모드 전환 메뉴 */}
       <div
         style={{
@@ -111,12 +111,12 @@ const TaskMenu: React.FC = () => {
             backgroundColor: "#FF432B",
             color: "#FFFFFF",
             fontSize: "14px",
-            fontWeight: "bold",
+            fontWeight: "normal",
             cursor: "pointer",
           }}
         >
           <FiPlus size={16} color="#FFFFFF" style={{ marginRight: "8px" }} />
-          업무 생성
+          업무생성
         </button>
       </div>
     </div>

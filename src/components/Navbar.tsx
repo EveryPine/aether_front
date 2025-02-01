@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
                 bottom: 0,
                 left: 0,
                 right: 0,
-                height: "2px",
+                height: "1.3px",
                 backgroundColor: "#FF432B",
               }}
             />
