@@ -3,16 +3,16 @@ import KanbanColumn from "./KanbanColumn";
 
 const KanbanBoard: React.FC = () => {
   const columns = [
-    { id: "waiting", title: "대기", color: "bg-orange-200" },
-    { id: "in-progress", title: "진행", color: "bg-blue-200" },
-    { id: "completed", title: "완료", color: "bg-green-200" },
-    { id: "issues", title: "이슈", color: "bg-red-200" },
+    { title: "대기", color: "#FFA726" },
+    { title: "진행", color: "#42A5F5" },
+    { title: "완료", color: "#66BB6A" },
+    { title: "이슈", color: "#EF5350" },
   ];
 
   return (
-    <div className="flex gap-4 overflow-x-auto">
-      {columns.map((column) => (
-        <KanbanColumn key={column.id} title={column.title} color={column.color} />
+    <div className="flex space-x-6 overflow-x-auto">
+      {columns.map((col) => (
+        <KanbanColumn key={col.title} title={col.title} color={col.color} />
       ))}
     </div>
   );
