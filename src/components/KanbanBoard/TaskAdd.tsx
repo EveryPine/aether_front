@@ -8,8 +8,6 @@ const TaskAdd: React.FC = () => {
       style={{
         width: "360px",
         height: "100%",
-        backgroundColor: "#FFFFFF",
-        boxShadow: "-4px 0 8px rgba(0, 0, 0, 0.1)",
         padding: "20px",
         borderLeft: "1px solid #E5EAF2",
         display: "flex",

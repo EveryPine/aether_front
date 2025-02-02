@@ -1,8 +1,8 @@
 import React from "react";
 
 interface NavbarProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  activeTab: string; // 활성화된 탭
+  setActiveTab: (tab: string) => void; // 탭 변경 함수
 }
 
 const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {

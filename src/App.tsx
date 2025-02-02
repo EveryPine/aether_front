@@ -1,8 +1,10 @@
-import React from "react";
+//App.tsx
+import React, { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import Main from "./pages/TaskKanban";
 
 const App: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<string>("업무"); // 전역 상태
   return (
     <div
       style={{
@@ -21,7 +23,7 @@ const App: React.FC = () => {
           flexShrink: 0,
         }}
       >
-        <Sidebar />
+        <Sidebar setActiveTab={setActiveTab}/>
       </div>
 
       {/* 메인 컨텐츠 영역 */}
@@ -31,7 +33,7 @@ const App: React.FC = () => {
           overflowY: "auto", // 스크롤 가능
         }}
       >
-        <Main />
+        <Main activeTab={activeTab} setActiveTab={setActiveTab}/>
       </div>
     </div>
   );
