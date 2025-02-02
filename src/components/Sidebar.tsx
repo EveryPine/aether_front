@@ -45,6 +45,7 @@ const Sidebar: React.FC = () => {
               height: "48px",
               borderRadius: "50%",
               objectFit: "cover",
+              cursor: "pointer"
             }}
           />
         </div>
@@ -59,17 +60,18 @@ const Sidebar: React.FC = () => {
             gap: "20px",
           }}
         >
-          <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-            <img src={Alarm} alt="Alarm" style={{ width: "24px", height: "24px" }} />
+          <div style={{ display: "flex", justifyContent: "center", width: "100%"}}>
+            <img src={Alarm} alt="Alarm" style={{ width: "24px", height: "24px", cursor: "pointer"}} />
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", width: "100%", }}>
+            <img src={Search} alt="Search" style={{ width: "24px", height: "24px", cursor: "pointer"}} />
           </div>
           <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-            <img src={Search} alt="Search" style={{ width: "24px", height: "24px" }} />
+            <img src={Dash} alt="Dash" style={{ width: "24px", height: "24px", cursor: "pointer"}} />
           </div>
+          {/* 업무 설정으로 이동가능케 구현 필요 */}
           <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-            <img src={Dash} alt="Dash" style={{ width: "24px", height: "24px" }} />
-          </div>
-          <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-            <img src={Setting} alt="Setting" style={{ width: "24px", height: "24px" }} />
+            <img src={Setting} alt="Setting" style={{ width: "24px", height: "24px", cursor: "pointer"}} />
           </div>
         </div>
       </div>

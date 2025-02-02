@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Navbar: React.FC = () => {
-  // 활성 메뉴 상태 관리
-  const [activeTab, setActiveTab] = useState<string>("개요");
+interface NavbarProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
 
-  // 메뉴 항목
+const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
   const tabs = ["개요", "업무", "문서함", "팀원 관리", "프로젝트 설정"];
 
   return (
