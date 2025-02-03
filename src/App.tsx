@@ -29,7 +29,7 @@ const App: React.FC = () => {
       </div>
       
       {/* 업무 세팅 탭 */}
-      <TaskSettingPage />
+      {/* <TaskSettingPage /> */}
 
       {/* 메인 컨텐츠 영역 */}
       <div
