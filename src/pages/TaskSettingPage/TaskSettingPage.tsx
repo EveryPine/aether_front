@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from '../../component/TaskHeader'
-import Sidebar from '../../component/TaskSidebar';
-import MainContent from '../../component/TaskMainContent';
+import Header from '../../components/TaskHeader'
+import Sidebar from '../../components/TaskSidebar';
+import MainContent from '../../components/TaskMainContent';
 
 const TaskSettingPage: React.FC = () => {
   return (
