@@ -1,9 +1,9 @@
 import React from 'react'
-import TaskTitle from './TaskTitle'
+import TaskTitle from '../TaskTitle'
 import TaskInfo from './TaskInfo'
-import TaskDivider from './TaskDivider'
+import TaskDivider from '../TaskDivider'
 
-function MainContent() {
+const MainContent: React.FC = () => {
   return (
     <main>
       {/* 업무 이름 */}

@@ -1,7 +1,7 @@
 import { Controller, Control, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { useState } from "react";
-import Down from "../assets/Down.svg";
-import Up from "../assets/Up.svg";
+import Down from "../../assets/Down.svg";
+import Up from "../../assets/Up.svg";
 
 type FormValues = {
   status: string;
