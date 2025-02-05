@@ -5,6 +5,7 @@ import TaskTitle from '../components/TaskTitle';
 import TaskDivider from '../components/TaskDivider';
 import DocumentList from '../components/TaskDocument/DocumentList';
 import Search from '../components/Search';
+import DocumentAdd from '../components/TaskDocument/DocumentAdd';
 
 const TaskDocument: React.FC = () => {
   const handleDocumentsearch = (term: string) => {
@@ -28,6 +29,7 @@ const TaskDocument: React.FC = () => {
             placeholder="문서 검색"
             onSearch={handleDocumentsearch}
           />
+          <DocumentAdd />
           <TaskDivider />
           <DocumentList />
         </main>
