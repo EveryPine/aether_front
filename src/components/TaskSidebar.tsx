@@ -8,7 +8,7 @@ import DocuActive from "../assets/DocuActive.svg";
 import User from "../assets/User.svg";
 import UserActive from "../assets/UserActive.svg";
 
-const bar: React.FC = () => {
+const TaskSidebar: React.FC = () => {
   const [active, setActive] = useState<string | null>("info");
 
   const menuItems = [
@@ -23,7 +23,7 @@ const bar: React.FC = () => {
       {menuItems.map((item) => (
         <button
           key={item.id}
-          className={`p-2 rounded-lg flex items-center justify-center transition-all ${
+          className={`p-2 rounded-lg flex items-center justify-center transition-all outline-none ${
             active === item.id ? "bg-[#ffe4e0]" : "bg-transparent"
           }`}
           onClick={() => setActive(item.id)}
@@ -39,4 +39,4 @@ const bar: React.FC = () => {
   );
 };
 
-export default bar;
+export default TaskSidebar;

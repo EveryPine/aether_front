@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Header: React.FC = () => {
+const TaskHeader: React.FC = () => {
   return (
     <header className="w-[640px] h-[48px] px-7 rounded-tl-3xl border-b-2 border-[#e5eaf2] flex-col justify-start items-start gap-2.5 inline-flex">
       <div className="h-[48px] justify-start items-center gap-8 inline-flex">
@@ -12,4 +12,4 @@ const Header: React.FC = () => {
   );
 }
 
-export default Header;
+export default TaskHeader;

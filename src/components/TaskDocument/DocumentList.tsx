@@ -22,6 +22,7 @@ const DocumentList: React.FC = () => {
     ]);
 
     const [hovered, setHovered] = useState<number | null>(null);
+
   return (
     <div className="absolute w-[464px] h-auto left-[128px] top-[230px] flex flex-col gap-5">
       {documents.map((doc) => (
