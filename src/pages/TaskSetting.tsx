@@ -1,7 +1,9 @@
 import React from 'react';
 import Header from '../components/TaskHeader'
 import Sidebar from '../components/TaskSidebar';
-import MainContent from '../components/TaskSetting/TaskMainContent';
+import TaskTitle from '../components/TaskTitle';
+import TaskDivider from '../components/TaskDivider';
+import TaskInfo from '../components/TaskSetting/TaskInfo';
 
 const TaskSettingPage: React.FC = () => {
   return (
@@ -9,7 +11,13 @@ const TaskSettingPage: React.FC = () => {
       <Header />
       <div>
         <Sidebar />
-        <MainContent />
+        <main>
+          {/* 업무 이름 */}
+            <TaskTitle />
+            <TaskDivider />
+          {/* 업무 정보 */}
+            <TaskInfo/>
+        </main>
       </div>
     </div>
   );
