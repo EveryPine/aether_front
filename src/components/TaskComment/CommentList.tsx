@@ -1,7 +1,7 @@
 import React from 'react';
 import Profile from '../../assets/Profile-small.svg'
 
-const Comment: React.FC = () => {
+const CommentList: React.FC = () => {
   return (
     <div className="absolute left-[128px] top-[230px] w-[464px] px-5 py-4 bg-[#f3f5f8] rounded-lg border border-[#e5eaf2] flex-col justify-start items-start gap-1 inline-flex">
     <div className="justify-start items-center gap-3 inline-flex">
@@ -23,4 +23,4 @@ const Comment: React.FC = () => {
   );
 };
 
-export default Comment;
+export default CommentList;
