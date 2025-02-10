@@ -4,7 +4,7 @@ import TaskPriority from './TaskPriority';
 import TaskVisibility from './TaskVisibility';
 import { useForm } from "react-hook-form";
 import TaskDate from './TaskDate';
-import TaskConstructor from './TaskConstructor';
+import TaskManager from './TaskManager';
 
 // 타입 정의
 type FormValues = {
@@ -45,7 +45,7 @@ const TaskInfo: React.FC = () => {
         <TaskVisibility control={control} setValue={setValue} watch={watch} />
         <TaskDate register={register} watch={watch} />
         <TaskPriority control={control} setValue={setValue} watch={watch} register={register} />
-        <TaskConstructor />
+        <TaskManager />
       </form>
     </div>
   );

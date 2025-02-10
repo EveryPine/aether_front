@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TaskConstructor: React.FC = () => {
+const TaskManager: React.FC = () => {
   return (
     <div className="h-10 justify-start items-start gap-12 inline-flex">
         <div className="w-[59px] h-10 py-2 justify-center items-center gap-2.5 flex">
@@ -14,4 +14,4 @@ const TaskConstructor: React.FC = () => {
   );
 };
 
-export default TaskConstructor;
+export default TaskManager;
