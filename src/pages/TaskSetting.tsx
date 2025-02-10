@@ -10,7 +10,7 @@ const TaskSetting: React.FC = () => {
     <div className="w-[640px] h-[972px] relative bg-[#F8F9FC] rounded-tl-lg shadow-[inset_0px_0px_8px_0px_rgba(26,26,35,0.12)]  overflow-hidden">
       <Header />
       <div>
-        <Sidebar />
+        <Sidebar visibleItems={["info", "chat", "docu", "user"]}/>
         <main>
           {/* 업무 이름 */}
             <TaskTitle isEditable={false} title="ABC 업무"/>
