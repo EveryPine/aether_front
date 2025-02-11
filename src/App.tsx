@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import Main from "./pages/TaskKanban";
 import './App.css'
-import TaskSetting from './pages/TaskSetting'
+import TaskForm from './pages/TaskForm'
 import TaskComment from './pages/TaskComment'
 
 const App: React.FC = () => {

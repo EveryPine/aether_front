@@ -31,7 +31,7 @@ const TaskSidebar: React.FC<TaskSidebarProps> = ({ visibleItems = ["info", "chat
   return (
     <a className="absolute h-[924px] w-[96px] top-[48px] px-7 py-6 bg-[#f8f9fc] border-r-2 border-[#e5eaf2] flex flex-col items-center gap-5">
       {menuItems
-        .filter((item) => visibleItems.includes(item.id)) // visibleItems에 해당하는 아이템만 렌더링
+        .filter((item) => visibleItems.includes(item.id))
         .map((item) => (
         <button
           key={item.id}
