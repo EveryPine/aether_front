@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import TaskCard from "../components/KanbanBoard/TaskCard";
 import TaskMenu from "../components/KanbanBoard/TaskMenu";
 import TaskSettingPage from "./TaskSettingPage/TaskSettingPage";
-
+import TaskMainContent from ".././components/TaskMainContent";
 interface TaskKanbanProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -14,7 +14,7 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
   const [selectedTask, setSelectedTask] = useState<string | null>(null);
   const [isTaskSettingOpen, setIsTaskSettingOpen] = useState(false);
 
-  // 🛠 업무 카드 클릭 시 TaskSettingPage 열기
+  // 업무 카드 클릭 시 TaskSettingPage 열기
   const handleTaskClick = (taskId: string) => {
     if (selectedTask === taskId) {
       setSelectedTask(null);
@@ -56,8 +56,13 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
           <div style={{ marginLeft: "23px", marginTop: "10px" }}>
             <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
           </div>
-
-          {activeTab === "업무" && (
+          {/* "프로젝트 설정" 탭이 활성화되면 TaskMainContent 렌더링 */}
+          {activeTab === "프로젝트 설정" ? (
+            <div>
+              <TaskMainContent />
+            </div>
+          ) : (
+          activeTab === "업무" && (
             <>
               <div>
                 {/* TaskMenu에서 setIsTaskSettingOpen을 전달 */}
@@ -102,10 +107,11 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
                 />
               </div>
             </>
+           )
           )}
         </div>
 
-        {/* ✅ 업무 설정 탭 (회색 컨테이너 내에서만 표시) */}
+        {/* 업무 설정 탭 (회색 컨테이너 내에서만 표시) */}
         {isTaskSettingOpen && (
           <div
             style={{
