@@ -5,7 +5,12 @@ import Trash from "../../assets/Trash.svg";
 import Kanban from "../../assets/Kanban.svg";
 import Edit from "../../assets/Edit.svg";
 
-const TaskMenu: React.FC = () => {
+interface TaskMenuProps {
+  isTaskSettingOpen: boolean;
+  setIsTaskSettingOpen: (isOpen: boolean) => void; // 상태 변경을 위한 props
+}
+
+const TaskMenu: React.FC<TaskMenuProps> = ({ isTaskSettingOpen, setIsTaskSettingOpen }) => {
   return (
     <div style={{ display: "flex", height: "100%", position: "relative", overflow: "hidden" }}>
       {/* TaskMenu 컨트롤 */}
@@ -124,6 +129,7 @@ const TaskMenu: React.FC = () => {
               fontWeight: "normal",
               cursor: "pointer",
             }}
+            onClick={() => setIsTaskSettingOpen(!isTaskSettingOpen)} // 🔥 클릭 시 토글!
           >
             <FiPlus size={16} color="#FFFFFF" style={{ marginRight: "5px" }} /> 업무 생성
           </button>

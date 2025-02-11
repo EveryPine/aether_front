@@ -20,7 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveTab }) => {
         </div>
 
         {/* 아이콘들 */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", gap: "20px" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", gap: "40px" }}>
           <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
             <img src={Alarm} alt="Alarm" style={{ width: "24px", height: "24px", cursor: "pointer" }} />
           </div>

@@ -12,9 +12,17 @@ interface TaskKanbanProps {
 
 const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
   const [selectedTask, setSelectedTask] = useState<string | null>(null);
+  const [isTaskSettingOpen, setIsTaskSettingOpen] = useState(false);
 
+  // 🛠 업무 카드 클릭 시 TaskSettingPage 열기
   const handleTaskClick = (taskId: string) => {
-    setSelectedTask((prev) => (prev === taskId ? null : taskId));
+    if (selectedTask === taskId) {
+      setSelectedTask(null);
+      setIsTaskSettingOpen(false); // 클릭된 업무 카드 다시 클릭 시 닫기
+    } else {
+      setSelectedTask(taskId);
+      setIsTaskSettingOpen(true); // 새로운 업무 카드 클릭 시 열기
+    }
   };
 
   return (
@@ -36,11 +44,12 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
           transition: "width 0.3s ease",
         }}
       >
+        {/* TaskSettingPage가 열리면 컨테이너 너비 줄이기 */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            width: selectedTask ? "calc(100% - 640px)" : "100%", // 설정 탭 열릴 때 폭 감소
+            width: isTaskSettingOpen ? "calc(100% - 640px)" : "100%",
             transition: "width 0.3s ease",
           }}
         >
@@ -51,7 +60,8 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
           {activeTab === "업무" && (
             <>
               <div>
-                <TaskMenu />
+                {/* TaskMenu에서 setIsTaskSettingOpen을 전달 */}
+                <TaskMenu isTaskSettingOpen={isTaskSettingOpen} setIsTaskSettingOpen={setIsTaskSettingOpen} />
               </div>
               <div
                 style={{
@@ -95,14 +105,14 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
           )}
         </div>
 
-        {/* 업무 설정 탭 (회색 컨테이너 내에서만 표시) */}
-        {selectedTask && (
+        {/* ✅ 업무 설정 탭 (회색 컨테이너 내에서만 표시) */}
+        {isTaskSettingOpen && (
           <div
             style={{
               width: "640px",
               height: "100%",
               transition: "transform 0.3s ease",
-              transform: selectedTask ? "translateX(0)" : "translateX(100%)",
+              transform: isTaskSettingOpen ? "translateX(0)" : "translateX(100%)",
               zIndex: 10,
             }}
           >
