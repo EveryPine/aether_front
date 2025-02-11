@@ -4,9 +4,17 @@ interface TaskCardProps {
   title: string;
   bodyText: string;
   borderColor: string;
+  onClick: () => void; // 클릭 핸들러 추가
+  isSelected: boolean; // 선택 여부
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ title, bodyText, borderColor }) => {
+const TaskCard: React.FC<TaskCardProps> = ({
+  title,
+  bodyText,
+  borderColor,
+  onClick,
+  isSelected,
+}) => {
   const [sortOption, setSortOption] = useState("마감일순");
 
   return (
@@ -34,14 +42,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ title, bodyText, borderColor }) => 
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <h4
-            style={{
-              margin: 0,
-              fontSize: "16px",
-              fontWeight: "600",
-              color: "#4F5462", // 글씨 색상 변경
-            }}
-          >
+          <h4 style={{ margin: 0, fontSize: "16px", fontWeight: "600", color: "#4F5462" }}>
             {title}
           </h4>
         </div>
@@ -51,9 +52,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ title, bodyText, borderColor }) => 
           onChange={(e) => setSortOption(e.target.value)}
           style={{
             fontSize: "12px",
-            border: "none", // Border 제거
-            color: "#949BAD", // 글씨 색상 변경
-            backgroundColor: "transparent", // 배경색 투명
+            border: "none",
+            color: "#949BAD",
+            backgroundColor: "transparent",
             cursor: "pointer",
           }}
         >
@@ -64,6 +65,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ title, bodyText, borderColor }) => 
 
       {/* Body */}
       <div
+        onClick={onClick}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -71,14 +73,17 @@ const TaskCard: React.FC<TaskCardProps> = ({ title, bodyText, borderColor }) => 
           gap: "8px",
           alignSelf: "stretch",
           borderRadius: "4px",
-          border: "1px solid #E5EAF2",
+          border: `1px solid ${isSelected ? borderColor : "#E5EAF2"}`, // 선택 시 border 변경
           background: "#F3F5F8",
+          cursor: "pointer",
         }}
       >
         <p style={{ margin: 0, fontSize: "20px", fontWeight: "normal", color: "#4F5462" }}>
           {bodyText}
         </p>
-        <p style={{ margin: "4px 0 0 0", fontSize: "12px", color: "#4F5462" }}>세부사항은 눌러서 확인해주세요.</p>
+        <p style={{ margin: "4px 0 0 0", fontSize: "12px", color: "#4F5462" }}>
+          세부사항은 눌러서 확인해주세요.
+        </p>
       </div>
     </div>
   );

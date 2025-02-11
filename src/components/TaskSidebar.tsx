@@ -19,7 +19,10 @@ const bar: React.FC = () => {
   ];
 
   return (
-    <a className="absolute h-[924px] w-[96px] top-[48px] px-7 py-6 bg-[#f8f9fc] border-r-2 border-[#e5eaf2] flex flex-col items-center gap-5">
+    <a className="absolute h-[924px] w-[96px] top-[48px] px-7 py-6 bg-[#f8f9fc] border-r-2 border-[#e5eaf2] flex flex-col items-center gap-5"
+      style={{
+        boxShadow: "inset 0px 0px 3px rgba(26, 26, 35, 0.12)", // 내부 그림자 효과 적용
+      }}>
       {menuItems.map((item) => (
         <button
           key={item.id}

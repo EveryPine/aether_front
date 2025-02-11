@@ -41,7 +41,7 @@ export default function TaskVisibility({ setValue, watch }: TaskVisibilityProps)
             className="h-10 h pl-3 pr-2 py-2 bg-[#f8f9fc] flex items-center justify-between cursor-pointer hover:bg-gray-200 rounded-md"
             onClick={() => setIsOpen(true)}
           >
-            <span className="text-[#4f5462] font-semibold text-base">
+            <span className="text-[#4f5462] text-base">
               {VisibilityOptions.find((option) => option.value === selectedVisibility)?.label}
             </span>
             <span className="w-3 h-3 flex justify-center items-center">
@@ -56,7 +56,7 @@ export default function TaskVisibility({ setValue, watch }: TaskVisibilityProps)
               className="h-10 pl-3 pr-2 py-2 flex items-center justify-between cursor-pointer hover:bg-gray-200"
               onClick={() => setIsOpen(false)}
             >
-              <span className="text-[#4f5462] font-semibold text-base">
+              <span className="text-[#4f5462] text-base">
                 {VisibilityOptions.find((option) => option.value === selectedVisibility)?.label}
               </span>
               <span className="w-3 h-3">
@@ -76,7 +76,7 @@ export default function TaskVisibility({ setValue, watch }: TaskVisibilityProps)
                       setIsOpen(false);
                     }}
                   >
-                    <span className="text-[#4f5462] font-semibold text-base">{option.label}</span>
+                    <span className="text-[#4f5462] text-base">{option.label}</span>
                   </div>
                 ))}
             </div>
