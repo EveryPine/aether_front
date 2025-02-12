@@ -19,7 +19,7 @@ const TaskDocument: React.FC = () => {
         <Sidebar />
         <main>  
           {/* 업무 이름 */}
-          <TaskTitle />
+          <TaskTitle isEditable={false} title="ABC 업무" />
           <h4 className="absolute h-[28px] left-[128px] top-[174px] text-[#4f5462] text-xl font-semibold leading-7">
                 문서
           </h4>
