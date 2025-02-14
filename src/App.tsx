@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import Main from "./pages/TaskKanban";
 import './App.css'
-import TaskForm from './pages/TaskForm'
-import TaskComment from './pages/TaskComment'
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("업무"); // 전역 상태
@@ -28,9 +26,6 @@ const App: React.FC = () => {
       >
         <Sidebar setActiveTab={setActiveTab}/>
       </div>
-      
-      {/* 업무 세팅 탭 */}
-      {/* <TaskSettingPage /> */}
 
       {/* 메인 컨텐츠 영역 */}
       <div
