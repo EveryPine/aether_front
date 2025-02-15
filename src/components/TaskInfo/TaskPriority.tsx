@@ -8,6 +8,13 @@ interface TaskPriorityProps {
   register: UseFormRegister<any>;
 }
 
+const priorityLabels: { [key: number]: string } = {
+  1: "낮음",
+  2: "보통",
+  3: "높음",
+  4: "긴급",
+};
+
 const TaskPriority: React.FC<TaskPriorityProps> = ({ setValue, watch, register }) => {
   const priority = watch("priority");
 
@@ -29,7 +36,7 @@ const TaskPriority: React.FC<TaskPriorityProps> = ({ setValue, watch, register }
             />
           ))}
         </div>
-        <div className="text-[#4f5462] text-base font-semibold leading-normal">{priority}</div>
+        <div className="text-[#4f5462] text-base font-semibold leading-normal">{priorityLabels[priority]}</div>
       </div>
       <input type="hidden" {...register("priority")} />
     </div>
