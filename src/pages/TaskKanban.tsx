@@ -5,6 +5,7 @@ import TaskCard from "../components/KanbanBoard/TaskCard";
 import TaskMenu from "../components/KanbanBoard/TaskMenu";
 import TaskSetting from "./TaskSetting";
 import TaskMainContent from "../components/TaskInfo/TaskInfo";
+import TaskAdd from "./TaskAdd";
 interface TaskKanbanProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -13,6 +14,7 @@ interface TaskKanbanProps {
 const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
   const [selectedTask, setSelectedTask] = useState<string | null>(null);
   const [isTaskSettingOpen, setIsTaskSettingOpen] = useState(false);
+  const [isTaskAddOpen, setIsTaskAddOpen] = useState(false);
 
   // 업무 카드 클릭 시 TaskSetting 열기
   const handleTaskClick = (taskId: string) => {
@@ -22,8 +24,21 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
     } else {
       setSelectedTask(taskId);
       setIsTaskSettingOpen(true); // 새로운 업무 카드 클릭 시 열기
+      setIsTaskAddOpen(false); // 업무 카드 클릭 시 업무 생성 닫기
     }
   };
+
+  // 업무 생성 클릭 시 TaskAdd 열기
+  const handleTaskAddClick = () => {
+    if (isTaskAddOpen) {
+      setIsTaskAddOpen(false); // 업무 생성 버튼 다시 클릭 시 닫기 
+    } else {
+      setIsTaskAddOpen(true); 
+      setIsTaskSettingOpen(false); // 업무 생성 클릭 시 업무 설정 닫기
+      setSelectedTask(null);
+    }
+    
+  }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -49,7 +64,9 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
           style={{
             display: "flex",
             flexDirection: "column",
-            width: isTaskSettingOpen ? "calc(100% - 640px)" : "100%",
+            width: isTaskSettingOpen || isTaskAddOpen 
+              ? "calc(100% - 640px)" 
+              : "100%",
             transition: "width 0.3s ease",
           }}
         >
@@ -66,7 +83,7 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
             <>
               <div>
                 {/* TaskMenu에서 setIsTaskSettingOpen을 전달 */}
-                <TaskMenu isTaskSettingOpen={isTaskSettingOpen} setIsTaskSettingOpen={setIsTaskSettingOpen} />
+                <TaskMenu isTaskAddOpen={isTaskAddOpen} setIsTaskAddOpen={handleTaskAddClick} />
               </div>
               <div
                 style={{
@@ -112,19 +129,20 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
         </div>
 
         {/* 업무 설정 탭 (회색 컨테이너 내에서만 표시) */}
-        {isTaskSettingOpen && (
+        {(isTaskSettingOpen || isTaskAddOpen) && (
           <div
             style={{
               width: "640px",
               height: "100%",
               transition: "transform 0.3s ease",
-              transform: isTaskSettingOpen ? "translateX(0)" : "translateX(100%)",
+              transform: isTaskSettingOpen || isTaskAddOpen ? "translateX(0)" : "translateX(100%)",
               zIndex: 10,
             }}
           >
-            <TaskSetting />
+            {isTaskSettingOpen ? <TaskSetting /> : <TaskAdd />}
           </div>
         )}
+
       </div>
     </div>
   );

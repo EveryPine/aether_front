@@ -17,9 +17,10 @@ interface MenuItem {
 interface TaskSidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  visibleTabs?: string[];
 }
 
-const TaskSidebar: React.FC<TaskSidebarProps> = ({ activeTab, setActiveTab }) => {
+const TaskSidebar: React.FC<TaskSidebarProps> = ({ activeTab, setActiveTab, visibleTabs }) => {
   const menuItems: MenuItem[] = [
     { id: 'info', defaultIcon: Info, activeIcon: InfoActive },
     { id: 'chat', defaultIcon: Chat, activeIcon: ChatActive },
@@ -27,12 +28,16 @@ const TaskSidebar: React.FC<TaskSidebarProps> = ({ activeTab, setActiveTab }) =>
     { id: 'user', defaultIcon: User, activeIcon: UserActive },
   ];
 
+  const filteredMenuItems = visibleTabs
+    ? menuItems.filter((item) => visibleTabs.includes(item.id))
+    : menuItems;
+
   return (
     <div
       className="absolute h-[924px] w-[96px] top-[48px] px-7 py-6 bg-[#f8f9fc] border-r-2 border-[#e5eaf2] flex flex-col items-center gap-5"
       style={{ boxShadow: 'inset 0px 0px 3px rgba(26, 26, 35, 0.12)' }}
     >
-      {menuItems.map((item) => (
+      {filteredMenuItems.map((item) => (
         <button
           key={item.id}
           className={`p-2 rounded-lg flex items-center justify-center transition-all outline-none ${
