@@ -2,8 +2,8 @@ import React from 'react';
 
 const TaskManager: React.FC = () => {
   return (
-    <div className="h-10 justify-start items-start gap-12 inline-flex">
-        <div className="w-[59px] h-10 py-2 justify-center items-center gap-2.5 flex">
+    <div className="h-10 justify-start items-start gap-12 flex">
+        <div className="w-14 h-10 py-2 justify-center items-center gap-2.5 flex">
             <div className="grow shrink basis-0 text-[#949bad] text-base font-medium leading-normal">생성자</div>
         </div>
         <div className="px-3 py-2 rounded-lg justify-start items-center gap-2 flex">

@@ -25,7 +25,7 @@ const Search: React.FC<SearchProps> = ({ className, placeholder, onSearch }) => 
           placeholder={placeholder}
           value={searchTerm}
           onChange={handleSearch}
-          className={`w-[120px] bg-transparent text-sm font-medium leading-normal outline-none placeholder-[#949bad]
+          className={`w-full bg-transparent text-sm font-medium leading-normal outline-none placeholder-[#949bad]
             ${searchTerm.length > 0 ? "text-[#4f5462]" : "text-[#949bad]"}`}
         />
     </div>

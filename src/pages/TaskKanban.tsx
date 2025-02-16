@@ -61,9 +61,8 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
       >
         {/* TaskSetting가 열리면 컨테이너 너비 줄이기 */}
         <div
+          className="flex flex-col min-w-[320px]"
           style={{
-            display: "flex",
-            flexDirection: "column",
             width: isTaskSettingOpen || isTaskAddOpen 
               ? "calc(100% - 640px)" 
               : "100%",
@@ -131,9 +130,9 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
         {/* 업무 설정 탭 (회색 컨테이너 내에서만 표시) */}
         {(isTaskSettingOpen || isTaskAddOpen) && (
           <div
+            className="min-w-[320px] h-full"
             style={{
               width: "640px",
-              height: "100%",
               transition: "transform 0.3s ease",
               transform: isTaskSettingOpen || isTaskAddOpen ? "translateX(0)" : "translateX(100%)",
               zIndex: 10,

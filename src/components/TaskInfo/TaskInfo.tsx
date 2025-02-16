@@ -36,7 +36,7 @@ const TaskInfo: React.FC = () => {
 
   return (
     <div>
-      <h4 className="absolute h-[28px] left-[128px] top-[174px] text-[#4f5462] text-xl leading-7">
+      <h4 className="absolute h-[28px] left-[128px] top-[174px] text-[#4f5462] text-xl font-semibold leading-7">
         업무 정보
       </h4>
 

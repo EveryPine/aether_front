@@ -23,26 +23,15 @@ const TaskAdd: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "stretch",
-        height: "972px", // 기존 높이 유지
-        backgroundColor: "white", // 흰색 배경 추가 (외부 공간)
-        paddingLeft: "8px", // 왼쪽 여백 8px 추가
-      }}
-    >
-     <div
-        className="w-[640px] h-full relative bg-[#F8F9FC] rounded-tl-lg overflow-hidden"
-        style={{
-          boxShadow: "inset 0px 0px 8px rgba(26, 26, 35, 0.12)", // 내부 그림자 효과 적용
-        }}
-      >
+    <div className="flex items-stretch h-full bg-white pl-2">
+      <div className="w-full h-full relative bg-[#F8F9FC] rounded-tl-lg overflow-auto shadow-[inset_0px_0px_8px_rgba(26,26,35,0.12)]">
         <Header />
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} visibleTabs={['info', 'user']}/>
-        <TaskTitle isEditable={true} title={title} setTitle={setTitle}/>
-        <TaskDivider top='152px'/>
-        <div>{renderContent()}</div>
+        <div className="overflow-auto">
+          <TaskTitle isEditable={true} title={title} setTitle={setTitle}/>
+          <TaskDivider top='152px'/>
+          <div>{renderContent()}</div>
+        </div>
       </div>
     </div>
   );
