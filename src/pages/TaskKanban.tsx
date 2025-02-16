@@ -6,6 +6,8 @@ import TaskMenu from "../components/KanbanBoard/TaskMenu";
 import TaskSetting from "./TaskSetting";
 import TaskMainContent from "../components/TaskInfo/TaskInfo";
 import TaskAdd from "./TaskAdd";
+import TaskTitle from "../components/TaskTitle";
+import TaskDivider from "../components/TaskDivider";
 interface TaskKanbanProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -75,6 +77,8 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
           {/* "프로젝트 설정" 탭이 활성화되면 TaskMainContent 렌더링 */}
           {activeTab === "프로젝트 설정" ? (
             <div>
+              <TaskTitle isEditable={false} title="ABCDE 프로젝트"/>
+              <TaskDivider />
               <TaskMainContent />
             </div>
           ) : (
