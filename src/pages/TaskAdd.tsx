@@ -25,7 +25,7 @@ const TaskAdd: React.FC = () => {
   return (
     <div className="flex items-stretch h-full bg-white pl-2">
       <div className="w-full h-full relative bg-[#F8F9FC] rounded-tl-lg overflow-auto shadow-[inset_0px_0px_8px_rgba(26,26,35,0.12)]">
-        <Header />
+        <Header title="업무 생성" />
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} visibleTabs={['info', 'user']}/>
         <div className="overflow-auto">
           <TaskTitle isEditable={true} title={title} setTitle={setTitle}/>

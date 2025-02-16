@@ -30,7 +30,7 @@ const TaskSetting: React.FC = () => {
   return (
     <div className="flex items-stretch h-full bg-white pl-2">
       <div className="w-full h-full relative bg-[#F8F9FC] rounded-tl-lg overflow-auto shadow-[inset_0px_0px_8px_rgba(26,26,35,0.12)]">
-        <Header />
+        <Header title="업무 설정"/>
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
         <TaskTitle isEditable={false} title="ABC 업무"/>
         <TaskDivider />
