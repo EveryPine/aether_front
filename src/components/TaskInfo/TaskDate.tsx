@@ -1,26 +1,29 @@
-import React from "react";
-import { UseFormRegister, UseFormWatch } from "react-hook-form";
+import React, { useEffect } from "react";
+import { useFormContext } from "react-hook-form";
 
-// TaskInfo에서 정의한 FormValues 타입
-type FormValues = {
-  status: string;
-  visibility: string;
-  priority: number;
-  startYear: string;
-  startMonth: string;
-  startDay: string;
-  endYear: string;
-  endMonth: string;
-  endDay: string;
-};
+const TaskDate: React.FC = () => {
+  const { register, watch, setValue } = useFormContext();
 
-// Props 타입 정의
-interface TaskDateProps {
-  register: UseFormRegister<FormValues>;
-  watch: UseFormWatch<FormValues>;
-}
+  const startYear = watch("startYaer");
+  const startMonth = watch("startMonth");
+  const startDay = watch("startDay");
 
-const TaskDate: React.FC<TaskDateProps> = ({ register, watch }) => {
+  const endYear = watch("endYear");
+  const endMonth = watch("endMonth");
+  const endDay = watch("endDay");
+
+  useEffect(() => {
+    if (startYear && startMonth && startDay) {
+      setValue("startDate", `${startYear}-${startMonth.padStart(2, "0")}-${startDay.padStart(2, "0")}`);
+    }
+  }, [startYear, startMonth, startDay, setValue]);
+
+  useEffect(() => {
+    if (endYear && endMonth && endDay) {
+      setValue("dueDate", `${endYear}-${endMonth.padStart(2, "0")}-${endDay.padStart(2, "0")}`);
+    }
+  }, [endYear, endMonth, endDay, setValue]);
+
   return (
     <div className="h-10 justify-start items-start gap-12 inline-flex">
       <div className="w-[59px] h-10 py-2 flex items-center">

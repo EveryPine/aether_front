@@ -1,32 +1,15 @@
 import { useState } from "react";
-import { Control, UseFormSetValue, UseFormWatch } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import Down from "../../assets/Down.svg";
 import Up from "../../assets/Up.svg";
-
-type FormValues = {
-  status: string;
-  visibility: string;
-  priority: number;
-  startYear: string;
-  startMonth: string;
-  startDay: string;
-  endYear: string;
-  endMonth: string;
-  endDay: string;
-};
-
-interface TaskVisibilityProps {
-  control: Control<FormValues>;
-  setValue: UseFormSetValue<FormValues>;
-  watch: UseFormWatch<FormValues>;
-}
 
 const VisibilityOptions = [
   { label: "전체 공개", value: "public"},
   { label: "담당자 공개", value: "private"}
 ];
 
-export default function TaskVisibility({ setValue, watch }: TaskVisibilityProps) {
+const TaskVisibility: React.FC = () => {
+  const { setValue, watch } = useFormContext();
   const selectedVisibility = watch("visibility");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -38,10 +21,10 @@ export default function TaskVisibility({ setValue, watch }: TaskVisibilityProps)
       <div className="w-[120px]">
         {!isOpen && (
           <div
-            className="h-10 h pl-3 pr-2 py-2 bg-[#f8f9fc] flex items-center justify-between cursor-pointer hover:bg-gray-200 rounded-md"
+            className="h-10 pl-3 pr-2 py-2 bg-[#f8f9fc] flex items-center justify-between cursor-pointer hover:bg-gray-200 rounded-md"
             onClick={() => setIsOpen(true)}
           >
-            <span className="text-[#4f5462] text-base">
+            <span className="text-[#4f5462] font-semibold text-base">
               {VisibilityOptions.find((option) => option.value === selectedVisibility)?.label}
             </span>
             <span className="w-3 h-3 flex justify-center items-center">
@@ -56,7 +39,7 @@ export default function TaskVisibility({ setValue, watch }: TaskVisibilityProps)
               className="h-10 pl-3 pr-2 py-2 flex items-center justify-between cursor-pointer hover:bg-gray-200"
               onClick={() => setIsOpen(false)}
             >
-              <span className="text-[#4f5462] text-base">
+              <span className="text-[#4f5462] font-semibold text-base">
                 {VisibilityOptions.find((option) => option.value === selectedVisibility)?.label}
               </span>
               <span className="w-3 h-3">
@@ -76,7 +59,7 @@ export default function TaskVisibility({ setValue, watch }: TaskVisibilityProps)
                       setIsOpen(false);
                     }}
                   >
-                    <span className="text-[#4f5462] text-base">{option.label}</span>
+                    <span className="text-[#4f5462] font-semibold text-base">{option.label}</span>
                   </div>
                 ))}
             </div>
@@ -86,3 +69,5 @@ export default function TaskVisibility({ setValue, watch }: TaskVisibilityProps)
     </div>
   );
 }
+
+export default TaskVisibility;

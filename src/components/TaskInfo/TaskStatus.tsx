@@ -1,25 +1,7 @@
-import { Controller, Control, UseFormSetValue, UseFormWatch } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 import { useState } from "react";
 import Down from "../../assets/Down.svg";
 import Up from "../../assets/Up.svg";
-
-type FormValues = {
-  status: string;
-  visibility: string;
-  priority: number;
-  startYear: string;
-  startMonth: string;
-  startDay: string;
-  endYear: string;
-  endMonth: string;
-  endDay: string;
-};
-
-interface TaskStatusProps {
-  control: Control<FormValues>;
-  setValue: UseFormSetValue<FormValues>;
-  watch: UseFormWatch<FormValues>;
-}
 
 export const statusOptions = [
   { label: "대기", value: "pending", bgColor: "bg-[#ffa75b]" },
@@ -29,7 +11,9 @@ export const statusOptions = [
   { label: "홀드", value: "hold", bgColor: "bg-[#949bad]" },
 ];
 
-export default function TaskStatus({ control, watch }: TaskStatusProps) {
+
+const TaskStatus: React.FC = () => {
+  const { control, watch } = useFormContext();
   const [isOpen, setIsOpen] = useState(false);
   const selectedStatus = watch("status"); 
 
@@ -113,3 +97,5 @@ export default function TaskStatus({ control, watch }: TaskStatusProps) {
     </div>
   );
 }
+
+export default TaskStatus;

@@ -1,12 +1,5 @@
 import React from "react";
-import { Control, UseFormSetValue, UseFormWatch, UseFormRegister } from "react-hook-form";
-
-interface TaskPriorityProps {
-  control: Control<any>;
-  setValue: UseFormSetValue<any>;
-  watch: UseFormWatch<any>;
-  register: UseFormRegister<any>;
-}
+import { useFormContext } from "react-hook-form";
 
 const priorityLabels: { [key: number]: string } = {
   1: "낮음",
@@ -15,7 +8,8 @@ const priorityLabels: { [key: number]: string } = {
   4: "긴급",
 };
 
-const TaskPriority: React.FC<TaskPriorityProps> = ({ setValue, watch, register }) => {
+const TaskPriority: React.FC = () => {
+  const { setValue, watch, register } = useFormContext();
   const priority = watch("priority");
 
   return (
