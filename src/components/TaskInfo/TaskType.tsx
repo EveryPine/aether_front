@@ -3,20 +3,20 @@ import { useFormContext } from "react-hook-form";
 import Down from "../../assets/Down.svg";
 import Up from "../../assets/Up.svg";
 
-const VisibilityOptions = [
-  { label: "전체 공개", value: "Public"},
-  { label: "담당자 공개", value: "Pestricted"}
+const IsDailyOptions = [
+  { label: "일반 업무", value: false},
+  { label: "데일리 업무", value: true}
 ];
 
-const TaskVisibility: React.FC = () => {
+const TaskType: React.FC = () => {
   const { setValue, watch } = useFormContext();
-  const selectedVisibility = watch("projectScope");
+  const selectedIsDaily = watch("isDaily");
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="justify-start items-start gap-12 inline-flex">
       <div className="w-[60px] h-10 py-2 items-center gap-2.5 inline-flex">
-        <label className="grow shrink basis-0 text-[#949bad] text-base leading-normal">공개 여부</label>
+        <label className="grow shrink basis-0 text-[#949bad] text-base leading-normal">유형</label>
       </div>
       <div className="w-[120px]">
         {!isOpen && (
@@ -25,7 +25,7 @@ const TaskVisibility: React.FC = () => {
             onClick={() => setIsOpen(true)}
           >
             <span className="text-[#4f5462] font-semibold text-base">
-              {VisibilityOptions.find((option) => option.value === selectedVisibility)?.label}
+              {IsDailyOptions.find((option) => option.value === selectedIsDaily)?.label}
             </span>
             <span className="w-3 h-3 flex justify-center items-center">
               <img src ={Down}/>
@@ -40,7 +40,7 @@ const TaskVisibility: React.FC = () => {
               onClick={() => setIsOpen(false)}
             >
               <span className="text-[#4f5462] font-semibold text-base">
-                {VisibilityOptions.find((option) => option.value === selectedVisibility)?.label}
+                {IsDailyOptions.find((option) => option.value === selectedIsDaily)?.label}
               </span>
               <span className="w-3 h-3">
                 <img src ={Up}/>
@@ -48,14 +48,14 @@ const TaskVisibility: React.FC = () => {
             </div>
 
             <div className="pt-1">
-              {VisibilityOptions
-                .filter(option => option.value !== selectedVisibility)
+              {IsDailyOptions
+                .filter(option => option.value !== selectedIsDaily)
                 .map((option) => (
                   <div
-                    key={option.value}
+                    key={option.label}
                     className="pl-3 pr-2 py-2 flex items-center cursor-pointer hover:bg-gray-200"
                     onClick={() => {
-                      setValue("projectScope", option.value);
+                      setValue("IsDaily", option.value);
                       setIsOpen(false);
                     }}
                   >
@@ -70,4 +70,4 @@ const TaskVisibility: React.FC = () => {
   );
 }
 
-export default TaskVisibility;
+export default TaskType;

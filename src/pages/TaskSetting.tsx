@@ -7,26 +7,30 @@ import TaskDivider from '../components/TaskDivider';
 import TaskComment from '../components/TaskComment/TaskComment';
 import TaskDocument from '../components/TaskDocument/TaskDocument';
 import TaskManager from '../components/TaskManager/TaskManager';
-import { useForm, FormProvider } from "react-hook-form"
-import useTaskInfo from '../hooks/useTaskInfo';
+import { FormProvider } from "react-hook-form"
+import useTask from "../hooks/useTask"
 
 const TaskSetting: React.FC = () => {
-  const methods = useTaskInfo();
+  const methods = useTask('679e19c24626ec865b9279ba', false);
+  const { userInfo } = methods;
 
   const [activeTab, setActiveTab] = useState('info')
+    const [isAddingManager, setIsAddingManager] = useState(false); // 담당자 추가
 
   const renderContent = () => {
+    if (!userInfo) return <div>loading</div>;
+    if (methods.formState.isLoading) return <div>Loading</div>;
     switch (activeTab) {
       case 'info':
-        return <TaskInfo />;
+        return <TaskInfo userInfo={userInfo}  />;
       case 'docu':
         return <TaskDocument />;
       case 'chat':
         return <TaskComment />;
       case 'user':
-        return <TaskManager />;
+        return <TaskManager setIsAddingManager={setIsAddingManager}/>;
       default:
-        return <TaskInfo />;
+        return <TaskInfo userInfo={userInfo}  />;
     }
   };
 
@@ -38,7 +42,22 @@ const TaskSetting: React.FC = () => {
           <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
           <TaskTitle isEditable={false} title="ABC 업무"/>
           <TaskDivider />
-          <div>{renderContent()}</div>
+          {/* 업무 설정, 업무 관리자 탭인 경우 하나의 폼으로 처리 */}
+          {['info', 'user'].includes(activeTab) ? (
+            <form>
+              <div>{renderContent()}</div>
+              {!isAddingManager && ( // 담당자 추가 시 생성하기 버튼 비활성화
+                <button
+                  type="submit"
+                  className="absolute top-[705px] left-[506px] h-8 px-4 py-1 bg-[#ff432b] rounded justify-center items-center gap-1 inline-flex"
+                >
+                  <div className="w-14 text-[#fcfcff] text-base font-semibold leading-normal">수정하기</div>
+                </button>
+              )}
+            </form>
+          ) : (
+            <div>{renderContent()}</div> // 코멘트, 문서 탭은 별도로 처리
+          )}
         </div>
       </div>
     </FormProvider>

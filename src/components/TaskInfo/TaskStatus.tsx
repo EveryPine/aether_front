@@ -4,9 +4,9 @@ import Down from "../../assets/Down.svg";
 import Up from "../../assets/Up.svg";
 
 export const statusOptions = [
-  { label: "대기", value: "pending", bgColor: "bg-[#ffa75b]" },
-  { label: "진행", value: "progress", bgColor: "bg-[#5ca8ff]" },
-  { label: "완료", value: "done", bgColor: "bg-[#5ec98a]" },
+  { label: "대기", value: "To Do", bgColor: "bg-[#ffa75b]" },
+  { label: "진행", value: "In Progress", bgColor: "bg-[#5ca8ff]" },
+  { label: "완료", value: "Done", bgColor: "bg-[#5ec98a]" },
   { label: "이슈", value: "issue", bgColor: "bg-[#ff615b]" },
   { label: "홀드", value: "hold", bgColor: "bg-[#949bad]" },
 ];

@@ -13,8 +13,10 @@ const TaskPriority: React.FC = () => {
   const priority = watch("priority");
 
   return (
-    <div className="h-10 justify-start items-center gap-12 inline-flex">
-      <div className="w-[59px] text-[#949bad] text-base leading-normal">우선순위</div>
+    <div className="justify-start items-center gap-12 inline-flex">
+      <div className="w-[59px] h-10 py-2 items-center">
+        <label className="text-[#949bad] text-base leading-normal">우선순위</label>
+      </div>
       <div className="justify-start items-center gap-4 flex">
         <div className="w-[220px] h-4 relative">
           {[1, 2, 3, 4].map((num) => (
