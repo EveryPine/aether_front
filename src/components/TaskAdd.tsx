@@ -10,21 +10,35 @@ import useTask from "../hooks/useTask"
 
 const TaskAdd: React.FC = () => {
   const methods = useTask(null, true);
-  const { userInfo, handleCreateTask } = methods;
+  const { userInfo, handleCreateTask, watch } = methods;
 
   const [activeTab, setActiveTab] = useState('info')
   const [title, setTitle] = useState("");
   const [isAddingManager, setIsAddingManager] = useState(false); // 담당자 추가
 
+  const taskInfoValues = {
+    title: watch("title"),
+    description: watch("description"),
+    isDaily: watch("isDaily"),
+    status: watch("status"),
+    projectScope: watch("projectScope"),
+    priority: watch("priority"),
+    startDate: watch("startDate"),
+    dueDate: watch("dueDate"),
+    createdBy: watch("createdBy"),
+    project: watch("project"),
+    assignedTo: watch("assignedTo"),
+  };
+  
   const renderContent = () => {
     if (!userInfo) return <div>loading</div>;
     switch (activeTab) {
       case 'info':
-        return <TaskInfo userInfo={userInfo} />;
+        return <TaskInfo methods={methods} taskInfoValues={taskInfoValues} userInfo={userInfo} />;
       case 'user':
         return <TaskManager setIsAddingManager={setIsAddingManager}/>;
       default:
-        return <TaskInfo userInfo={userInfo}/>;
+        return <TaskInfo methods={methods} taskInfoValues={taskInfoValues} userInfo={userInfo}/>;
     }
   };
 

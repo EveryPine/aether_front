@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useFormContext } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
+import { TaskInfoValues } from "../../hooks/useTask";
 
-const TaskDescription: React.FC = () => {
-  const {
-    register,
-    formState: { errors },
-    watch,
-  } = useFormContext();
+interface TaskDescriptionProps {
+  methods: UseFormReturn<TaskInfoValues>;
+}
+
+const TaskDescription: React.FC<TaskDescriptionProps> = ({ methods }) => {
+  const { register, formState: { errors }, watch } = methods;
 
   const maxLength = 386;
   const description = watch("description", "");
@@ -20,10 +22,7 @@ const TaskDescription: React.FC = () => {
             <textarea
             {...register("description", {
               required: "업무 설명을 입력하세요.",
-              maxLength: {
-                value: maxLength,
-                message: `최대 ${maxLength}자까지 입력할 수 있습니다.`,
-              },
+              maxLength: { value: maxLength, message: `최대 ${maxLength}자까지 입력할 수 있습니다.` },
             })}
             placeholder="업무 설명을 입력하세요."
             className="w-full h-full bg-transparent outline-none resize-none text-[#4f5462] text-base font-semibold leading-normal"

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTask, fetchTaskInfo } from "../api/taskApi";
@@ -12,8 +13,8 @@ const taskSchema = z.object({
   status: z.string(),
   projectScope: z.string(),
   priority: z.number(),
-  startDate: z.date().optional(),
-  dueDate: z.date().optional(),
+  startDate: z.string().optional(),
+  dueDate: z.string().optional(),
   createdBy: z.string(),
   project: z.string(),
   assignedTo: z.array(z.string()).optional(),
@@ -24,6 +25,10 @@ export interface TaskInfoValues extends z.infer<typeof taskSchema> {}
 export const useTask = (tid: string | null, isCreate: boolean) => {
   const queryClient = useQueryClient();
   const { data: userInfo } = useQuery(["userInfo"], () => fetchUserInfo());
+  const { data: taskData, isLoading } = useQuery(["taskInfo", tid], () => fetchTaskInfo(tid as string), {
+    enabled: !isCreate && !!tid,
+    initialData: null,
+  });
 
   const methods = useForm<TaskInfoValues>({
     defaultValues: {
@@ -33,14 +38,32 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
       status: "To Do",
       projectScope: "Public",
       priority: 0,
-      startDate: undefined,
-      dueDate: undefined,
+      startDate: "",
+      dueDate: "",
       createdBy: "",
-      project: "679aedec4f051a6eaac0204c",
+      project: "",
       assignedTo: [],
     },
     resolver: zodResolver(taskSchema),
   });
+
+  useEffect(() => {
+    if (taskData?.data) {
+      methods.reset({
+        title: taskData.data.title || "",
+        description: taskData.data.description || "",
+        isDaily: taskData.data.isDaily || false,
+        status: taskData.data.status || "To Do",
+        projectScope: taskData.data.projectScope || "Public",
+        priority: taskData.data.priority || 0,
+        startDate: taskData.data.startDate ? new Date(taskData.data.startDate).toISOString().split("T")[0] : "",
+        dueDate: taskData.data.dueDate ? new Date(taskData.data.dueDate).toISOString().split("T")[0] : "",
+        createdBy: taskData.data.createdBy || "",
+        project: taskData.data.project || "",
+        assignedTo: taskData.data.assignedTo || [],
+      });
+    }
+  }, [taskData, methods])
 
   // 업무 생성 mutation
   const createTaskMutation = useMutation(
@@ -64,32 +87,6 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
       console.log(error);
     }
   });
-
-  // 업무 상세
-  const { isLoading } = useQuery(
-    ["taskInfo", tid],
-    () => fetchTaskInfo(tid as string),
-    {
-      enabled: !isCreate && tid !== null,
-      onSuccess: (data) => {
-        if (data) {
-          methods.reset({
-            status: data.status || "To Do",
-            projectScope: data.projectScope || "Public",
-            priority: data.priority || 0,
-            startDate: data.startDate || undefined,
-            dueDate: data.dueDate || undefined,
-            createdBy: data.createdBy || "",
-            project: data.project || "",
-            title: data.title || "",
-            description: data.description || "",
-            assignedTo: data.assignedTo || [],
-            isDaily: data.isDaily || false,
-          });
-        }
-      },
-    }
-  );
 
   return { ...methods, handleCreateTask, userInfo, createTaskMutation };
 };

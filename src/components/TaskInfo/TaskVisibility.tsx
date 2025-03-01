@@ -1,16 +1,21 @@
 import { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { UseFormReturn  } from "react-hook-form";
 import Down from "../../assets/Down.svg";
 import Up from "../../assets/Up.svg";
+import { TaskInfoValues } from "../../hooks/useTask";
 
 const VisibilityOptions = [
   { label: "전체 공개", value: "Public"},
-  { label: "담당자 공개", value: "Pestricted"}
+  { label: "담당자 공개", value: "Restricted"}
 ];
 
-const TaskVisibility: React.FC = () => {
-  const { setValue, watch } = useFormContext();
-  const selectedVisibility = watch("projectScope");
+interface TaskVisibilityProps {
+  methods: UseFormReturn<TaskInfoValues>;
+}
+
+const TaskVisibility: React.FC<TaskVisibilityProps> = ({ methods }) => {
+  const { setValue, watch } = methods;
+  const selectedVisibility = watch("projectScope", "Public");
   const [isOpen, setIsOpen] = useState(false);
 
   return (

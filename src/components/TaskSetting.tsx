@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Header from '../components/TaskHeader';
 import Sidebar from '../components/TaskSidebar';
 import TaskInfo from '../components/TaskInfo/TaskInfo';
@@ -11,20 +11,32 @@ import { FormProvider } from "react-hook-form"
 import useTask from "../hooks/useTask"
 
 const TaskSetting: React.FC = () => {
-  const methods = useTask('679097237e21d4a55d11487c', false);
-  const { userInfo } = methods;
+  const methods = useTask('67a8386d7bc30e8a03378129', false);
+  const { userInfo, formState: { isLoading }, watch } = methods;
 
   const [activeTab, setActiveTab] = useState('info')
   const [isAddingManager, setIsAddingManager] = useState(false); // 담당자 추가
 
-  const title = methods.watch("title", "");
-
+  const taskInfoValues = {
+    title: watch("title", ""),
+    description: watch("description", ""),
+    isDaily: watch("isDaily", false),
+    status: watch("status", "To Do"),
+    projectScope: watch("projectScope", "Public"),
+    priority: watch("priority", 0),
+    startDate: watch("startDate", ""),
+    dueDate: watch("dueDate", ""),
+    createdBy: watch("createdBy", ""),
+    project: watch("project", ""),
+    assignedTo: watch("assignedTo", []),
+  };
+  
   const renderContent = () => {
-    if (!userInfo) return <div>loading</div>;
+    if (!userInfo || isLoading) return <div>loading</div>;
     if (methods.formState.isLoading) return <div>Loading</div>;
     switch (activeTab) {
       case 'info':
-        return <TaskInfo userInfo={userInfo}  />;
+        return <TaskInfo taskInfoValues={taskInfoValues} methods={methods} userInfo={userInfo}  />;
       case 'docu':
         return <TaskDocument />;
       case 'chat':
@@ -32,7 +44,7 @@ const TaskSetting: React.FC = () => {
       case 'user':
         return <TaskManager setIsAddingManager={setIsAddingManager}/>;
       default:
-        return <TaskInfo userInfo={userInfo}  />;
+        return <TaskInfo taskInfoValues={taskInfoValues} methods={methods} userInfo={userInfo}  />;
     }
   };
 
@@ -42,7 +54,7 @@ const TaskSetting: React.FC = () => {
         <div className="w-full h-full relative bg-[#F8F9FC] rounded-tl-lg overflow-auto shadow-[inset_0px_0px_8px_rgba(26,26,35,0.12)]">
           <Header title="업무 설정"/>
           <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-          <TaskTitle isEditable={false} title={title}/>
+          <TaskTitle isEditable={false} title={taskInfoValues.title}/>
           <TaskDivider />
           {/* 업무 설정, 업무 관리자 탭인 경우 하나의 폼으로 처리 */}
           {['info', 'user'].includes(activeTab) ? (

@@ -1,16 +1,21 @@
 import { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { UseFormReturn  } from "react-hook-form";
 import Down from "../../assets/Down.svg";
 import Up from "../../assets/Up.svg";
+import { TaskInfoValues } from "../../hooks/useTask";
 
 const IsDailyOptions = [
   { label: "일반 업무", value: false},
   { label: "데일리 업무", value: true}
 ];
 
-const TaskType: React.FC = () => {
-  const { setValue, watch } = useFormContext();
-  const selectedIsDaily = watch("isDaily");
+interface TaskTypeProps {
+  methods: UseFormReturn<TaskInfoValues>;
+}
+
+const TaskType: React.FC<TaskTypeProps> = ({ methods }) => {
+  const { setValue, watch } = methods;
+  const selectedIsDaily = watch("isDaily", false);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -55,7 +60,7 @@ const TaskType: React.FC = () => {
                     key={option.label}
                     className="pl-3 pr-2 py-2 flex items-center cursor-pointer hover:bg-gray-200"
                     onClick={() => {
-                      setValue("IsDaily", option.value);
+                      setValue("isDaily", option.value);
                       setIsOpen(false);
                     }}
                   >

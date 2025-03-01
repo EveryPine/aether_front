@@ -1,7 +1,8 @@
-import { useFormContext, Controller } from "react-hook-form";
+import { UseFormReturn, Controller } from "react-hook-form";
 import { useState } from "react";
 import Down from "../../assets/Down.svg";
 import Up from "../../assets/Up.svg";
+import { TaskInfoValues } from "../../hooks/useTask";
 
 export const statusOptions = [
   { label: "대기", value: "To Do", bgColor: "bg-[#ffa75b]" },
@@ -11,11 +12,14 @@ export const statusOptions = [
   { label: "홀드", value: "hold", bgColor: "bg-[#949bad]" },
 ];
 
+interface TaskStatusProps {
+  methods: UseFormReturn<TaskInfoValues>;
+}
 
-const TaskStatus: React.FC = () => {
-  const { control, watch } = useFormContext();
+const TaskStatus: React.FC<TaskStatusProps> = ({ methods }) => {
+  const { control, watch } = methods;
   const [isOpen, setIsOpen] = useState(false);
-  const selectedStatus = watch("status"); 
+  const selectedStatus = watch("status", "To Do"); 
 
   return (
     <div className="justify-start items-start gap-12 flex w-full">
@@ -47,7 +51,6 @@ const TaskStatus: React.FC = () => {
       {/* status 필드 - 펼쳐진 상태 */}
       {isOpen && (
           <div className="bg-[#f3f5f8] rounded-md border border-[#e5eaf2]">
-            {/* 헤더 */}
             <div
               className="h-10 pl-3 pr-2 py-2 flex items-center justify-between cursor-pointer hover:bg-gray-200"
               onClick={() => setIsOpen(false)}
