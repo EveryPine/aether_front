@@ -22,11 +22,8 @@ const taskSchema = z.object({
 export interface TaskInfoValues extends z.infer<typeof taskSchema> {}
 
 export const useTask = (tid: string | null, isCreate: boolean) => {
-  const token = "";
-  if (!token) throw new Error("인증 토큰 없음");
-  
   const queryClient = useQueryClient();
-  const { data: userInfo } = useQuery(["userInfo"], () => fetchUserInfo(token));
+  const { data: userInfo } = useQuery(["userInfo"], () => fetchUserInfo());
 
   const methods = useForm<TaskInfoValues>({
     defaultValues: {
@@ -47,7 +44,7 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
 
   // 업무 생성 mutation
   const createTaskMutation = useMutation(
-    (newTask: TaskInfoValues) => createTask(newTask, token),
+    (newTask: TaskInfoValues) => createTask(newTask),
     {
       onSuccess: (data) => {
         console.log("업무 생성:", data);
@@ -71,7 +68,7 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
   // 업무 상세
   const { isLoading } = useQuery(
     ["taskInfo", tid],
-    () => fetchTaskInfo(tid as string, token),
+    () => fetchTaskInfo(tid as string),
     {
       enabled: !isCreate && tid !== null,
       onSuccess: (data) => {
@@ -87,6 +84,7 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
             title: data.title || "",
             description: data.description || "",
             assignedTo: data.assignedTo || [],
+            isDaily: data.isDaily || false,
           });
         }
       },

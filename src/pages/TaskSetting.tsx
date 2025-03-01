@@ -11,11 +11,13 @@ import { FormProvider } from "react-hook-form"
 import useTask from "../hooks/useTask"
 
 const TaskSetting: React.FC = () => {
-  const methods = useTask('679e19c24626ec865b9279ba', false);
+  const methods = useTask('679097237e21d4a55d11487c', false);
   const { userInfo } = methods;
 
   const [activeTab, setActiveTab] = useState('info')
-    const [isAddingManager, setIsAddingManager] = useState(false); // 담당자 추가
+  const [isAddingManager, setIsAddingManager] = useState(false); // 담당자 추가
+
+  const title = methods.watch("title", "");
 
   const renderContent = () => {
     if (!userInfo) return <div>loading</div>;
@@ -40,7 +42,7 @@ const TaskSetting: React.FC = () => {
         <div className="w-full h-full relative bg-[#F8F9FC] rounded-tl-lg overflow-auto shadow-[inset_0px_0px_8px_rgba(26,26,35,0.12)]">
           <Header title="업무 설정"/>
           <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-          <TaskTitle isEditable={false} title="ABC 업무"/>
+          <TaskTitle isEditable={false} title={title}/>
           <TaskDivider />
           {/* 업무 설정, 업무 관리자 탭인 경우 하나의 폼으로 처리 */}
           {['info', 'user'].includes(activeTab) ? (

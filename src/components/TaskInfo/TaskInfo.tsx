@@ -15,7 +15,6 @@ interface TaskInfoProps {
 }
 
 const TaskInfo: React.FC<TaskInfoProps> = ({ userInfo }) => {
-
   return (
     <div>
       <h4 className="absolute h-[28px] left-[128px] top-[174px] text-[#4f5462] text-xl font-semibold leading-7">
