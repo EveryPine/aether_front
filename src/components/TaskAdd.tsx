@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import Header from '../components/TaskHeader';
-import Sidebar from '../components/TaskSidebar';
-import TaskInfo from '../components/TaskInfo/TaskInfo';
-import TaskTitle from '../components/TaskTitle';
-import TaskDivider from '../components/TaskDivider';
-import TaskManager from '../components/TaskManager/TaskManager';
+import Header from './TaskHeader';
+import Sidebar from './TaskSidebar';
+import TaskInfo from './TaskInfo/TaskInfo';
+import TaskTitle from './TaskTitle';
+import TaskDivider from './TaskDivider';
+import TaskManager from './TaskManager/TaskManager';
 import { FormProvider } from "react-hook-form"
 import useTask from "../hooks/useTask"
 

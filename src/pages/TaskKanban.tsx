@@ -3,9 +3,9 @@ import Breadcrumb from "../components/BreadCrumb";
 import Navbar from "../components/Navbar";
 import TaskCard from "../components/KanbanBoard/TaskCard";
 import TaskMenu from "../components/KanbanBoard/TaskMenu";
-import TaskSetting from "./TaskSetting";
+import TaskSetting from "../components/TaskSetting";
 import TaskInfo from "../components/TaskInfo/TaskInfo";
-import TaskAdd from "./TaskAdd";
+import TaskAdd from "../components/TaskAdd";
 import TaskTitle from "../components/TaskTitle";
 import TaskDivider from "../components/TaskDivider";
 import {useTask} from "../hooks/useTask"
