@@ -1,28 +1,29 @@
-import React from "react";
-import { UseFormRegister, UseFormWatch } from "react-hook-form";
+import React, { useEffect } from "react";
+import { useFormContext, UseFormReturn } from "react-hook-form";
+import { TaskInfoValues } from "../../hooks/useTask";
 
-// TaskInfo에서 정의한 FormValues 타입
-type FormValues = {
-  status: string;
-  visibility: string;
-  priority: number;
-  startYear: string;
-  startMonth: string;
-  startDay: string;
-  endYear: string;
-  endMonth: string;
-  endDay: string;
-};
-
-// Props 타입 정의
 interface TaskDateProps {
-  register: UseFormRegister<FormValues>;
-  watch: UseFormWatch<FormValues>;
+  methods: UseFormReturn<TaskInfoValues>;
 }
 
-const TaskDate: React.FC<TaskDateProps> = ({ register, watch }) => {
+const TaskDate: React.FC<TaskDateProps> = ({ methods }) => {
+  const { register, watch, setValue } = methods;
+
+  // 날짜 변환 함수 (ISO -> 년월일)
+  const formatDate = (date: string | undefined ) => {
+    if (!date) return "";
+    return new Date(date).toISOString().split("T")[0]; 
+  };
+
+  const startDate = formatDate(watch("startDate"));
+  const dueDate = formatDate(watch("dueDate"));
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>, field: "startDate" | "dueDate") => {
+    setValue(field, e.target.value);
+  };
+
   return (
-    <div className="h-10 justify-start items-start gap-12 inline-flex">
+    <div className="justify-start items-start gap-12 inline-flex">
       <div className="w-[59px] h-10 py-2 flex items-center">
         <div className="text-[#949bad] text-base font-medium leading-normal">
           일정
@@ -33,24 +34,11 @@ const TaskDate: React.FC<TaskDateProps> = ({ register, watch }) => {
         {/* 시작 날짜 */}
         <div className="w-[156px] h-10 px-3 py-2 bg-[#f3f5f8] rounded-lg shadow-[inset_0px_0px_4px_rgba(26,26,35,0.12)] flex justify-center items-center gap-1">
           <input
-            {...register("startYear")}
-            className="w-[44px] h-6 text-center bg-transparent text-[#4f5462] text-base font-semibold"
-            placeholder="YYYY"
-            maxLength={4}
-          />
-          <span className="w-[10px] h-6 text-[#949bad] text-base font-semibold">-</span>
-          <input
-            {...register("startMonth")}
-            className="w-[29px] h-6 text-center bg-transparent text-[#4f5462] text-base font-semibold"
-            placeholder="MM"
-            maxLength={2}
-          />
-          <span className="w-[10px] h-6 text-[#949bad] text-base font-semibold">-</span>
-          <input
-            {...register("startDay")}
-            className="w-[23px] h-6 text-center bg-transparent text-[#4f5462] text-base font-semibold"
-            placeholder="DD"
-            maxLength={2}
+              {...register("startDate")}
+              type="date"
+              value={startDate}
+              onChange={(e) => handleDateChange(e, "startDate")}
+              className="w-full bg-transparent text-[#4f5462] text-base font-semibold text-center outline-none"
           />
         </div>
 
@@ -62,26 +50,13 @@ const TaskDate: React.FC<TaskDateProps> = ({ register, watch }) => {
         </div>
 
         {/* 종료 날짜 */}
-        <div className="w-[156px] h-10 px-3 py-2 bg-[#f3f5f8] rounded-lg shadow-[inset_0px_0px_4px_rgba(26,26,35,0.12)] flex justify-center items-center gap-1">
+        <div className="w-[156px] h-10 px-3 py-2 bg-[#f3f5f8] rounded-lg shadow-[inset_0px_0px_4px_rgba(26,26,35,0.12)] flex justify-center items-center">
           <input
-            {...register("endYear")}
-            className="w-[44px] h-6 text-center bg-transparent text-[#4f5462] text-base font-semibold"
-            placeholder="YYYY"
-            maxLength={4}
-          />
-          <span className="w-[10px] h-6 text-[#949bad] text-base font-semibold">-</span>
-          <input
-            {...register("endMonth")}
-            className="w-[29px] h-6 text-center bg-transparent text-[#4f5462] text-base font-semibold"
-            placeholder="MM"
-            maxLength={2}
-          />
-          <span className="w-[10px] h-6 text-[#949bad] text-base font-semibold">-</span>
-          <input
-            {...register("endDay")}
-            className="w-[23px] h-6 text-center bg-transparent text-[#4f5462] text-base font-semibold"
-            placeholder="DD"
-            maxLength={2}
+            {...register("dueDate")}
+            type="date"
+            value={dueDate}
+            onChange={(e) => handleDateChange(e, "dueDate")}
+            className="w-full bg-transparent text-[#4f5462] text-base font-semibold text-center outline-none"
           />
         </div>
       </div>

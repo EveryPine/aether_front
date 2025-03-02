@@ -1,37 +1,25 @@
-import { Controller, Control, UseFormSetValue, UseFormWatch } from "react-hook-form";
+import { UseFormReturn, Controller } from "react-hook-form";
 import { useState } from "react";
 import Down from "../../assets/Down.svg";
 import Up from "../../assets/Up.svg";
-
-type FormValues = {
-  status: string;
-  visibility: string;
-  priority: number;
-  startYear: string;
-  startMonth: string;
-  startDay: string;
-  endYear: string;
-  endMonth: string;
-  endDay: string;
-};
-
-interface TaskStatusProps {
-  control: Control<FormValues>;
-  setValue: UseFormSetValue<FormValues>;
-  watch: UseFormWatch<FormValues>;
-}
+import { TaskInfoValues } from "../../hooks/useTask";
 
 export const statusOptions = [
-  { label: "대기", value: "pending", bgColor: "bg-[#ffa75b]" },
-  { label: "진행", value: "progress", bgColor: "bg-[#5ca8ff]" },
-  { label: "완료", value: "done", bgColor: "bg-[#5ec98a]" },
+  { label: "대기", value: "To Do", bgColor: "bg-[#ffa75b]" },
+  { label: "진행", value: "In Progress", bgColor: "bg-[#5ca8ff]" },
+  { label: "완료", value: "Done", bgColor: "bg-[#5ec98a]" },
   { label: "이슈", value: "issue", bgColor: "bg-[#ff615b]" },
   { label: "홀드", value: "hold", bgColor: "bg-[#949bad]" },
 ];
 
-export default function TaskStatus({ control, watch }: TaskStatusProps) {
+interface TaskStatusProps {
+  methods: UseFormReturn<TaskInfoValues>;
+}
+
+const TaskStatus: React.FC<TaskStatusProps> = ({ methods }) => {
+  const { control, watch } = methods;
   const [isOpen, setIsOpen] = useState(false);
-  const selectedStatus = watch("status"); 
+  const selectedStatus = watch("status", "To Do"); 
 
   return (
     <div className="justify-start items-start gap-12 flex w-full">
@@ -63,7 +51,6 @@ export default function TaskStatus({ control, watch }: TaskStatusProps) {
       {/* status 필드 - 펼쳐진 상태 */}
       {isOpen && (
           <div className="bg-[#f3f5f8] rounded-md border border-[#e5eaf2]">
-            {/* 헤더 */}
             <div
               className="h-10 pl-3 pr-2 py-2 flex items-center justify-between cursor-pointer hover:bg-gray-200"
               onClick={() => setIsOpen(false)}
@@ -113,3 +100,5 @@ export default function TaskStatus({ control, watch }: TaskStatusProps) {
     </div>
   );
 }
+
+export default TaskStatus;

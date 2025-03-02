@@ -1,11 +1,9 @@
 import React from "react";
-import { Control, UseFormSetValue, UseFormWatch, UseFormRegister } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
+import { TaskInfoValues } from "../../hooks/useTask";
 
 interface TaskPriorityProps {
-  control: Control<any>;
-  setValue: UseFormSetValue<any>;
-  watch: UseFormWatch<any>;
-  register: UseFormRegister<any>;
+  methods: UseFormReturn<TaskInfoValues>;
 }
 
 const priorityLabels: { [key: number]: string } = {
@@ -15,12 +13,15 @@ const priorityLabels: { [key: number]: string } = {
   4: "긴급",
 };
 
-const TaskPriority: React.FC<TaskPriorityProps> = ({ setValue, watch, register }) => {
+const TaskPriority: React.FC<TaskPriorityProps> = ({ methods }) => {
+  const { setValue, watch, register } = methods;
   const priority = watch("priority");
 
   return (
-    <div className="h-10 justify-start items-center gap-12 inline-flex">
-      <div className="w-[59px] text-[#949bad] text-base leading-normal">우선순위</div>
+    <div className="justify-start items-center gap-12 inline-flex">
+      <div className="w-[59px] h-10 py-2 items-center">
+        <label className="text-[#949bad] text-base leading-normal">우선순위</label>
+      </div>
       <div className="justify-start items-center gap-4 flex">
         <div className="w-[220px] h-4 relative">
           {[1, 2, 3, 4].map((num) => (

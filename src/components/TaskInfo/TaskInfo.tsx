@@ -2,51 +2,40 @@ import React from 'react';
 import TaskStatus from './TaskStatus';
 import TaskPriority from './TaskPriority';
 import TaskVisibility from './TaskVisibility';
-import { useForm } from "react-hook-form";
 import TaskDate from './TaskDate';
-import TaskManager from './TaskManager';
+import TaskCreator from './TaskCreator';
+import TaskType from './TaskType';
+import TaskDescription from './TaskDescription';
+import { UseFormReturn } from "react-hook-form";
+import { TaskInfoValues } from "../../hooks/useTask";
 
-// 타입 정의
-type FormValues = {
-  status: string;
-  visibility: string;
-  priority: number;
-  startYear: string;
-  startMonth: string;
-  startDay: string;
-  endYear: string;
-  endMonth: string;
-  endDay: string;
-};
+interface TaskInfoProps {
+  userInfo: {
+    name: string;
+    rank: string;
+  };
+}
 
-const TaskInfo: React.FC = () => {
-  const { control, setValue, watch, register } = useForm<FormValues>({
-    defaultValues: {
-      status: "pending",
-      visibility: "public",
-      priority: 1,
-      startYear: "",
-      startMonth: "",
-      startDay: "",
-      endYear: "",
-      endMonth: "",
-      endDay: "",
-    },
-  });
+interface TaskInfoProps {
+  taskInfoValues: TaskInfoValues;
+  methods: UseFormReturn<TaskInfoValues>;
+}
 
+const TaskInfo: React.FC<TaskInfoProps> = ({ taskInfoValues, methods, userInfo }) => {
   return (
     <div>
       <h4 className="absolute h-[28px] left-[128px] top-[174px] text-[#4f5462] text-xl font-semibold leading-7">
         업무 정보
       </h4>
-
-      <form className="absolute w-[457px] h-[248px] left-[128px] top-[226px] flex-col justify-start items-start gap-3 inline-flex">
-        <TaskStatus control={control} setValue={setValue} watch={watch} />
-        <TaskVisibility control={control} setValue={setValue} watch={watch} />
-        <TaskDate register={register} watch={watch} />
-        <TaskPriority control={control} setValue={setValue} watch={watch} register={register} />
-        <TaskManager />
-      </form>
+      <div className="absolute w-[457px] left-[128px] top-[226px] flex-col justify-start items-start gap-3 inline-flex">
+        <TaskDescription methods={methods}/>
+        <TaskType methods={methods}/>
+        <TaskStatus methods={methods}/>
+        <TaskVisibility methods={methods}/>
+        <TaskDate methods={methods}/>
+        <TaskPriority methods={methods}/>
+        <TaskCreator creatorName={userInfo?.name} rank={userInfo?.rank}/>
+      </div>
     </div>
   );
 };

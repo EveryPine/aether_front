@@ -3,11 +3,14 @@ import Breadcrumb from "../components/BreadCrumb";
 import Navbar from "../components/Navbar";
 import TaskCard from "../components/KanbanBoard/TaskCard";
 import TaskMenu from "../components/KanbanBoard/TaskMenu";
-import TaskSetting from "./TaskSetting";
-import TaskMainContent from "../components/TaskInfo/TaskInfo";
-import TaskAdd from "./TaskAdd";
+import TaskSetting from "../components/TaskSetting";
+import TaskInfo from "../components/TaskInfo/TaskInfo";
+import TaskAdd from "../components/TaskAdd";
 import TaskTitle from "../components/TaskTitle";
 import TaskDivider from "../components/TaskDivider";
+import {useTask} from "../hooks/useTask"
+import { FormProvider } from "react-hook-form";
+
 interface TaskKanbanProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -17,6 +20,8 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
   const [selectedTask, setSelectedTask] = useState<string | null>(null);
   const [isTaskSettingOpen, setIsTaskSettingOpen] = useState(false);
   const [isTaskAddOpen, setIsTaskAddOpen] = useState(false);
+  
+  const methods = useTask(null, true);
 
   // 업무 카드 클릭 시 TaskSetting 열기
   const handleTaskClick = (taskId: string) => {
@@ -74,12 +79,14 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
           <div style={{ marginLeft: "23px", marginTop: "10px" }}>
             <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
           </div>
-          {/* "프로젝트 설정" 탭이 활성화되면 TaskMainContent 렌더링 */}
+          {/* "프로젝트 설정" 탭이 활성화되면 TaskInfo 렌더링 */}
           {activeTab === "프로젝트 설정" ? (
             <div>
-              <TaskTitle isEditable={false} title="ABCDE 프로젝트"/>
-              <TaskDivider />
-              <TaskMainContent />
+              <FormProvider {...methods}>
+                <TaskTitle isEditable={false} title="ABCDE 프로젝트"/>
+                <TaskDivider />
+                <TaskInfo />
+              </FormProvider>
             </div>
           ) : (
         activeTab === "업무" && (
