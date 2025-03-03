@@ -12,7 +12,7 @@ import useTask from "../hooks/useTask"
 
 const TaskSetting: React.FC = () => {
   const methods = useTask('67a8386d7bc30e8a03378129', false);
-  const { userInfo, formState: { isLoading }, watch } = methods;
+  const { userInfo, handleUpdateTask, formState: { isLoading }, watch } = methods;
 
   const [activeTab, setActiveTab] = useState('info')
   const [isAddingManager, setIsAddingManager] = useState(false); // 담당자 추가
@@ -40,7 +40,7 @@ const TaskSetting: React.FC = () => {
       case 'docu':
         return <TaskDocument />;
       case 'chat':
-        return <TaskComment />;
+        return <TaskComment taskId='67a8386d7bc30e8a03378129' userId={userInfo.id} />;
       case 'user':
         return <TaskManager setIsAddingManager={setIsAddingManager}/>;
       default:
@@ -58,7 +58,7 @@ const TaskSetting: React.FC = () => {
           <TaskDivider />
           {/* 업무 설정, 업무 관리자 탭인 경우 하나의 폼으로 처리 */}
           {['info', 'user'].includes(activeTab) ? (
-            <form>
+            <form onSubmit={handleUpdateTask}>
               <div>{renderContent()}</div>
               {!isAddingManager && ( // 담당자 추가 시 생성하기 버튼 비활성화
                 <button
