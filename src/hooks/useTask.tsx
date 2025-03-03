@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { createTask, fetchTaskInfo } from "../api/taskApi";
+import { createTask, fetchTaskInfo, updateTask } from "../api/taskApi";
 import { fetchUserInfo } from "../api/userApi";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,6 +47,7 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
     resolver: zodResolver(taskSchema),
   });
 
+  //기존 데이터를 가져오면 reset
   useEffect(() => {
     if (taskData?.data) {
       methods.reset({
@@ -88,7 +89,40 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
     }
   });
 
-  return { ...methods, handleCreateTask, userInfo, createTaskMutation };
+    // 수정 mutation
+    const updateTaskMutation = useMutation(
+      (updatedData: Partial<TaskInfoValues>) => updateTask(tid as string, updatedData),
+      {
+        onSuccess: (data) => {
+          console.log("업무 수정", data);
+          queryClient.invalidateQueries(["taskInfo", tid]); 
+        },
+        onError: (error) => {
+          console.error("업무 수정 에러:", error);
+        },
+      }
+    );
+  
+    // 업무 수정
+    const handleUpdateTask = methods.handleSubmit(async (formData) => {
+      try {
+        const updatedData = Object.fromEntries(
+          Object.entries(formData).filter(([key, value]) => {
+            const typedKey = key as keyof TaskInfoValues;
+            return value !== undefined && value !== taskData?.data?.[typedKey]; 
+          })
+        ) as Partial<TaskInfoValues>; // 변경된 값만 남김
+        
+        if (Object.keys(updatedData).length > 0) {
+          await updateTaskMutation.mutateAsync(updatedData);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
+    
+
+  return { ...methods, handleCreateTask, userInfo, createTaskMutation, handleUpdateTask};
 };
 
 export default useTask;
