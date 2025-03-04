@@ -11,7 +11,7 @@ import { FormProvider } from "react-hook-form"
 import useTask from "../hooks/useTask"
 
 const TaskSetting: React.FC = () => {
-  const methods = useTask('67a8386d7bc30e8a03378129', false);
+  const methods = useTask('679097237e21d4a55d11487c', false);
   const { userInfo, handleUpdateTask, formState: { isLoading }, watch } = methods;
 
   const [activeTab, setActiveTab] = useState('info')
@@ -40,7 +40,7 @@ const TaskSetting: React.FC = () => {
       case 'docu':
         return <TaskDocument />;
       case 'chat':
-        return <TaskComment taskId='67a8386d7bc30e8a03378129' userId={userInfo.id} />;
+        return <TaskComment taskId='679097237e21d4a55d11487c' userId='67b9cb0eb915f8644f7326f2' />;
       case 'user':
         return <TaskManager setIsAddingManager={setIsAddingManager}/>;
       default:
