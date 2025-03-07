@@ -23,7 +23,6 @@ const TaskDocument: React.FC = () => {
             onSearch={handleDocumentsearch}
       />
       <DocumentAdd />
-      <TaskDivider />
       <DocumentList />
     </div>
   );

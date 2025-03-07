@@ -27,7 +27,11 @@ export const fetchTaskInfo = async (tid: string) => {
 
 export const updateTask = async (tid: string, updatedData: Partial<TaskInfoValues>) => {
   try{
-    const response = await axiosInstance.patch(`/tasks/${tid}/info`, updatedData);
+    const response = await axiosInstance.patch(`/tasks/${tid}/info`, updatedData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);

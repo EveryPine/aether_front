@@ -12,7 +12,7 @@ const TaskDate: React.FC<TaskDateProps> = ({ methods }) => {
   // 날짜 변환 함수 (ISO -> 년월일)
   const formatDate = (date: string | undefined ) => {
     if (!date) return "";
-    return new Date(date).toISOString().split("T")[0]; 
+    return date.split("T")[0];
   };
 
   return (
