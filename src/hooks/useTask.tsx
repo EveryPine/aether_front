@@ -39,7 +39,7 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
       isDaily: false,
       status: "To Do",
       projectScope: "Public",
-      priority: 0,
+      priority: 1,
       startDate: "",
       dueDate: "",
       createdBy: "",
@@ -71,7 +71,11 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
 
   // 업무 생성 mutation
   const createTaskMutation = useMutation(
-    (newTask: TaskInfoValues) => createTask(newTask),
+    (newTask: TaskInfoValues) => {
+      // createdBy 필드 제거 후 요청
+      const { createdBy, ...filteredTask } = newTask;
+      return createTask(filteredTask);
+    },
     {
       onSuccess: (data) => {
         console.log("업무 생성:", data);
@@ -92,37 +96,55 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
     }
   });
 
-    // 수정 mutation
-    const updateTaskMutation = useMutation(
-      (updatedData: Partial<TaskInfoValues>) => updateTask(tid as string, updatedData),
-      {
-        onSuccess: (data) => {
-          console.log("업무 수정", data);
-          queryClient.invalidateQueries(["taskInfo", tid]); 
-        },
-        onError: (error) => {
-          console.error("업무 수정 에러:", error);
-        },
-      }
-    );
+  // 수정 mutation
+  const updateTaskMutation = useMutation(
+    (updatedData: Partial<TaskInfoValues>) => {
+      // createdBy 필드 제거 후 요청
+      const { createdBy, ...filteredUpdate } = updatedData;
+      return updateTask(tid as string, filteredUpdate);
+    },      {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries(["taskInfo", tid]); 
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    }
+  );
   
-    // 업무 수정
-    const handleUpdateTask = methods.handleSubmit(async (formData) => {
-      try {
-        const updatedData = Object.fromEntries(
-          Object.entries(formData).filter(([key, value]) => {
-            const typedKey = key as keyof TaskInfoValues;
-            return value !== undefined && value !== taskData?.data?.[typedKey]; 
-          })
-        ) as Partial<TaskInfoValues>; // 변경된 값만 남김
-        
-        if (Object.keys(updatedData).length > 0) {
-          await updateTaskMutation.mutateAsync(updatedData);
-        }
-      } catch (error) {
-        console.log(error);
+  // 업무 수정
+  const handleUpdateTask = methods.handleSubmit(async (formData) => {
+    try {
+      const updatedData = Object.fromEntries(
+        Object.entries(formData).filter(([key, value]) => {
+          const typedKey = key as keyof TaskInfoValues;
+          const prevValue = taskData?.data?.[typedKey];
+          
+          if (Array.isArray(value) && Array.isArray(prevValue)) {
+            return JSON.stringify(value) !== JSON.stringify(prevValue);
+          }
+
+        return value !== undefined && value !== prevValue;
+      })
+    ) as Partial<TaskInfoValues>;
+      
+    
+    if (updatedData.startDate) {
+      updatedData.startDate = updatedData.startDate.split("T")[0]; 
+    }
+    if (updatedData.dueDate) {
+      updatedData.dueDate = updatedData.dueDate.split("T")[0];
+    }
+    
+    delete updatedData.createdBy;
+
+    if (Object.keys(updatedData).length > 0) {
+        await updateTaskMutation.mutateAsync(updatedData);
       }
-    });
+    } catch (error) {
+      console.log(error);
+    }
+  });
     
 
   return { ...methods, handleCreateTask, userInfo, createTaskMutation, handleUpdateTask};

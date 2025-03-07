@@ -11,7 +11,7 @@ import { FormProvider } from "react-hook-form"
 import useTask from "../hooks/useTask"
 
 const TaskSetting: React.FC = () => {
-  const methods = useTask('679097237e21d4a55d11487c', false);
+  const methods = useTask('67c9ad738b0d60fe6acbbeb4', false);
   const { userInfo, handleUpdateTask, formState: { isLoading }, watch } = methods;
 
   const [activeTab, setActiveTab] = useState('info')
