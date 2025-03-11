@@ -38,10 +38,10 @@ const TaskSetting: React.FC = () => {
       case 'info':
         return <TaskInfo taskInfoValues={taskInfoValues} methods={methods} userInfo={userInfo}  />;
       case 'docu':
-        return <TaskDocument />;
+        return <TaskDocument tid='679097237e21d4a55d11487c'/>;
       case 'chat':
-        return <TaskComment taskId='679097237e21d4a55d11487c' userId='67b9cb0eb915f8644f7326f2' />;
-      case 'user':
+        return <TaskComment tid='679097237e21d4a55d11487c' userId='67b9cb0eb915f8644f7326f2' />;
+    case 'user':
         return <TaskManager setIsAddingManager={setIsAddingManager}/>;
       default:
         return <TaskInfo taskInfoValues={taskInfoValues} methods={methods} userInfo={userInfo}  />;

@@ -1,20 +1,31 @@
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import Search from '../Search';
 import useComment from "../../hooks/useComment";
 import Profile from '../../assets/Profile-small.svg'
 
 interface TaskCommentProps {
-  taskId: string;
+  tid: string;
   userId: string;
 }
 
-const TaskComment: React.FC<TaskCommentProps> = ({ taskId, userId }) => {
-  const { comments, isLoading, isError, createComment } = useComment(taskId);
+const TaskComment: React.FC<TaskCommentProps> = ({ tid, userId }) => {
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [debouncedKeyword, setDebouncedKeyword] = useState("");
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedKeyword(searchKeyword);
+    }, 1000);
+    return () => clearTimeout(timeoutId);
+  }, [searchKeyword]);
+
+  const { comments, isLoading, isError, createComment } = useComment(tid, debouncedKeyword);
   const [content, setContent] = useState("");
+
 
   //코멘트 검색
   const handleCommentSearch = (term: string) => {
-    console.log(term);
+    setSearchKeyword(term);
   };
 
   // 코멘트 입력 처리
@@ -30,7 +41,7 @@ const TaskComment: React.FC<TaskCommentProps> = ({ taskId, userId }) => {
         }
       );
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -46,7 +57,7 @@ const TaskComment: React.FC<TaskCommentProps> = ({ taskId, userId }) => {
         onSearch={handleCommentSearch}
       />
       
-      {/* 코멘트 리스트 */}
+      {/* 전체 코멘트 리스트 또는 검색 결과*/}
       {!isLoading && !isError && comments && (
         <div className="absolute w-[464px] h-auto overflow-y-auto max-h-[500px] left-[128px] top-[230px] flex flex-col gap-5">
           {comments.map((comment) => (
