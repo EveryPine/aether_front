@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 중...</title>
+    <script>
+        window.onload = function() {
+            try {
+                const responseText = document.body.innerText; // 현재 페이지의 JSON 데이터 가져오기
+                const data = JSON.parse(responseText); // JSON 파싱
+
+                if (data.code === 200 && data.result) {
+                    const { accessToken, email, username } = data.result;
+
+                    if (accessToken && email && username) {
+                        console.log("✅ 로그인 성공! 로컬 스토리지 저장 후 /sign-up으로 이동");
+
+                        localStorage.setItem("accessToken", accessToken);
+                        localStorage.setItem("email", email);
+                        localStorage.setItem("username", username);
+
+                        // 즉시 /sign-up으로 이동
+                        window.location.href = "/sign-up";
+                    } else {
+                        console.error("⚠️ 필수 데이터 없음. 로그인 실패", data);
+                        window.location.href = "/login";
+                    }
+                } else {
+                    console.error("⚠️ 로그인 응답 오류:", data.message);
+                    window.location.href = "/login";
+                }
+            } catch (error) {
+                console.error("❌ 인증 데이터 가져오기 실패:", error);
+                window.location.href = "/login";
+            }
+        };
+    </script>
+</head>
+<body>
+    로그인 중입니다. 잠시만 기다려주세요...
+</body>
+</html>

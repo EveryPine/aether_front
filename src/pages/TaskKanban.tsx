@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Breadcrumb from "../components/BreadCrumb";
 import Navbar from "../components/Navbar";
 import TaskCard from "../components/KanbanBoard/TaskCard";
@@ -8,8 +8,9 @@ import TaskInfo from "../components/TaskInfo/TaskInfo";
 import TaskAdd from "../components/TaskAdd";
 import TaskTitle from "../components/TaskTitle";
 import TaskDivider from "../components/TaskDivider";
-import {useTask} from "../hooks/useTask"
+import { useTask } from "../hooks/useTask";
 import { FormProvider } from "react-hook-form";
+import axiosInstance from "../api/lib/axios";
 
 interface TaskKanbanProps {
   activeTab: string;
@@ -20,8 +21,38 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
   const [selectedTask, setSelectedTask] = useState<string | null>(null);
   const [isTaskSettingOpen, setIsTaskSettingOpen] = useState(false);
   const [isTaskAddOpen, setIsTaskAddOpen] = useState(false);
-  
+  const [tasks, setTasks] = useState<{ [key: string]: any[] }>({
+    "To Do": [],
+    "In Progress": [],
+    "Done": [],
+    "Issue": [],
+  });
+
+  const projectId = "679aedec4f051a6eaac0204c"; // 현재 프로젝트 ID (하드코딩)
+
   const methods = useTask(null, true);
+
+  // 업무 데이터 가져오기
+  const fetchTasks = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/tasks/${projectId}`);
+      if (response.data.success) {
+        setTasks({
+          "To Do": response.data.data["To Do"] || [],
+          "In Progress": response.data.data["In Progress"] || [],
+          "Done": response.data.data["Done"] || [],
+          "Issue": response.data.data["Issue"] || [],
+          "Hold": response.data.data["Hold"] || [], 
+        });
+      }
+    } catch (error) {
+      console.error("업무 조회 실패", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   // 업무 카드 클릭 시 TaskSetting 열기
   const handleTaskClick = (taskId: string) => {
@@ -37,15 +68,10 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
 
   // 업무 생성 클릭 시 TaskAdd 열기
   const handleTaskAddClick = () => {
-    if (isTaskAddOpen) {
-      setIsTaskAddOpen(false); // 업무 생성 버튼 다시 클릭 시 닫기 
-    } else {
-      setIsTaskAddOpen(true); 
-      setIsTaskSettingOpen(false); // 업무 생성 클릭 시 업무 설정 닫기
-      setSelectedTask(null);
-    }
-    
-  }
+    setIsTaskAddOpen(!isTaskAddOpen);
+    setIsTaskSettingOpen(false);
+    setSelectedTask(null);
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -70,75 +96,60 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
         <div
           className="flex flex-col min-w-[320px]"
           style={{
-            width: isTaskSettingOpen || isTaskAddOpen 
-              ? "calc(100% - 640px)" 
-              : "100%",
+            width: isTaskSettingOpen || isTaskAddOpen ? "calc(100% - 640px)" : "100%",
             transition: "width 0.3s ease",
           }}
         >
           <div style={{ marginLeft: "23px", marginTop: "10px" }}>
             <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
           </div>
+
           {/* "프로젝트 설정" 탭이 활성화되면 TaskInfo 렌더링 */}
           {activeTab === "프로젝트 설정" ? (
             <div>
               <FormProvider {...methods}>
-                <TaskTitle isEditable={false} title="ABCDE 프로젝트"/>
+                <TaskTitle isEditable={false} title="ABCDE 프로젝트" />
                 <TaskDivider />
-                <TaskInfo />
+                <TaskInfo/>
               </FormProvider>
             </div>
           ) : (
-        activeTab === "업무" && (
-            <>
-              <div>
-                {/* TaskMenu에서 setIsTaskSettingOpen을 전달 */}
-                <TaskMenu isTaskAddOpen={isTaskAddOpen} setIsTaskAddOpen={handleTaskAddClick} />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "32px",
-                  padding: "40px",
-                  overflowX: "auto",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                <TaskCard
-                  title="대기"
-                  bodyText="박대리 인수인계 리스트업"
-                  borderColor="#FFA85C"
-                  onClick={() => handleTaskClick("1")}
-                  isSelected={selectedTask === "1"}
-                />
-                <TaskCard
-                  title="진행"
-                  bodyText="현대건설 외주"
-                  borderColor="#5CA8FF"
-                  onClick={() => handleTaskClick("2")}
-                  isSelected={selectedTask === "2"}
-                />
-                <TaskCard
-                  title="완료"
-                  bodyText="업무 브리핑"
-                  borderColor="#5EC98B"
-                  onClick={() => handleTaskClick("3")}
-                  isSelected={selectedTask === "3"}
-                />
-                <TaskCard
-                  title="이슈"
-                  bodyText="신규 사원 모집"
-                  borderColor="#FF615C"
-                  onClick={() => handleTaskClick("4")}
-                  isSelected={selectedTask === "4"}
-                />
-              </div>
-            </>
-           )
+            activeTab === "업무" && (
+              <>
+                <div>
+                  <TaskMenu isTaskAddOpen={isTaskAddOpen} setIsTaskAddOpen={handleTaskAddClick} />
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "32px",
+                    padding: "40px",
+                    overflowX: "auto",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {Object.entries(tasks).map(([status, taskList]) => (
+                    <div key={status} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                      {taskList.map((task) => (
+                        <TaskCard
+                          key={task._id}
+                          title={task.title}
+                          description={task.description}
+                          status={task.status}
+                          onClick={() => handleTaskClick(task._id)}
+                          isSelected={selectedTask === task._id}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </>
+            )
           )}
         </div>
 
-        {/* 업무 설정 탭 (회색 컨테이너 내에서만 표시) */}
+        {/* 업무 설정 / 업무 생성 탭 */}
         {(isTaskSettingOpen || isTaskAddOpen) && (
           <div
             className="min-w-[320px] h-full"
@@ -149,10 +160,9 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
               zIndex: 10,
             }}
           >
-            {isTaskSettingOpen ? <TaskSetting /> : <TaskAdd />}
+            {isTaskSettingOpen ? <TaskSetting /> : <TaskAdd fetchTasks={fetchTasks}/>}
           </div>
         )}
-
       </div>
     </div>
   );

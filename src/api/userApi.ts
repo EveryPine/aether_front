@@ -1,10 +1,10 @@
 export const fetchUserInfo = async () => {
     // 생성자에 사용하는 더미 데이터
     return {
-      id: "65a3c9f7b1d4e8a7c9f5d2b3", 
-      email: "ABC123@test.com",
-      name: "최기수",
+      id: "67c1ba6f9aac326b49424b1d", 
+      email: "diana021015@gmail.com",
+      name: "배수연",
       role: "Member", 
-      rank: "팀장",
+      rank: "Intern",
     };
   };

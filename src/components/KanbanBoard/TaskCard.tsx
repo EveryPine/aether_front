@@ -2,20 +2,38 @@ import React, { useState } from "react";
 
 interface TaskCardProps {
   title: string;
-  bodyText: string;
-  borderColor: string;
-  onClick: () => void; // 클릭 핸들러 추가
-  isSelected: boolean; // 선택 여부
+  description: string;
+  status: string;
+  onClick: () => void;
+  isSelected: boolean;
 }
+
+const getBorderColor = (status: string) => {
+  switch (status) {
+    case "To Do":
+      return "#FFA85C";
+    case "In Progress":
+      return "#5CA8FF";
+    case "Done":
+      return "#5EC98B";
+    case "Issue":
+      return "#FF615C";
+    case "Hold":
+      return "#949BAD";
+    default:
+      return "#E5EAF2";
+  }
+};
 
 const TaskCard: React.FC<TaskCardProps> = ({
   title,
-  bodyText,
-  borderColor,
+  description,
+  status,
   onClick,
   isSelected,
 }) => {
   const [sortOption, setSortOption] = useState("마감일순");
+  const borderColor = getBorderColor(status);
 
   return (
     <div
@@ -73,16 +91,16 @@ const TaskCard: React.FC<TaskCardProps> = ({
           gap: "8px",
           alignSelf: "stretch",
           borderRadius: "4px",
-          border: `1px solid ${isSelected ? borderColor : "#E5EAF2"}`, // 선택 시 border 변경
+          border: `1px solid ${isSelected ? borderColor : "#E5EAF2"}`,
           background: "#F3F5F8",
           cursor: "pointer",
         }}
       >
         <p style={{ margin: 0, fontSize: "20px", fontWeight: "normal", color: "#4F5462" }}>
-          {bodyText}
+          {title}
         </p>
         <p style={{ margin: "4px 0 0 0", fontSize: "12px", color: "#4F5462" }}>
-          세부사항은 눌러서 확인해주세요.
+          {description}
         </p>
       </div>
     </div>

@@ -6,6 +6,8 @@ import { fetchUserInfo } from "../api/userApi";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+const projectId = "679aedec4f051a6eaac0204c"; // 현재 프로젝트 ID (하드코딩)
+
 const taskSchema = z.object({
   title: z.string().min(1, "업무 제목을 입력해주세요."),
   description: z.string().min(1, "업무 설명을 입력해주세요."),
@@ -58,12 +60,13 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
         priority: taskData.data.priority || 0,
         startDate: taskData.data.startDate ? new Date(taskData.data.startDate).toISOString().split("T")[0] : "",
         dueDate: taskData.data.dueDate ? new Date(taskData.data.dueDate).toISOString().split("T")[0] : "",
-        createdBy: taskData.data.createdBy || "",
-        project: taskData.data.project || "",
+        createdBy: taskData.data.createdBy || (userInfo ? `${userInfo.name} (${userInfo.rank})` : ""),  // ✅ 유저 정보 반영
+        project: taskData.data.project || projectId,  // ✅ 프로젝트 ID 반영
         assignedTo: taskData.data.assignedTo || [],
       });
     }
-  }, [taskData, methods])
+  }, [taskData, userInfo, projectId, methods]);  // ✅ userInfo, projectId 의존성 추가
+
 
   // 업무 생성 mutation
   const createTaskMutation = useMutation(
