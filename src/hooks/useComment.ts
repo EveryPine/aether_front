@@ -4,7 +4,7 @@ import { fetchComments, postComment, searchComments } from "../api/commentApi";
 const useComment = (tid: string, searchKeyword?: string) => {
   const queryClient = useQueryClient();
   
-  // 코멘트 조회
+  // 코멘트 조회 및 검색
   const { data: comments = [], isLoading, isError } = useQuery(
     ["comments", tid, searchKeyword], 
     () => searchKeyword ? searchComments(tid, searchKeyword) : fetchComments(tid),

@@ -25,13 +25,10 @@ export const fetchTaskInfo = async (tid: string) => {
   }
 };
 
+// 업무 상세정보 수정
 export const updateTask = async (tid: string, updatedData: Partial<TaskInfoValues>) => {
   try{
-    const response = await axiosInstance.patch(`/tasks/${tid}/info`, updatedData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axiosInstance.patch(`/tasks/${tid}/info`, updatedData);
     return response.data;
   } catch (error) {
     console.log(error);
