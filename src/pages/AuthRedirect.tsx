@@ -1,47 +1,40 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../api/lib/axios"; // axios 인스턴스 사용
 
-// 수정
+// 쿠키에서 특정 값을 가져오는 함수
+const getCookie = (name: string): string | null => {
+  const matches = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
+  return matches ? decodeURIComponent(matches[2]) : null;
+};
+
 const AuthRedirect: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("✅ AuthRedirect.tsx 실행됨"); // 실행 여부 확인
+    console.log("✅ AuthRedirect.tsx 실행됨");
+    
+    // 쿠키에서 필요한 값 가져오기
+    const accessToken = getCookie("accessToken");
+    const userId = getCookie("id");
+    const username = getCookie("username");
+    const email = getCookie("email");
 
-    const fetchAuthData = async () => {
-      try {
-        console.log("🔄 /auth/success 데이터 요청 시작");
+    console.log("🔍 쿠키에서 읽은 데이터:", { accessToken, userId, username, email });
 
-        const response = await axios.get("https://aether.asia/auth/success", { withCredentials: true });
+    if (accessToken && userId && username && email) {
+      console.log("✅ 로그인 성공! 로컬 스토리지 저장 후 SignUp 페이지로 이동");
 
-        console.log("📥 응답 수신:", response);
+      // 로컬 스토리지에 저장
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("username", username);
+      localStorage.setItem("email", email);
 
-        if (response.status === 200) {
-          const { accessToken, email, username } = response.data.result;
-
-          if (accessToken && email && username) {
-            console.log("✅ 로그인 성공! 로컬 스토리지 저장 후 /sign-up으로 이동");
-
-            // 액세스 토큰과 유저 정보 저장
-            localStorage.setItem("accessToken", accessToken);
-            localStorage.setItem("email", email);
-            localStorage.setItem("username", username);
-
-            // 즉시 /sign-up으로 이동
-            window.location.href = "/sign-up";
-          } else {
-            console.error("⚠️ 필수 데이터 없음. 로그인 실패", response.data);
-            window.location.href = "/login"; // 실패 시 로그인 페이지로 이동
-          }
-        }
-      } catch (error) {
-        console.error("❌ 인증 데이터 가져오기 실패:", error);
-        window.location.href = "/login";
-      }
-    };
-
-    fetchAuthData();
+      navigate("/user-info"); // ✅ 사용자 추가 정보 입력 페이지로 이동
+    } else {
+      console.error("❌ 로그인 정보가 없습니다. 다시 로그인 필요.");
+      navigate("/login");
+    }
   }, [navigate]);
 
   return <div>로그인 중입니다. 잠시만 기다려주세요...</div>;

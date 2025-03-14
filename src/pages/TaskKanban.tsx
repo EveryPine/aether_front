@@ -96,7 +96,7 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
         <div
           className="flex flex-col min-w-[320px]"
           style={{
-            width: isTaskSettingOpen || isTaskAddOpen ? "calc(100% - 640px)" : "100%",
+            width: isTaskSettingOpen || isTaskAddOpen ? "calc(100% - 340px)" : "100%",
             transition: "width 0.3s ease",
           }}
         >
