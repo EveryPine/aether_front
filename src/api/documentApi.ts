@@ -34,21 +34,12 @@ export const documentApi = {
     const formData = new FormData();
     formData.append("file", file);
 
-    formData.forEach((value, key) => console.log("폼 데이터 확인:", key, value));
-
     try{
       const response = await axiosInstance.post(`/tasks/${tid}/docs`, formData);
     
       return response.data;
     } catch (error) {
-      const axiosError = error as AxiosError; 
-
-      if (axiosError.response) {
-        console.error("서버 응답 상태 코드:", axiosError.response.status);
-        console.error("서버 응답 데이터:", axiosError.response.data); 
-      } else {
-        console.error("네트워크 오류:", axiosError.message);
-      }
+      console.log(error);
     }
   },
 
@@ -58,7 +49,6 @@ export const documentApi = {
       const response = await axiosInstance.get(`/docs/downloads/${did}`, {
         responseType: "blob",
       });
-      console.log("문서 다운로드 헤더:", response.headers);
 
       const blob = new Blob([response.data])
       const fileUrl = window.URL.createObjectURL(blob);
@@ -68,7 +58,6 @@ export const documentApi = {
       link.style.display = 'none';
 
       const contentDisposition = response.headers["content-disposition"];
-      console.log("Content-Disposition:", contentDisposition);
       let filename = "unknown";
 
       if (contentDisposition) {
