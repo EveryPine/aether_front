@@ -1,11 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchComments, postComment, searchComments } from "../api/commentApi";
+import { Comment } from "../api/commentApi";
 
 const useComment = (tid: string, searchKeyword?: string) => {
   const queryClient = useQueryClient();
   
   // 코멘트 조회 및 검색
-  const { data: comments = [], isLoading, isError } = useQuery(
+  const { data: comments = [], isLoading, isError } = useQuery<Comment[]>(
     ["comments", tid, searchKeyword], 
     () => searchKeyword ? searchComments(tid, searchKeyword) : fetchComments(tid),
     {

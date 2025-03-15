@@ -123,6 +123,7 @@ const TaskManager: React.FC<{ setIsAddingManager: (isAdding: boolean) => void }>
                 setIsAdding(false);
                 setIsAddingManager(false);
                 setSearch("");
+                setSelectedUser(null);
               }}>
               취소
             </button>

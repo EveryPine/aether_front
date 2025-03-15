@@ -1,10 +1,11 @@
 import { axiosInstance } from "../api/lib/axios";
 
-interface Comment {
+export interface Comment {
   _id: string;
   tid: string;
   commenterId: string;
   content: string;
+  replies?: Comment[];
 }
 
 // 코멘트 조회
