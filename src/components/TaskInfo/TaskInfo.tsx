@@ -14,9 +14,6 @@ interface TaskInfoProps {
     name: string;
     rank: string;
   };
-}
-
-interface TaskInfoProps {
   taskInfoValues: TaskInfoValues;
   methods: UseFormReturn<TaskInfoValues>;
 }

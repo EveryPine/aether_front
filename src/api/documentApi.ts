@@ -6,7 +6,7 @@ export const documentApi = {
   // 문서 조회
   fetchDocuments: async (tid: string) => {
     try{
-      const response = await axiosInstance.get(`/tasks/${tid}/docs`);
+      const response = await axiosInstance.get(`/api/tasks/${tid}/docs`);
       return response.data.data ?? [];
     } catch(error) {
       console.log(error);
@@ -16,7 +16,7 @@ export const documentApi = {
   // 문서 검색
   searchDocument: async (tid: string, keyword: string): Promise<Comment[]> => {
     try {
-      const response = await axiosInstance.get(`/tasks/${tid}/docs/search`, {
+      const response = await axiosInstance.get(`/api/tasks/${tid}/docs/search`, {
         params: { keyword }
       });
       return response.data?.data ?? [];
@@ -35,7 +35,7 @@ export const documentApi = {
     formData.append("file", file);
 
     try{
-      const response = await axiosInstance.post(`/tasks/${tid}/docs`, formData);
+      const response = await axiosInstance.post(`/api/tasks/${tid}/docs`, formData);
     
       return response.data;
     } catch (error) {
@@ -46,7 +46,7 @@ export const documentApi = {
   // 문서 다운로드 
   downloadDocument: async (did: string) => {
     try{
-      const response = await axiosInstance.get(`/docs/downloads/${did}`, {
+      const response = await axiosInstance.get(`/api/docs/downloads/${did}`, {
         responseType: "blob",
       });
 
