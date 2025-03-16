@@ -10,8 +10,8 @@ import TaskManager from '../components/TaskManager/TaskManager';
 import { FormProvider } from "react-hook-form"
 import useTask from "../hooks/useTask"
 
-const TaskSetting: React.FC = () => {
-  const methods = useTask('67c9ad738b0d60fe6acbbeb4', false);
+const TaskSetting: React.FC<{ selectedTaskId: string | null }> = ({ selectedTaskId }) => {
+  const methods = useTask(selectedTaskId, false);
   const { userInfo, handleUpdateTask, formState: { isLoading }, watch } = methods;
 
   const [activeTab, setActiveTab] = useState('info')
@@ -38,9 +38,9 @@ const TaskSetting: React.FC = () => {
       case 'info':
         return <TaskInfo taskInfoValues={taskInfoValues} methods={methods} userInfo={userInfo}  />;
       case 'docu':
-        return <TaskDocument tid='679097237e21d4a55d11487c'/>;
+        return <TaskDocument tid={selectedTaskId!}/>;
       case 'chat':
-        return <TaskComment tid='679097237e21d4a55d11487c' userId='67b9cb0eb915f8644f7326f2' />;
+        return <TaskComment tid={selectedTaskId!} userId='67b9cb0eb915f8644f7326f2' />;
     case 'user':
         return <TaskManager setIsAddingManager={setIsAddingManager}/>;
       default:

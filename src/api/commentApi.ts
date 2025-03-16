@@ -11,7 +11,7 @@ export interface Comment {
 // 코멘트 조회
 export const fetchComments = async (tid: string): Promise<Comment[]> => {
   try{
-    const response = await axiosInstance.get(`/tasks/${tid}/comments`);
+    const response = await axiosInstance.get(`/api/tasks/${tid}/comments`);
     return response.data?.data ?? [];
   } catch (error) {
     console.error(error);
@@ -22,7 +22,7 @@ export const fetchComments = async (tid: string): Promise<Comment[]> => {
 // 코멘트 검색
 export const searchComments = async (tid: string, keyword: string): Promise<Comment[]> => {
   try {
-    const response = await axiosInstance.get(`/tasks/${tid}/comments/search`, {
+    const response = await axiosInstance.get(`/api/tasks/${tid}/comments/search`, {
       params: { keyword }
     });
     return response.data?.data ?? [];
@@ -35,7 +35,7 @@ export const searchComments = async (tid: string, keyword: string): Promise<Comm
 // 코멘트 추가
 export const postComment = async (tid: string, commentData: { content: string }) => {
   try{
-    const response = await axiosInstance.post(`/tasks/${tid}/comments`, commentData);
+    const response = await axiosInstance.post(`/api/tasks/${tid}/comments`, commentData);
     return response.data?.comments ?? [];
   } catch (error){
     console.error(error);

@@ -160,7 +160,7 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
               zIndex: 10,
             }}
           >
-            {isTaskSettingOpen ? <TaskSetting /> : <TaskAdd fetchTasks={fetchTasks}/>}
+            {isTaskSettingOpen ? <TaskSetting selectedTaskId={selectedTask} /> : <TaskAdd fetchTasks={fetchTasks}/>}
           </div>
         )}
       </div>
