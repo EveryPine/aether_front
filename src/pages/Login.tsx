@@ -30,7 +30,7 @@
 
 const Login = () => {
   const handleLogin = () => {
-    window.location.href = "https://aether.asia/api/oauth2/authorization/google";
+    window.location.href = "https://aether.asia/oauth2/authorization/google";
   };
 
   return (

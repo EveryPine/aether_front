@@ -16,9 +16,9 @@ const App: React.FC = () => {
     <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
-          {/* <Route path="/login" element={<Login />} /> */}
-          {/* <Route path="/sign-up" element={<SignUp />} /> */}
-          {/* <Route path="/auth/success" element={<AuthRedirect />} /> */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/user-info" element={<SignUp />} />
+          <Route path="/sign-up" element={<AuthRedirect />} />
           <Route
             path="/tasks"
             element={

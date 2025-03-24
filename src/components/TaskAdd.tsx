@@ -7,7 +7,7 @@ import TaskDivider from './TaskDivider';
 import TaskManager from './TaskManager/TaskManager';
 import { FormProvider } from "react-hook-form";
 import useTask from "../hooks/useTask";
-import {axiosInstance} from "../api/lib/axios";
+import axiosInstance from "../api/lib/axios";
 
 const TaskAdd: React.FC<{ fetchTasks: () => void }> = ({ fetchTasks }) => {
   const methods = useTask(null, true);
