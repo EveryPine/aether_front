@@ -118,8 +118,14 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
       const updatedData = Object.fromEntries(
         Object.entries(formData).filter(([key, value]) => {
           const typedKey = key as keyof TaskInfoValues;
-          const prevValue = taskData?.data?.[typedKey];
+          let prevValue = taskData?.data?.[typedKey];
           
+          // 날짜 포맷 변환
+          if ((typedKey === "startDate" || typedKey === "dueDate") && typeof prevValue === "string") {
+            prevValue = prevValue.split("T")[0];
+          }
+
+          // 담당자 문자열 비교
           if (Array.isArray(value) && Array.isArray(prevValue)) {
             return JSON.stringify(value) !== JSON.stringify(prevValue);
           }
@@ -140,6 +146,7 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
 
     if (Object.keys(updatedData).length > 0) {
         await updateTaskMutation.mutateAsync(updatedData);
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
