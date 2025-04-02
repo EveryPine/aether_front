@@ -21,6 +21,7 @@ const TaskAdd: React.FC<{ fetchTasks: () => void }> = ({ fetchTasks }) => {
     console.log("📌 전송 데이터:", data);
   
     // ✅ 필수 필드 검증 (누락된 값이 있으면 요청 차단)
+    // 업무 생성 api 연동 
     if (!data.title || !data.description || !data.status || !data.project || !data.createdBy) {
       console.error("❌ 필수 필드 누락! 업무를 생성할 수 없습니다.");
       return;
@@ -36,7 +37,7 @@ const TaskAdd: React.FC<{ fetchTasks: () => void }> = ({ fetchTasks }) => {
         description: data.description,
         status: data.status || "To Do",
         priority: data.priority ?? 3, // 기본값 3
-        project: data.project,
+        project: data.project ?? "679aedec4f051a6eaac0204c", //기본 project id 값
         assignedTo: Array.isArray(data.assignedTo) ? data.assignedTo : [], // ✅ 리스트 검증
         createdBy: data.createdBy,
         isDaily: data.isDaily ?? false, // ✅ 기본값 false
