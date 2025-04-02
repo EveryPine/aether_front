@@ -59,8 +59,8 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
         status: taskData.data.status || "To Do",
         projectScope: taskData.data.projectScope || "Public",
         priority: taskData.data.priority || 0,
-        startDate: taskData.data.startDate ? new Date(taskData.data.startDate).toISOString().split("T")[0] : "",
-        dueDate: taskData.data.dueDate ? new Date(taskData.data.dueDate).toISOString().split("T")[0] : "",
+        startDate: taskData.data.startDate || "",
+        dueDate: taskData.data.dueDate || "",
         createdBy: taskData.data.createdBy || (userInfo ? `${userInfo.name} (${userInfo.rank})` : ""),  // ✅ 유저 정보 반영
         project: taskData.data.project || projectId,  // ✅ 프로젝트 ID 반영
         assignedTo: taskData.data.assignedTo || [],

@@ -9,6 +9,7 @@ import TaskDocument from '../components/TaskDocument/TaskDocument';
 import TaskManager from '../components/TaskManager/TaskManager';
 import { FormProvider } from "react-hook-form"
 import useTask from "../hooks/useTask"
+import AddDocument from '../components/TaskDocument/AddDocument'
 
 const TaskSetting: React.FC<{ selectedTaskId: string | null }> = ({ selectedTaskId }) => {
   const methods = useTask(selectedTaskId, false);
@@ -47,6 +48,11 @@ const TaskSetting: React.FC<{ selectedTaskId: string | null }> = ({ selectedTask
         return <TaskInfo taskInfoValues={taskInfoValues} methods={methods} userInfo={userInfo}  />;
     }
   };
+  
+  // 새로운 업무를 선택하면 activeTab을 'info'로 초기화
+  useEffect(() => {
+    setActiveTab('info');
+  }, [selectedTaskId]);
 
   return (
     <FormProvider {...methods}>  
@@ -63,9 +69,9 @@ const TaskSetting: React.FC<{ selectedTaskId: string | null }> = ({ selectedTask
               {!isAddingManager && ( // 담당자 추가 시 생성하기 버튼 비활성화
                 <button
                   type="submit"
-                  className="absolute top-[705px] left-[506px] h-8 px-4 py-1 bg-[#ff432b] rounded justify-center items-center gap-1 inline-flex"
+                  className="absolute top-[705px] left-[506px] w-[86px] h-8 px-4 py-1 bg-[#ff432b] rounded justify-center items-center gap-1 inline-flex"
                 >
-                  <div className="w-14 text-[#fcfcff] text-base font-semibold leading-normal">수정하기</div>
+                  <div className="w-14 text-[#fcfcff] text-sm font-semibold leading-normal">수정하기</div>
                 </button>
               )}
             </form>
