@@ -8,8 +8,8 @@ export const statusOptions = [
   { label: "대기", value: "To Do", bgColor: "bg-[#ffa75b]" },
   { label: "진행", value: "In Progress", bgColor: "bg-[#5ca8ff]" },
   { label: "완료", value: "Done", bgColor: "bg-[#5ec98a]" },
-  { label: "이슈", value: "issue", bgColor: "bg-[#ff615b]" },
-  { label: "홀드", value: "hold", bgColor: "bg-[#949bad]" },
+  { label: "이슈", value: "Issue", bgColor: "bg-[#ff615b]" },
+  { label: "홀드", value: "Hold", bgColor: "bg-[#949bad]" },
 ];
 
 interface TaskStatusProps {

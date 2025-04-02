@@ -32,7 +32,7 @@ export const documentApi = {
       console.log("파일 없음");
     }
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", file); 
 
     try{
       const response = await axiosInstance.post(`/api/tasks/${tid}/docs`, formData);

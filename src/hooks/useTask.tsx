@@ -59,8 +59,8 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
         status: taskData.data.status || "To Do",
         projectScope: taskData.data.projectScope || "Public",
         priority: taskData.data.priority || 0,
-        startDate: taskData.data.startDate ? new Date(taskData.data.startDate).toISOString().split("T")[0] : "",
-        dueDate: taskData.data.dueDate ? new Date(taskData.data.dueDate).toISOString().split("T")[0] : "",
+        startDate: taskData.data.startDate || "",
+        dueDate: taskData.data.dueDate || "",
         createdBy: taskData.data.createdBy || (userInfo ? `${userInfo.name} (${userInfo.rank})` : ""),  // ✅ 유저 정보 반영
         project: taskData.data.project || projectId,  // ✅ 프로젝트 ID 반영
         assignedTo: taskData.data.assignedTo || [],
@@ -118,8 +118,14 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
       const updatedData = Object.fromEntries(
         Object.entries(formData).filter(([key, value]) => {
           const typedKey = key as keyof TaskInfoValues;
-          const prevValue = taskData?.data?.[typedKey];
+          let prevValue = taskData?.data?.[typedKey];
           
+          // 날짜 포맷 변환
+          if ((typedKey === "startDate" || typedKey === "dueDate") && typeof prevValue === "string") {
+            prevValue = prevValue.split("T")[0];
+          }
+
+          // 담당자 문자열 비교
           if (Array.isArray(value) && Array.isArray(prevValue)) {
             return JSON.stringify(value) !== JSON.stringify(prevValue);
           }
@@ -140,6 +146,7 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
 
     if (Object.keys(updatedData).length > 0) {
         await updateTaskMutation.mutateAsync(updatedData);
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
