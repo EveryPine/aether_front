@@ -6,7 +6,7 @@ import TaskKanban from "./pages/TaskKanban";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import AuthRedirect from "./pages/AuthRedirect";
-
+import Dashboard from "./pages/Dashboard";
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
@@ -19,6 +19,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/user-info" element={<SignUp />} />
           <Route path="/sign-up" element={<AuthRedirect />} />
+          <Route path="/dashboard" element={<Dashboard/>} />
           <Route
             path="/tasks"
             element={
