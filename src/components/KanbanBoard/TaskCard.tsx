@@ -6,6 +6,7 @@ interface TaskCardProps {
   status: string;
   onClick: () => void;
   isSelected: boolean;
+  className?: string;
 }
 
 const getBorderColor = (status: string) => {
@@ -31,13 +32,14 @@ const TaskCard: React.FC<TaskCardProps> = ({
   status,
   onClick,
   isSelected,
+  className
 }) => {
   const [sortOption, setSortOption] = useState("마감일순");
   const borderColor = getBorderColor(status);
 
   return (
     <div
-      className="flex flex-col min-w-[362px] max-w-[402px] p-5 rounded-md shadow-md gap-3 bg-[#FCFCFF]"
+      className={`flex flex-col min-w-[362px] max-w-[402px] p-5 rounded-md shadow-md gap-3 bg-[#FCFCFF] ${className || ""}`}
       style={{
         borderTop: `8px solid ${borderColor}`,
       }}

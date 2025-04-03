@@ -211,7 +211,7 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
                               status={task.status}
                               onClick={() => handleTaskClick(task._id)}
                               isSelected={selectedTask === task._id}
-                              className={index === taskList.length - 1 ? "mb-5" : ""}
+                              className={index === taskList.length - 1 ? "mb-10" : ""}
                             />
                           ))}
                     </div>
