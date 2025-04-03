@@ -28,6 +28,36 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
     "Issue": [],
   });
 
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case "To Do":
+        return "대기";
+      case "In Progress":
+        return "진행";
+      case "Done":
+        return "완료";
+      case "Issue":
+        return "이슈";
+      default:
+        return status;
+    }
+  };
+  
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "To Do":
+        return "#FFA14A";
+      case "In Progress":
+        return "#4999F8";
+      case "Done":
+        return "#5DC896";
+      case "Issue":
+        return "#FF6B6B";
+      default:
+        return "#D3D3D3";
+    }
+  };
+  
   const projectId = "679aedec4f051a6eaac0204c"; // 현재 프로젝트 ID (하드코딩)
 
   const methods = useTask(null, true);
@@ -120,7 +150,7 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
                   <TaskMenu isTaskAddOpen={isTaskAddOpen} setIsTaskAddOpen={handleTaskAddClick} addLabel="업무 생성" />
                 </div>
 
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     gap: "32px",
@@ -141,6 +171,49 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
                           isSelected={selectedTask === task._id}
                         />
                       ))}
+                    </div>
+                  ))}
+                </div> */}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "32px",
+                    padding: "40px",
+                    overflowX: "auto",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {Object.entries(tasks).map(([status, taskList]) => (
+                    <div key={status} className="flex flex-col gap-4">
+                      
+                      {/* ✅ 업무가 없는 상태일 경우에만 기본틀 렌더링 */}
+                      {taskList.length === 0 && (
+                        <div
+                          className="min-w-[362px] max-w-[402px] rounded-[12px] bg-white p-3 shadow-md"
+                          style={{ borderTop: `6px solid ${getStatusColor(status)}` }}
+                        >
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="text-[#3D3D3D] font-semibold">{getStatusLabel(status)}</span>
+                            <span className="text-[#949BAD] text-sm">마감일 순 ⌄</span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* ✅ 업무가 있는 경우에만 실제 TaskCard 렌더링 */}
+                      {taskList.length > 0 &&
+                        taskList
+                          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                          .map((task, index) => (
+                            <TaskCard
+                              key={task._id}
+                              title={task.title}
+                              description={task.description}
+                              status={task.status}
+                              onClick={() => handleTaskClick(task._id)}
+                              isSelected={selectedTask === task._id}
+                              className={index === taskList.length - 1 ? "mb-5" : ""}
+                            />
+                          ))}
                     </div>
                   ))}
                 </div>
