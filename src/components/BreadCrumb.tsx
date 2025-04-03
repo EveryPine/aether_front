@@ -1,6 +1,10 @@
 import React from "react";
 
-const Breadcrumb: React.FC = () => {
+interface BreadcrumbProps {
+  label: string;
+}
+
+const Breadcrumb: React.FC<BreadcrumbProps> = ({label}) => {
   return (
     <div
       style={{
@@ -19,13 +23,8 @@ const Breadcrumb: React.FC = () => {
       }}
     >
       {/* Breadcrumb */}
-      <span>
-        <span style={{ marginRight: "8px" }}>ABC 회사</span>
-        <span style={{ margin: "0 8px" }}>&gt;</span>
-        <span style={{ marginLeft: "3px", marginRight: "8px" }}>ABCD 팀</span>
-        <span style={{ margin: "0 8px" }}>&gt;</span>
-        <span style={{marginLeft: "3px"}}>ABCDE 프로젝트</span>
-      </span>
+      {/* label 전달 형식으로 변경 */}
+      <span>{label}</span>
 
     </div>
   );

@@ -76,7 +76,7 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <div>
-        <Breadcrumb />
+        <Breadcrumb label= "ABC 회사 > ABCD 팀 > ABCDE 프로젝트" />
       </div>
 
       <div
@@ -117,7 +117,7 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
             activeTab === "업무" && (
               <>
                 <div>
-                  <TaskMenu isTaskAddOpen={isTaskAddOpen} setIsTaskAddOpen={handleTaskAddClick} />
+                  <TaskMenu isTaskAddOpen={isTaskAddOpen} setIsTaskAddOpen={handleTaskAddClick} addLabel="업무 생성" />
                 </div>
 
                 <div
