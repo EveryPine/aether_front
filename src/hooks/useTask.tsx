@@ -24,7 +24,7 @@ const taskSchema = z.object({
 
 export interface TaskInfoValues extends z.infer<typeof taskSchema> {}
 
-export const useTask = (tid: string | null, isCreate: boolean) => {
+export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () => void) => {
   const queryClient = useQueryClient();
   const { data: userInfo } = useQuery(["userInfo"], () => fetchUserInfo());
   const { data: taskData, isLoading } = useQuery(["taskInfo", tid], () => fetchTaskInfo(tid as string), {
@@ -146,7 +146,7 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
 
     if (Object.keys(updatedData).length > 0) {
         await updateTaskMutation.mutateAsync(updatedData);
-        window.location.reload();
+        fetchTasks();
       }
     } catch (error) {
       console.log(error);

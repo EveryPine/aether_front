@@ -10,7 +10,7 @@ import useTask from "../hooks/useTask";
 import axiosInstance from "../api/lib/axios";
 
 const TaskAdd: React.FC<{ fetchTasks: () => void }> = ({ fetchTasks }) => {
-  const methods = useTask(null, true);
+  const methods = useTask(null, true, fetchTasks);
   const { userInfo, handleSubmit, watch, setValue } = methods;
 
   const [activeTab, setActiveTab] = useState('info');

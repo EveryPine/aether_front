@@ -11,8 +11,8 @@ import { FormProvider } from "react-hook-form"
 import useTask from "../hooks/useTask"
 import AddDocument from '../components/TaskDocument/AddDocument'
 
-const TaskSetting: React.FC<{ selectedTaskId: string | null }> = ({ selectedTaskId }) => {
-  const methods = useTask(selectedTaskId, false);
+const TaskSetting: React.FC<{ selectedTaskId: string | null; fetchTasks: () => void }> = ({ selectedTaskId, fetchTasks }) => {
+  const methods = useTask(selectedTaskId, false, fetchTasks);
   const { userInfo, handleUpdateTask, formState: { isLoading }, watch } = methods;
 
   const [activeTab, setActiveTab] = useState('info')
