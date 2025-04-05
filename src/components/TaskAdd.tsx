@@ -11,62 +11,11 @@ import axiosInstance from "../api/lib/axios";
 
 const TaskAdd: React.FC<{ fetchTasks: () => void }> = ({ fetchTasks }) => {
   const methods = useTask(null, true, fetchTasks);
-  const { userInfo, handleSubmit, watch, setValue } = methods;
-
+  const { userInfo, handleSubmit, watch, setValue, handleCreateTask } = methods;
+  
   const [activeTab, setActiveTab] = useState('info');
   const [title, setTitle] = useState("");
   const [isAddingManager, setIsAddingManager] = useState(false); // 담당자 추가
-
-  const handleCreateTask = async (data: any) => {
-    console.log("📌 전송 데이터:", data);
-  
-    // ✅ 필수 필드 검증 (누락된 값이 있으면 요청 차단)
-    // 업무 생성 api 연동 
-    if (!data.title || !data.description || !data.status || !data.project || !data.createdBy) {
-      console.error("❌ 필수 필드 누락! 업무를 생성할 수 없습니다.");
-      return;
-    }
-  
-    // ✅ 날짜 변환 (ISO 8601 형식 유지)
-    const formattedStartDate = data.startDate ? new Date(data.startDate).toISOString() : null;
-    const formattedDueDate = data.dueDate ? new Date(data.dueDate).toISOString() : null;
-  
-    try {
-      const response = await axiosInstance.post("/api/tasks", {
-        title: data.title,
-        description: data.description,
-        status: data.status || "To Do",
-        priority: data.priority ?? 3, // 기본값 3
-        project: data.project ?? "679aedec4f051a6eaac0204c", //기본 project id 값
-        assignedTo: Array.isArray(data.assignedTo) ? data.assignedTo : [], // ✅ 리스트 검증
-        createdBy: data.createdBy,
-        isDaily: data.isDaily ?? false, // ✅ 기본값 false
-        startDate: formattedStartDate,
-        dueDate: formattedDueDate,
-      });
-  
-      console.log("✅ 업무 생성 성공:", response.data);
-      if (response.data.success) {
-        fetchTasks(); // ✅ 업무 생성 후 실시간 반영
-      }
-    } catch (error: any) {
-      console.error("❌ 업무 생성 실패:", error.response?.data || error);
-    }
-  };  
-
-  const taskInfoValues = {
-    title: watch("title"),
-    description: watch("description"),
-    isDaily: watch("isDaily"),
-    status: watch("status"),
-    projectScope: watch("projectScope"),
-    priority: watch("priority"),
-    startDate: watch("startDate"),
-    dueDate: watch("dueDate"),
-    createdBy: watch("createdBy"),
-    project: watch("project"),
-    assignedTo: watch("assignedTo"),
-  };
 
   return (
     <FormProvider {...methods}>  
@@ -78,12 +27,12 @@ const TaskAdd: React.FC<{ fetchTasks: () => void }> = ({ fetchTasks }) => {
             <TaskTitle isEditable={true} title={title} setTitle={setTitle} />
             <TaskDivider top='152px' />
             {/* 업무 정보 폼 */}
-            <form onSubmit={handleSubmit(handleCreateTask)}>  
+            <form onSubmit={handleCreateTask}>  
               <div>
                 {activeTab === "info" ? (
                   <TaskInfo 
                   methods={methods} 
-                  taskInfoValues={taskInfoValues} 
+                  taskInfoValues={methods.getValues()} 
                   userInfo={{ name: userInfo?.name ?? "알 수 없음", rank: userInfo?.rank ?? "미정" }} 
                 />                
                 ) : (

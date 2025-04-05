@@ -43,7 +43,7 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
       startDate: "",
       dueDate: "",
       createdBy: "",
-      project: "",
+      project: projectId,
       assignedTo: [],
     },
     resolver: zodResolver(taskSchema),
@@ -90,7 +90,9 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
   // 업무 생성
   const handleCreateTask = methods.handleSubmit(async (formData) => {
     try {
+      console.log("전송할 formData:", formData);
       await createTaskMutation.mutateAsync(formData);
+      fetchTasks();
     } catch (error) {
       console.log(error);
     }
