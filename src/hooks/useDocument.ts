@@ -30,7 +30,7 @@ export const useDocuments = (tid: string, searchKeyword?: string) => {
 export const useUploadDocument = (tid: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (file: File) => documentApi.uploadDocument(tid, file),
+    mutationFn: (files: File) => documentApi.uploadDocument(tid, files),
     onSuccess: () => {
       queryClient.invalidateQueries(["documents", tid]); // 문서 리스트 새로고침
     },
