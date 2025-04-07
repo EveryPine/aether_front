@@ -11,7 +11,7 @@ import TaskDivider from "../components/TaskDivider";
 import { useTask } from "../hooks/useTask";
 import { FormProvider } from "react-hook-form";
 import axiosInstance from "../api/lib/axios";
-
+import ProjectSetting from "../components/Project/ProjectSetting"
 interface TaskKanbanProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -60,7 +60,7 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
   
   const projectId = "679aedec4f051a6eaac0204c"; // 현재 프로젝트 ID (하드코딩)
 
-  const methods = useTask(null, true);
+  // const methods = useTask(null, true);
 
   // 업무 데이터 가져오기
   const fetchTasks = async () => {
@@ -136,12 +136,12 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
 
           {/* "프로젝트 설정" 탭이 활성화되면 TaskInfo 렌더링 */}
           {activeTab === "프로젝트 설정" ? (
-            <div>
-              <FormProvider {...methods}>
+            <div className="relative w-full min-h-screen overflow-x-auto">
+              {/* <FormProvider {...methods}>
                 <TaskTitle isEditable={false} title="ABCDE 프로젝트" />
                 <TaskDivider />
-                <TaskInfo/>
-              </FormProvider>
+                <ProjectSetting/>
+              </FormProvider> */}
             </div>
           ) : (
             activeTab === "업무" && (
@@ -233,7 +233,7 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
               zIndex: 10,
             }}
           >
-            {isTaskSettingOpen ? <TaskSetting selectedTaskId={selectedTask} /> : <TaskAdd fetchTasks={fetchTasks}/>}
+            {isTaskSettingOpen ? <TaskSetting selectedTaskId={selectedTask} fetchTasks={fetchTasks} /> : <TaskAdd fetchTasks={fetchTasks}/>}
           </div>
         )}
       </div>

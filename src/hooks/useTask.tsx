@@ -24,7 +24,7 @@ const taskSchema = z.object({
 
 export interface TaskInfoValues extends z.infer<typeof taskSchema> {}
 
-export const useTask = (tid: string | null, isCreate: boolean) => {
+export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () => void) => {
   const queryClient = useQueryClient();
   const { data: userInfo } = useQuery(["userInfo"], () => fetchUserInfo());
   const { data: taskData, isLoading } = useQuery(["taskInfo", tid], () => fetchTaskInfo(tid as string), {
@@ -43,7 +43,7 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
       startDate: "",
       dueDate: "",
       createdBy: "",
-      project: "",
+      project: projectId,
       assignedTo: [],
     },
     resolver: zodResolver(taskSchema),
@@ -90,7 +90,9 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
   // 업무 생성
   const handleCreateTask = methods.handleSubmit(async (formData) => {
     try {
+      console.log("전송할 formData:", formData);
       await createTaskMutation.mutateAsync(formData);
+      fetchTasks();
     } catch (error) {
       console.log(error);
     }
@@ -146,7 +148,7 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
 
     if (Object.keys(updatedData).length > 0) {
         await updateTaskMutation.mutateAsync(updatedData);
-        window.location.reload();
+        fetchTasks();
       }
     } catch (error) {
       console.log(error);
