@@ -85,9 +85,9 @@ const TeamSpace: React.FC = () => {
             </div>
             <div>
                 <TaskMenu
-                isTaskAddOpen={isProjectAddOpen}
-                setIsTaskAddOpen={handleProjectAddClick}
-                addLabel="프로젝트 생성"
+                    isTaskAddOpen={isProjectAddOpen}
+                    setIsTaskAddOpen={handleProjectAddClick}
+                    addLabel="프로젝트 생성"
                 />
             </div>
             <div className="flex flex-col w-full px-10 py-8">
@@ -98,7 +98,7 @@ const TeamSpace: React.FC = () => {
                 <div className="flex gap-8 overflow-x-auto whitespace-nowrap">
                     {Object.entries(tasks).map(([status, taskList]) => (
                     <div key={status} className="flex flex-col gap-4">
-                        {taskList.map((task) => (
+                        {taskList.map((task, index) => (
                         <TaskCard
                             key={task._id}
                             title={task.title}
@@ -106,6 +106,7 @@ const TeamSpace: React.FC = () => {
                             status={task.status}
                             onClick={() => handleTaskClick(task._id)}
                             isSelected={selectedTask === task._id}
+                            className={index === taskList.length - 1 ? "mb-10" : ""}
                         />
                         ))}
                     </div>

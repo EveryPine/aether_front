@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import TaskCard from "../components/KanbanBoard/TaskCard";
 import TaskMenu from "../components/KanbanBoard/TaskMenu";
 import TaskSetting from "../components/TaskSetting";
-import ProjectSetting from "../components/\bProjectSetting";
+import ProjectSetting from "../components/ProjectSetting";
 import TaskAdd from "../components/TaskAdd";
 import { useTask } from "../hooks/useTask";
 import axiosInstance from "../api/lib/axios";
@@ -123,7 +123,7 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
         <div
           className="flex flex-col min-w-[320px]"
           style={{
-            width: isTaskSettingOpen || isTaskAddOpen ? "calc(100% - 555px)" : "100%",
+            width: isTaskSettingOpen || isTaskAddOpen ? "calc(100% - 570px)" : "100%",
             transition: "width 0.3s ease",
           }}
         >

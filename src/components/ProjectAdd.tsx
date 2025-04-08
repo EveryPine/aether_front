@@ -2,13 +2,7 @@ import React from "react";
 
 const ProjectAdd: React.FC = () => {
   return (
-    <div className="bg-[#F8F9FC] p-10 rounded-lg h-full shadow-inner">
-      <div className="border-b border-[#E5EAF2] pb-4 mb-6">
-        <h2>
-          프로젝트 생성
-        </h2>
-      </div>
-
+    <div>
       {/* 프로젝트 제목 */}
       <div className="mb-6">
         <label className="block text-[#4F5462] text-sm font-semibold mb-2">

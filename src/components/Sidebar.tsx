@@ -124,7 +124,6 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveTab }) => {
         onClick={toggleSidebar} // 🔁 로고 클릭 시 확장 토글
       >
         <img src={AetherLogo} alt="Logo" style={{ width: "24px", height: "24px" }} />
-        {isExpanded && <span style={{ marginLeft: "12px", fontWeight: 600 }}>Aether</span>}
       </div>
     </div>
   );
