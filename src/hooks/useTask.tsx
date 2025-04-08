@@ -9,14 +9,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const projectId = "679aedec4f051a6eaac0204c"; // 현재 프로젝트 ID (하드코딩)
 
 const taskSchema = z.object({
-  title: z.string().min(1, "업무 제목을 입력해주세요."),
-  description: z.string().min(1, "업무 설명을 입력해주세요."),
+  title: z.string().min(1, ""),
+  description: z.string().min(1, ""),
   isDaily: z.boolean(),
   status: z.string(),
   projectScope: z.string(),
   priority: z.number(),
-  startDate: z.string().optional(),
-  dueDate: z.string().optional(),
+  startDate: z.preprocess((val) => (val === "" ? undefined : val), z.string().optional()),
+  dueDate: z.preprocess((val) => (val === "" ? undefined : val), z.string().optional()),
   createdBy: z.string(),
   project: z.string(),
   assignedTo: z.array(z.string()).optional(),
