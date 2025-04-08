@@ -11,7 +11,7 @@ import TaskDivider from "../components/TaskDivider";
 import { useTask } from "../hooks/useTask";
 import { FormProvider } from "react-hook-form";
 import axiosInstance from "../api/lib/axios";
-import ProjectSetting from "../components/Project/ProjectSetting"
+
 interface TaskKanbanProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -140,7 +140,7 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
               {/* <FormProvider {...methods}>
                 <TaskTitle isEditable={false} title="ABCDE 프로젝트" />
                 <TaskDivider />
-                <ProjectSetting/>
+                <TaskSetting/>
               </FormProvider> */}
             </div>
           ) : (
