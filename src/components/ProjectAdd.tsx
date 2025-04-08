@@ -4,7 +4,7 @@ const ProjectAdd: React.FC = () => {
   return (
     <div className="bg-[#F8F9FC] p-10 rounded-lg h-full shadow-inner">
       <div className="border-b border-[#E5EAF2] pb-4 mb-6">
-        <h2 className="text-[#FF432B] text-base font-semibold border-b-2 border-[#FF432B] inline-block pb-1">
+        <h2>
           프로젝트 생성
         </h2>
       </div>

@@ -22,7 +22,17 @@ const App: React.FC = () => {
           <Route path="/user-info" element={<SignUp />} />
           <Route path="/sign-up" element={<AuthRedirect />} />
           <Route path="/dashboard" element={<Dashboard/>} />
-          <Route path="/teamspace" element={<TeamSpace/>} />
+          <Route
+            path="/teamspace"
+            element={
+              <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+                <Sidebar setActiveTab={setActiveTab} />
+                <div style={{ flex: 1, overflowY: "auto" }}>
+                  <TeamSpace />
+                </div>
+              </div>
+            }
+          />
           <Route
             path="/tasks"
             element={
