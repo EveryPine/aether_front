@@ -2,36 +2,52 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 interface BreadcrumbProps {
-  label: string;
+  paths: { label: string; path?: string }[]; // path가 있을 때만 클릭 가능
 }
 
-const Breadcrumb: React.FC<BreadcrumbProps> = ({ label }) => {
+const Breadcrumb: React.FC<BreadcrumbProps> = ({ paths = [] }) => {
   const navigate = useNavigate();
 
-  const crumbs = label.split(" > ");
-  const lastCrumb = crumbs[crumbs.length - 1];
-
   return (
-    <div className="flex items-center justify-between px-12 py-4 text-[12px] text-[#4F5462] bg-white font-medium">
-      <div className="flex gap-1">
-        {crumbs.map((crumb, index) => (
-          <span key={index} className="flex items-center gap-1">
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        padding: "16px 48px",
+        fontFamily: "SUIT Variable",
+        fontSize: "12px",
+        fontWeight: 500,
+        lineHeight: "15.84px",
+        letterSpacing: "-0.3px",
+        color: "#4F5462",
+        backgroundColor: "#fff",
+      }}
+    >
+      {paths.map((item, index) => (
+        <span key={index} style={{ display: "flex", alignItems: "center" }}>
+          {item.path ? (
             <span
-              onClick={() => {
-                if (crumb === lastCrumb) navigate("/teamspace");
+              onClick={() => navigate(item.path!)}
+              style={{
+                cursor: "pointer",
+                textDecoration: "none",
+                color: "#4F5462",
               }}
-              className={`${
-                crumb === lastCrumb
-                  ? "hover:underline cursor-pointer hover:text-[#FF432B]"
-                  : ""
-              } transition-all duration-150`}
+              onMouseEnter={(e) => {
+                (e.target as HTMLElement).style.textDecoration = "underline";
+              }}
+              onMouseLeave={(e) => {
+                (e.target as HTMLElement).style.textDecoration = "none";
+              }}
             >
-              {crumb}
+              {item.label}
             </span>
-            {index < crumbs.length - 1 && <span className="text-[#949BAD]">{">"}</span>}
-          </span>
-        ))}
-      </div>
+          ) : (
+            <span>{item.label}</span>
+          )}
+          {index < paths.length - 1 && <span style={{ margin: "0 8px" }}>{">"}</span>}
+        </span>
+      ))}
     </div>
   );
 };

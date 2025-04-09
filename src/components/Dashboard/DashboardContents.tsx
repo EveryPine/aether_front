@@ -6,16 +6,17 @@ import MemoCard from "./MemoCard";
 
 const DashboardContents = () => {
   return (
-    <div className="flex gap-4 p-6">
-      {/* 왼쪽: 열 정렬 */}
-      <div className="flex flex-col gap-4">
+    <div className="w-[1244px] mx-auto flex gap-[32px] pt-[40px] pb-[10]">
+      <div className="flex flex-col gap-[32px] min-w-[362px] max-w-[402px]">
         <TeamSpaceCard />
         <ProjectCard />
       </div>
 
-      {/* 오른쪽: 행 정렬 */}
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-[32px] min-w-[362px] max-w-[402px] h-[722px] flex-1">
         <MyTaskCard />
+      </div>
+
+      <div className="flex flex-col justify-between min-w-[362px] max-w-[402px] h-[722px] flex-1">
         <MemoCard />
       </div>
     </div>

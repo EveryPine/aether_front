@@ -1,8 +1,10 @@
-// src/utils/getBackgroundByTime.ts
-export const getBackgroundByTime = (): string => {
-    const hour = new Date().getHours();
-    if (hour < 12) return "bg-gradient-to-r from-blue-200 to-blue-500"; // 아침
-    if (hour < 17) return "bg-gradient-to-r from-blue-400 to-blue-700"; // 낮
-    return "bg-gradient-to-r from-purple-600 to-red-400"; // 저녁
-  };
-  
+export const getBackgroundByTime = () => {
+  const hour = new Date().getHours();
+  if (hour >= 4 && hour < 11) {
+    return "bg-gradient-to-r from-[#007BFF] to-[#FFC9C2]"; // 아침
+  }
+  if (hour >= 11 && hour < 17) {
+    return "bg-gradient-to-r from-[#3DB5FF] to-[#007BFF]"; // 낮
+  }
+  return "bg-gradient-to-r from-[#FFC9C2] via-[#D4C0D0] to-[#007BFF]"; // 저녁~새벽
+};

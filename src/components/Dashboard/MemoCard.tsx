@@ -1,37 +1,55 @@
-// src/components/Dashboard/MemoCard.tsx
 import { useState } from "react";
-import Card from "../Card";
 
 const MemoCard = () => {
-  const [memos, setMemos] = useState<string[]>([
-    "Lorem ipsum dolor sit amet consectetur.",
-    "Diam cursus nisi est massa risus lectus."
+  const [memos, setMemos] = useState([
+    { text: "Lorem ipsum dolor sit amet consectetur...", date: "01월 30일" },
+    { text: "Diam cursus nisi est massa risus lectus.", date: "01월 30일" }
   ]);
-  const [input, setInput] = useState("");
+  const [newMemo, setNewMemo] = useState("");
 
   const handleAddMemo = () => {
-    if (input.trim() === "") return;
-    setMemos([...memos, input]);
-    setInput("");
+    if (newMemo.trim() !== "") {
+      const today = new Date();
+      const date = today.toLocaleDateString("ko-KR", {
+        month: "2-digit",
+        day: "2-digit"
+      }).replace(".", "월").replace(".", "일").replace(" ", "");
+
+      setMemos([...memos, { text: newMemo, date }]);
+      setNewMemo("");
+    }
   };
 
   return (
-    <Card title="메모">
-      {memos.map((memo, index) => (
-        <div key={index} className="bg-white border p-2 rounded mb-2 text-sm text-gray-700">{memo}</div>
-      ))}
-      <div className="mt-2">
-        <input
-          className="w-full border rounded p-2 text-sm"
-          placeholder="메모를 입력해 주세요."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <button className="mt-1 px-3 py-1 bg-red-500 text-white text-sm rounded" onClick={handleAddMemo}>
-          추가
-        </button>
+    <div className="flex flex-col justify-between items-start h-[722px] min-w-[362px] max-w-[402px] p-[20px_16px] rounded-lg shadow bg-white">
+      <h2 className="text-sm font-semibold mb-1">메모</h2>
+
+      <div className="flex flex-col gap-3 w-full overflow-auto">
+        {memos.map((memo, idx) => (
+          <div key={idx} className="bg-[#F3F5F8] rounded p-4 text-sm relative">
+            <p>{memo.text}</p>
+            <p className="text-xs text-right mt-2 text-gray-500">{memo.date}</p>
+          </div>
+        ))}
       </div>
-    </Card>
+
+      <div className="w-full mt-auto">
+        <textarea
+          placeholder="메모를 입력해 주세요."
+          className="w-full h-24 p-2 text-sm border rounded mb-2"
+          value={newMemo}
+          onChange={(e) => setNewMemo(e.target.value)}
+        />
+        <div className="flex justify-end">
+          <button
+            onClick={handleAddMemo}
+            className="bg-[#FF432B] text-white px-3 py-1 rounded text-sm"
+          >
+            추가
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

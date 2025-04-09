@@ -64,7 +64,12 @@ const TeamSpace: React.FC = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <div>
-        <Breadcrumb label= "ABC 회사 > ABCD 팀" />
+        <Breadcrumb
+            paths={[
+                { label: "ABC 회사" },
+                { label: "ABCD 팀" },
+            ]}
+        />
       </div>
         <div
             style={{
@@ -79,7 +84,7 @@ const TeamSpace: React.FC = () => {
             transition: "width 0.3s ease",
             }}
         >
-            <div className="ml-[23px] mt-[10px]">
+            <div className="ml-[40px] mt-[10px]">
             {/* ✅ NavBar의 탭은 '프로젝트' 하나만 존재 */}
             <Navbar tabs={isProjectAddOpen ? ["프로젝트 생성"] : ["프로젝트"]} activeTab={isProjectAddOpen ? "프로젝트 생성" : "프로젝트"} setActiveTab={() => {}} />
             </div>

@@ -1,25 +1,26 @@
-import { getBackgroundByTime } from "../../utils/getBackgroundByTime";
+import { getGradientByTime } from "../../utils/getGradientByTime";
 
-//useGreeting.ts
-export const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return "좋은 아침이에요!";
-    if (hour < 18) return "활기찬 오후에요!";
-    return "오늘도 수고하셨어요.";
-  };
-
-  // DashboardHeader.tsx
 const DashboardHeader = () => {
-    const greeting = getGreeting();
-    const now = new Date().toLocaleDateString("ko-KR", { weekday: "long", year: "numeric", month: "2-digit", day: "2-digit" });
-    const bgClass = getBackgroundByTime(); // 해당 부분 수정 필요 (그라데이션이 시간 지날수록 색변경되게. 현재는 이미지 세개 준비해두고 변경되도록 하는 느낌)
-  
-    return (
-      <div className={`w-full h-[100px] rounded-xl px-8 py-4 ${bgClass}`}>
-        <p className="text-white text-sm">{now}</p>
-        <h1 className="text-white text-2xl font-bold">최기수님 {greeting}</h1>
-      </div>
-    );
-  };
+  const now = new Date().toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    weekday: "long",
+  });
+  const { gradient, greeting } = getGradientByTime();
 
-  export default DashboardHeader;
+  return (
+    <div className={`bg-gradient-to-r ${gradient} transition-all duration-1000`}>
+      {/* 회색 반투명 박스 */}
+      <div
+      className="relative w-[1244px] h-[160px] px-[64px] py-[40px] mx-auto z-10 flex flex-col items-center gap-4 rounded-xl bg-gray-400/50 backdrop-blur-md shadow-[0px_0px_24px_rgba(79,84,98,0.32)]">
+        <p className="text-sm text-white">{now}</p>
+        <h1 className="text-[32px] font-bold leading-[48px] tracking-[-0.8px] text-[#FCFCFF]/80 font-['SUITE Variable']">
+          배수연님 {greeting}
+        </h1>
+      </div>
+    </div>
+  );
+};
+
+export default DashboardHeader;
