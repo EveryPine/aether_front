@@ -12,7 +12,11 @@ interface Task {
 
 interface Project {
   _id: string;
-  title: string;
+  name: string;
+  description: string;
+  status: string;
+  startDate: string;
+  dueDate: string;
 }
 
 const DashboardContents = () => {
@@ -28,7 +32,17 @@ const DashboardContents = () => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         });
-        setMyTasks(response.data?.data["To Do"] || []);
+
+        const data = response.data?.data;
+        const allTasks = [
+          ...(data["To Do"] || []),
+          ...(data["In Progress"] || []),
+          ...(data["Done"] || []),
+          ...(data["Issue"] || []),
+          ...(data["Hold"] || []),
+        ];
+
+        setMyTasks(allTasks);
       } catch (error) {
         console.error("나의 업무 가져오기 실패", error);
       }
@@ -73,10 +87,16 @@ const DashboardContents = () => {
             projects.map((project) => (
               <div
                 key={project._id}
-                className="cursor-pointer hover:bg-gray-100 rounded-md px-3 py-2"
-                onClick={() => navigate(`/tasks`)}
+                className="cursor-pointer hover:bg-gray-100 rounded-md px-3 py-3 border border-gray-200 mb-3"
+                onClick={() => navigate(`/tasks/${project._id}`)}
               >
-                <p className="text-sm text-gray-800 font-medium">{project.title}</p>
+                <p className="text-sm font-semibold text-gray-900 mb-1">{project.name}</p>
+                <p className="text-xs text-gray-600 line-clamp-2">{project.description}</p>
+                <div className="text-[11px] text-blue-500 mt-1">
+                  {project.status} ・{" "}
+                  {new Date(project.startDate).toLocaleDateString()} ~{" "}
+                  {new Date(project.dueDate).toLocaleDateString()}
+                </div>
               </div>
             ))
           )}
