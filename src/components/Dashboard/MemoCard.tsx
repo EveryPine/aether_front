@@ -22,7 +22,7 @@ const MemoCard = () => {
 
   return (
     <div className="flex flex-col justify-between items-start h-[722px] min-w-[362px] max-w-[402px] p-[20px_16px] rounded-lg shadow bg-white">
-      <h2 className="text-sm font-semibold mb-1">메모</h2>
+      <h2 className="text-lg font-semibold mb-4">메모</h2>
 
       <div className="flex flex-col gap-3 w-full overflow-auto">
         {memos.map((memo, idx) => (

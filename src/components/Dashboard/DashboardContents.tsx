@@ -27,11 +27,7 @@ const DashboardContents = () => {
   useEffect(() => {
     const fetchMyTasks = async () => {
       try {
-        const response = await axiosInstance.get("/api/tasks/679aedec4f051a6eaac0204c", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        });
+        const response = await axiosInstance.get("/api/tasks/679aedec4f051a6eaac0204c");
 
         const data = response.data?.data;
         const allTasks = [
@@ -50,11 +46,7 @@ const DashboardContents = () => {
 
     const fetchProjects = async () => {
       try {
-        const response = await axiosInstance.get("/api/projects/67fce39dddf4eb5d55ecb3d0", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        });
+        const response = await axiosInstance.get("/api/projects/67fce39dddf4eb5d55ecb3d0");
         setProjects(response.data?.data || []);
       } catch (error) {
         console.error("프로젝트 가져오기 실패", error);
@@ -65,6 +57,21 @@ const DashboardContents = () => {
     fetchProjects();
   }, []);
 
+  const getStatusBadge = (status: string) => {
+    const badgeColor = {
+      "To Do": "bg-orange-100 text-orange-600",
+      "In Progress": "bg-blue-100 text-blue-600",
+      "Done": "bg-green-100 text-green-600",
+      "Issue": "bg-red-100 text-red-600",
+      "Hold": "bg-gray-200 text-gray-600",
+    };
+    return (
+      <span className={`text-xs font-medium px-2 py-1 rounded-md ${badgeColor[status] || "bg-gray-100 text-gray-600"}`}>
+        {status}
+      </span>
+    );
+  };
+
   return (
     <div className="w-full max-w-[1344px] mt-12 px-4 mx-auto flex gap-8">
       {/* 왼쪽 열 (팀 스페이스 + 참여 프로젝트) */}
@@ -72,31 +79,33 @@ const DashboardContents = () => {
         <div className="h-[168px] min-w-[362px] max-w-[402px] bg-white rounded-xl shadow-md p-4">
           <h2 className="text-lg font-semibold mb-4">팀 스페이스</h2>
           <div
-            className="cursor-pointer hover:bg-gray-100 rounded-md px-3 py-2"
+            className="bg-[#F5F7FA] hover:bg-gray-100 rounded-lg px-6 py-4 cursor-pointer"
             onClick={() => navigate("/teamspace")}
           >
-            <p className="text-sm text-gray-800 font-medium">Ho감자 팀</p>
+            <p className="text-base font-semibold text-gray-800">Ho감자 팀</p>
+            <p className="text-sm text-gray-400">Body Text</p>
           </div>
         </div>
 
         <div className="h-[522px] min-w-[362px] max-w-[402px] bg-white rounded-xl shadow-md p-4 overflow-y-auto">
-          <h2 className="text-lg font-semibold mb-4">참여 프로젝트</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold">참여 프로젝트</h2>
+            <span className="text-sm text-gray-400">우선순위 순 ▾</span>
+          </div>
           {projects.length === 0 ? (
             <p className="text-sm text-gray-400">진행 중인 프로젝트가 없습니다.</p>
           ) : (
             projects.map((project) => (
               <div
                 key={project._id}
-                className="cursor-pointer hover:bg-gray-100 rounded-md px-3 py-3 border border-gray-200 mb-3"
+                className="bg-[#F5F7FA] hover:bg-gray-100 rounded-lg px-6 py-4 mb-4 cursor-pointer"
                 onClick={() => navigate(`/tasks/${project._id}`)}
               >
-                <p className="text-sm font-semibold text-gray-900 mb-1">{project.name}</p>
-                <p className="text-xs text-gray-600 line-clamp-2">{project.description}</p>
-                <div className="text-[11px] text-blue-500 mt-1">
-                  {project.status} ・{" "}
-                  {new Date(project.startDate).toLocaleDateString()} ~{" "}
-                  {new Date(project.dueDate).toLocaleDateString()}
+                <div className="flex items-center gap-2 mb-1">
+                  {getStatusBadge(project.status)}
+                  <p className="text-base font-semibold text-gray-800">{project.name}</p>
                 </div>
+                <p className="text-sm text-gray-400">Body Text</p>
               </div>
             ))
           )}
@@ -105,7 +114,10 @@ const DashboardContents = () => {
 
       {/* 가운데 열 (나의 업무) */}
       <div className="h-[722px] min-w-[362px] max-w-[402px] bg-white rounded-xl shadow-md p-4 overflow-y-auto">
-        <h2 className="text-lg font-semibold mb-4">나의 업무</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold">나의 업무</h2>
+          <span className="text-sm text-gray-400">마감일 순 ▾</span>
+        </div>
         {myTasks.length === 0 ? (
           <p className="text-sm text-gray-400">담당한 업무가 없습니다.</p>
         ) : (
@@ -114,12 +126,14 @@ const DashboardContents = () => {
             .map((task) => (
               <div
                 key={task._id}
-                className="border-l-4 pl-4 mb-4 last:mb-0 cursor-pointer hover:bg-gray-100 rounded-md"
+                className="bg-[#F5F7FA] hover:bg-gray-100 rounded-lg px-6 py-4 mb-4 cursor-pointer"
                 onClick={() => navigate(`/tasks`)}
               >
-                <p className="text-sm font-medium text-gray-800">{task.title}</p>
-                <p className="text-xs text-gray-500 line-clamp-2">{task.description}</p>
-                <span className="text-xs text-blue-500">{task.status}</span>
+                <div className="flex items-center gap-2 mb-1">
+                  {getStatusBadge(task.status)}
+                  <p className="text-base font-semibold text-gray-800">{task.title}</p>
+                </div>
+                <p className="text-sm text-gray-400">Body Text</p>
               </div>
             ))
         )}
