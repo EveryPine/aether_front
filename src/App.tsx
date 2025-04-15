@@ -6,6 +6,8 @@ import TaskKanban from "./pages/TaskKanban";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import AuthRedirect from "./pages/AuthRedirect";
+import Dashboard from "./pages/Dashboard";
+import TeamSpace from "./pages/TeamSpace"
 
 const queryClient = new QueryClient();
 
@@ -19,6 +21,28 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/user-info" element={<SignUp />} />
           <Route path="/sign-up" element={<AuthRedirect />} />
+          <Route
+            path="/dashboard"
+            element={
+              <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+                <Sidebar setActiveTab={setActiveTab} />
+                <div style={{ flex: 1, overflowY: "auto" }}>
+                  <Dashboard />
+                </div>
+              </div>
+            }
+          />
+          <Route
+            path="/teamspace"
+            element={
+              <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+                <Sidebar setActiveTab={setActiveTab} />
+                <div style={{ flex: 1, overflowY: "auto" }}>
+                  <TeamSpace />
+                </div>
+              </div>
+            }
+          />
           <Route
             path="/tasks"
             element={

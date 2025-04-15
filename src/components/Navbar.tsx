@@ -1,13 +1,16 @@
 import React from "react";
 
 interface NavbarProps {
-  activeTab: string; // 활성화된 탭
-  setActiveTab: (tab: string) => void; // 탭 변경 함수
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  tabs?: string[]; // ⬅️ 탭 배열을 props로 받도록 변경
 }
 
-const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
-  const tabs = ["개요", "업무", "문서함", "팀원 관리", "프로젝트 설정"];
-
+const Navbar: React.FC<NavbarProps> = ({
+  activeTab,
+  setActiveTab,
+  tabs = ["개요", "업무", "문서함", "팀원 관리", "프로젝트 설정"], // 기본값
+}) => {
   return (
     <div
       style={{
@@ -19,20 +22,18 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
       {tabs.map((tab) => (
         <div
           key={tab}
-          onClick={() => setActiveTab(tab)} // 클릭 시 활성화 상태 변경
+          onClick={() => setActiveTab(tab)}
           style={{
             position: "relative",
             padding: "10px 25px",
             cursor: "pointer",
-            color: activeTab === tab ? "#FF432B" : "#949BAD", // 활성화 상태 색상
+            color: activeTab === tab ? "#FF432B" : "#949BAD",
             fontWeight: activeTab === tab ? "bold" : "normal",
             fontSize: "14px",
             transition: "color 0.3s",
           }}
         >
           {tab}
-
-          {/* 하단 강조선 */}
           {activeTab === tab && (
             <div
               style={{

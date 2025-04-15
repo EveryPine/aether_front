@@ -1,32 +1,53 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const Breadcrumb: React.FC = () => {
+interface BreadcrumbProps {
+  paths: { label: string; path?: string }[]; // path가 있을 때만 클릭 가능
+}
+
+const Breadcrumb: React.FC<BreadcrumbProps> = ({ paths = [] }) => {
+  const navigate = useNavigate();
+
   return (
     <div
       style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
         padding: "16px 48px",
         fontFamily: "SUIT Variable",
         fontSize: "12px",
-        fontStyle: "normal",
         fontWeight: 500,
         lineHeight: "15.84px",
         letterSpacing: "-0.3px",
-        color: "#4F5462", // 텍스트 색상 지정
-        backgroundColor: "#fff", // 배경색상 지정
+        color: "#4F5462",
+        backgroundColor: "#fff",
       }}
     >
-      {/* Breadcrumb */}
-      <span>
-        <span style={{ marginRight: "8px" }}>ABC 회사</span>
-        <span style={{ margin: "0 8px" }}>&gt;</span>
-        <span style={{ marginLeft: "3px", marginRight: "8px" }}>ABCD 팀</span>
-        <span style={{ margin: "0 8px" }}>&gt;</span>
-        <span style={{marginLeft: "3px"}}>ABCDE 프로젝트</span>
-      </span>
-
+      {paths.map((item, index) => (
+        <span key={index} style={{ display: "flex", alignItems: "center" }}>
+          {item.path ? (
+            <span
+              onClick={() => navigate(item.path!)}
+              style={{
+                cursor: "pointer",
+                textDecoration: "none",
+                color: "#4F5462",
+              }}
+              onMouseEnter={(e) => {
+                (e.target as HTMLElement).style.textDecoration = "underline";
+              }}
+              onMouseLeave={(e) => {
+                (e.target as HTMLElement).style.textDecoration = "none";
+              }}
+            >
+              {item.label}
+            </span>
+          ) : (
+            <span>{item.label}</span>
+          )}
+          {index < paths.length - 1 && <span style={{ margin: "0 8px" }}>{">"}</span>}
+        </span>
+      ))}
     </div>
   );
 };
