@@ -3,18 +3,18 @@ export const getGradientByTime = () => {
   
     if (hour >= 4 && hour < 11) {
       return {
-        gradient: "from-[#00aaff] to-[#80d0ff]", // 아침
+        gradient: "from-[#007BFF] to-[#FFC9C2]", // 아침
         greeting: "좋은 아침이에요!",
       };
     }
     if (hour >= 11 && hour < 17) {
       return {
-        gradient: "from-[#aee2ff] to-[#007bff]", // 오후
+        gradient: "from-[#3DB5FF] to-[#007BFF]", // 오후
         greeting: "활기찬 오후에요!",
       };
     }
     return {
-      gradient: "from-[#ff9a9e] to-[#fad0c4]", // 저녁
+      gradient: "from-[#FFC9C2] to-[#007BFF]", // 저녁
       greeting: "오늘도 수고하셨어요.",
     };
   };
