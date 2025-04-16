@@ -22,7 +22,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (form.name && form.employeeId && form.position) {
-      setTimeout(() => navigate("/tasks"), 1000);
+      setTimeout(() => navigate("/dashboard"), 1000);
     }
   }, [form, navigate]);
 
