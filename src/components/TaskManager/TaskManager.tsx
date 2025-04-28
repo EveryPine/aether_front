@@ -49,12 +49,12 @@ const TaskManager: React.FC<{ setIsAddingManager: (isAdding: boolean) => void }>
             담당자
           </h4>
           <button 
-            className="absolute left-[506px] top-[174px] h-8 px-3 py-1 bg-[#ff432b] rounded justify-center items-center gap-1 inline-flex"
+            className="absolute left-[506px] top-[174px] w-[86px] p-0 h-8 bg-[#ff432b] rounded justify-center items-center gap-1 inline-flex"
             onClick={() => {
               setIsAdding(true);
               setIsAddingManager(true);
             }}>
-            <div className="text-[#fcfcff] text-sm font-semibold leading-normal">담당자 추가</div>
+            <div className="text-[#fcfcff] w-[86px] text-sm font-semibold leading-normal">담당자 추가</div>
           </button>
           <div className="absolute left-[128px] top-[226px] w-[464px]">
             {assignedUsers.length > 0 ? (
@@ -65,7 +65,7 @@ const TaskManager: React.FC<{ setIsAddingManager: (isAdding: boolean) => void }>
                 >
                   <img className="w-12 h-12 rounded-full" src={Profile} />
                   <div className="flex flex-col">
-                    <span className="text-[#4f5462] text-base font-semibold">{user.name}</span>
+                    <span className="text-[#4f5462] text-xs font-semibold">{user.name}</span>
                     <span className="text-[#ff432b] text-sm font-medium">{user.email}</span>
                   </div>
                 </div>
@@ -84,11 +84,11 @@ const TaskManager: React.FC<{ setIsAddingManager: (isAdding: boolean) => void }>
           <div className="absolute left-[128px] top-[232px] w-[464px] h-8 px-3 py-1 bg-[#f3f5f8] rounded-lg flex items-center">
             {selectedUser ? (
               <div className="h-6 px-2 bg-[#ffe3e0] rounded shadow-[0px_0px_28px_0px_rgba(79,84,98,0.12)] flex items-center">
-                <div className="text-[#ff432b] text-base font-semibold">{selectedUser.name}</div>
+                <div className="text-[#ff432b] text-xs font-semibold">{selectedUser.name}</div>
               </div>
             ) : (
               <input 
-                className="w-full bg-transparent text-[#4f5462] text-base font-semibold outline-none"
+                className="w-full bg-transparent text-[#4f5462] text-xs font-semibold outline-none"
                 type="text"
                 placeholder="담당자를 입력해 주세요."
                 value={search}
@@ -108,7 +108,7 @@ const TaskManager: React.FC<{ setIsAddingManager: (isAdding: boolean) => void }>
                 >
                   <img className="w-12 h-12 rounded-full" src={Profile} />
                   <div className="flex flex-col justify-between h-12">
-                    <div className="text-[#4f5462] text-base font-semibold leading-normal">{user.name}</div>
+                    <div className="text-[#4f5462] text-xs font-semibold leading-normal">{user.name}</div>
                     <div className="text-[#ff432b] text-sm font-medium leading-normal">{user.email}</div>
                   </div>
                 </div>
@@ -116,9 +116,9 @@ const TaskManager: React.FC<{ setIsAddingManager: (isAdding: boolean) => void }>
             </div>
           )}
   
-          <div className="absolute left-[460px] top-[705px] h-8 flex items-center gap-3">
+          <div className="absolute left-[460px] top-[705px] w-[132px] h-5 flex items-center gap-3">
             <button 
-              className="px-4 py-1 bg-[#e5eaf2] rounded text-[#949bad] text-base font-semibold leading-normal"
+              className="px-4 py-1 bg-[#e5eaf2] rounded text-[#949bad] text-xs font-semibold leading-normal"
               onClick={() => {
                 setIsAdding(false);
                 setIsAddingManager(false);
@@ -128,7 +128,7 @@ const TaskManager: React.FC<{ setIsAddingManager: (isAdding: boolean) => void }>
               취소
             </button>
             <button 
-              className="px-4 py-1 bg-[#ff432b] rounded text-[#fcfcff] text-base font-semibold leading-normal"
+              className="px-4 py-1 bg-[#ff432b] rounded text-[#fcfcff] text-xs font-semibold leading-normal"
               onClick={handleAddUser}
               disabled={!selectedUser} // 선택된 유저가 없으면 비활성화
             >

@@ -3,6 +3,7 @@ import { axiosInstance } from "../api/lib/axios";
 export interface Comment {
   _id: string;
   tid: string;
+  parentId?: string;
   commenterId: {
     _id: string;
     name: string;

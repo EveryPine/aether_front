@@ -51,7 +51,7 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
 
   //기존 데이터를 가져오면 reset
   useEffect(() => {
-    if (taskData?.data) {
+    if (taskData?.data && userInfo) {
       methods.reset({
         title: taskData.data.title || "",
         description: taskData.data.description || "",
