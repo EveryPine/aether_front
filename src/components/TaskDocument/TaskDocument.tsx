@@ -237,7 +237,7 @@ const TaskDocument: React.FC<{ tid: string }> = ({ tid }) => {
           {documents.map((doc: Document) => (
             <div
               key={doc._id}
-              className="self-stretch h-[76px] px-5 py-4 bg-[#f3f5f8] rounded-lg border border-[#e5eaf2] flex flex-col gap-1"
+              className="self-stretch px-5 py-4 bg-[#f3f5f8] rounded-lg border border-[#e5eaf2] flex flex-col gap-1"
             >
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2">

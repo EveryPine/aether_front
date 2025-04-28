@@ -70,14 +70,26 @@ img, video {
   max-width: none !important;
 }
 
+.bg-morning {
+  background: linear-gradient(90deg, #007BFF, #FFC9C2);
+}
+
+.bg-afternoon {
+  background: linear-gradient(90deg, #3DB5FF, #007BFF);
+}
+
+.bg-evening {
+  background: linear-gradient(90deg, #FFC9C2, #007BFF);
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
-  a:hover {
+  /* a:hover {
     color: #747bff;
-  }
+  } */
   button {
     background-color: #f9f9f9;
   }

@@ -8,9 +8,10 @@ import Edit from "../../assets/Edit.svg";
 interface TaskMenuProps {
   isTaskAddOpen: boolean;
   setIsTaskAddOpen: (isOpen: boolean) => void; // 상태 변경을 위한 props
+  addLabel?: string; //팀 스페이스 프로젝트 생성 버튼 관리를 위한 props
 }
 
-const TaskMenu: React.FC<TaskMenuProps> = ({ isTaskAddOpen, setIsTaskAddOpen }) => {
+const TaskMenu: React.FC<TaskMenuProps> = ({ isTaskAddOpen, setIsTaskAddOpen, addLabel }) => {
   return (
     <div style={{ display: "flex", height: "100%", position: "relative", overflow: "hidden" }}>
       {/* TaskMenu 컨트롤 */}
@@ -131,8 +132,8 @@ const TaskMenu: React.FC<TaskMenuProps> = ({ isTaskAddOpen, setIsTaskAddOpen }) 
             }}
             onClick={() => setIsTaskAddOpen(!isTaskAddOpen)} // 🔥 클릭 시 토글!
           >
-            <FiPlus size={16} color="#FFFFFF" style={{ marginRight: "5px" }} /> 업무 생성
-          </button>
+            {/* <FiPlus size={16} color="#FFFFFF" style={{ marginRight: "5px" }} /> 업무 생성</button> */}
+            <FiPlus size={16} color="#FFFFFF" style={{ marginRight: "5px" }} /> {addLabel || "업무 생성"}</button>
         </div>
       </div>
     </div>
