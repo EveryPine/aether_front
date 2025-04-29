@@ -9,15 +9,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const projectId = "679aedec4f051a6eaac0204c"; // 현재 프로젝트 ID (하드코딩)
 
 const taskSchema = z.object({
-  title: z.string().min(1, "업무 제목을 입력해주세요."),
-  description: z.string().min(1, "업무 설명을 입력해주세요."),
+  title: z.string().min(1, ""),
+  description: z.string().min(1, ""),
   isDaily: z.boolean(),
   status: z.string(),
   projectScope: z.string(),
   priority: z.number(),
-  startDate: z.string().optional(),
-  dueDate: z.string().optional(),
+  startDate: z.preprocess((val) => (val === "" ? undefined : val), z.string().optional()),
+  dueDate: z.preprocess((val) => (val === "" ? undefined : val), z.string().optional()),
   createdBy: z.string(),
+  creator: z.string(),
   project: z.string(),
   assignedTo: z.array(z.string()).optional(),
 });
@@ -43,6 +44,7 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
       startDate: "",
       dueDate: "",
       createdBy: "",
+      creator: "",
       project: projectId,
       assignedTo: [],
     },
@@ -51,7 +53,7 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
 
   //기존 데이터를 가져오면 reset
   useEffect(() => {
-    if (taskData?.data) {
+    if (taskData?.data && userInfo) {
       methods.reset({
         title: taskData.data.title || "",
         description: taskData.data.description || "",
@@ -61,7 +63,8 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
         priority: taskData.data.priority || 0,
         startDate: taskData.data.startDate || "",
         dueDate: taskData.data.dueDate || "",
-        createdBy: taskData.data.createdBy || (userInfo ? `${userInfo.name} (${userInfo.rank})` : ""),  // ✅ 유저 정보 반영
+        createdBy: taskData.data.createdBy,
+        creator: taskData.data.creator || "",
         project: taskData.data.project || projectId,  // ✅ 프로젝트 ID 반영
         assignedTo: taskData.data.assignedTo || [],
       });

@@ -5,7 +5,6 @@ import Profile from '../../assets/Profile-small.svg';
 import Up from '../../assets/Up-monotone.svg';
 import Down from '../../assets/Down-monotone.svg';
 import Brenchsvg from '../../assets/Brench.svg'
-import {Brench} from './Brench'
 
 interface TaskCommentProps {
   tid: string;
@@ -15,6 +14,7 @@ interface TaskCommentProps {
 interface Comment {
   _id: string;
   tid: string;
+  parentId?: string;
   commenterId: {
     _id: string;
     name: string;
@@ -134,12 +134,14 @@ const TaskComment: React.FC<TaskCommentProps> = ({ tid, userId }) => {
                   </div>
 
                   {/* 답글 작성 버튼 */}
-                  <button 
-                    onClick={() => setReplyTo(comment)}
-                    className="ps-2 py-0 rounded bg-[#f3f5f8] text-[#949bad] text-xs font-medium flex-shrink-0"
-                  >
-                    답글 작성
-                  </button>
+                  {!comment.parentId && (
+                    <button 
+                      onClick={() => setReplyTo(comment)}
+                      className="ps-2 py-0 rounded bg-[#f3f5f8] text-[#949bad] text-xs font-medium flex-shrink-0"
+                    >
+                      답글 작성
+                    </button>
+                  )}
                 </div>
 
                 {/* 답글 리스트 */}

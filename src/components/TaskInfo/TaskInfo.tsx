@@ -10,7 +10,7 @@ import { UseFormReturn } from "react-hook-form";
 import { TaskInfoValues } from "../../hooks/useTask";
 
 interface TaskInfoProps {
-  userInfo: {
+  userInfo?: {
     name: string;
     rank: string;
   };
@@ -31,7 +31,7 @@ const TaskInfo: React.FC<TaskInfoProps> = ({ taskInfoValues, methods, userInfo }
         <TaskVisibility methods={methods}/>
         <TaskDate methods={methods}/>
         <TaskPriority methods={methods}/>
-        <TaskCreator creatorName={userInfo?.name} rank={userInfo?.rank}/>
+        <TaskCreator creatorName={userInfo?.name || taskInfoValues.creator} rank={userInfo?.rank || "intern"}/>
       </div>
     </div>
   );

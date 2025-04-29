@@ -13,7 +13,7 @@ const TaskCreator: React.FC<TaskCreatorProps> = ({ creatorName, rank }) => {
         </div>
         <div className="px-3 py-2 rounded-lg justify-start items-center gap-2 flex">
             <div className="text-[#4f5462] text-base font-semibold leading-normal">{creatorName}</div>
-            <div className="text-[#ff432b] text-sm font-semibold leading-normal">{rank}</div>
+            <div className="w-10 text-[#ff432b] text-sm font-semibold leading-normal">{rank}</div>
         </div>
     </div>
   );
