@@ -12,7 +12,7 @@ import useTask from "../hooks/useTask"
 
 const TaskSetting: React.FC<{ selectedTaskId: string | null; fetchTasks: () => void }> = ({ selectedTaskId, fetchTasks }) => {
   const methods = useTask(selectedTaskId, false, fetchTasks);
-  const { userInfo, handleUpdateTask, formState: { isLoading }, watch } = methods;
+  const { handleUpdateTask, formState: { isLoading }, watch } = methods;
 
   const [activeTab, setActiveTab] = useState('info')
   const [isAddingManager, setIsAddingManager] = useState(false); // 담당자 추가
@@ -27,16 +27,17 @@ const TaskSetting: React.FC<{ selectedTaskId: string | null; fetchTasks: () => v
     startDate: watch("startDate", ""),
     dueDate: watch("dueDate", ""),
     createdBy: watch("createdBy", ""),
+    creator: watch("creator", ""),
     project: watch("project", ""),
     assignedTo: watch("assignedTo", []),
   };
   
   const renderContent = () => {
-    if (!userInfo || isLoading) return <div>loading</div>;
+    if (isLoading) return <div>loading</div>;
     if (methods.formState.isLoading) return <div>Loading</div>;
     switch (activeTab) {
       case 'info':
-        return <TaskInfo taskInfoValues={taskInfoValues} methods={methods} userInfo={userInfo}  />;
+        return <TaskInfo taskInfoValues={taskInfoValues} methods={methods} />;
       case 'docu':
         return <TaskDocument tid={selectedTaskId!}/>;
       case 'chat':
@@ -44,7 +45,7 @@ const TaskSetting: React.FC<{ selectedTaskId: string | null; fetchTasks: () => v
     case 'user':
         return <TaskManager setIsAddingManager={setIsAddingManager}/>;
       default:
-        return <TaskInfo taskInfoValues={taskInfoValues} methods={methods} userInfo={userInfo}  />;
+        return <TaskInfo taskInfoValues={taskInfoValues} methods={methods}  />;
     }
   };
   

@@ -18,6 +18,7 @@ const taskSchema = z.object({
   startDate: z.preprocess((val) => (val === "" ? undefined : val), z.string().optional()),
   dueDate: z.preprocess((val) => (val === "" ? undefined : val), z.string().optional()),
   createdBy: z.string(),
+  creator: z.string(),
   project: z.string(),
   assignedTo: z.array(z.string()).optional(),
 });
@@ -43,6 +44,7 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
       startDate: "",
       dueDate: "",
       createdBy: "",
+      creator: "",
       project: projectId,
       assignedTo: [],
     },
@@ -61,7 +63,8 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
         priority: taskData.data.priority || 0,
         startDate: taskData.data.startDate || "",
         dueDate: taskData.data.dueDate || "",
-        createdBy: taskData.data.createdBy || (userInfo ? `${userInfo.name} (${userInfo.rank})` : ""),  // ✅ 유저 정보 반영
+        createdBy: taskData.data.createdBy,
+        creator: taskData.data.creator || "",
         project: taskData.data.project || projectId,  // ✅ 프로젝트 ID 반영
         assignedTo: taskData.data.assignedTo || [],
       });
