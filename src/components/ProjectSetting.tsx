@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import ProejectTitle from "./Project/ProjectTitle";
+import ProjectDescription from "./Project/ProjectDescription";
 
 const ProjectSetting: React.FC = () => {
+  const [title, setTitle] = useState("");
   const [status, setStatus] = useState("대기");
   const [visibility, setVisibility] = useState("전체 공개");
   const [startDate, setStartDate] = useState("");
@@ -17,21 +20,13 @@ const ProjectSetting: React.FC = () => {
         {/* 프로젝트 제목 */}
         <div>
           <label className="block mb-2 text-sm font-medium text-[#4F5462]">프로젝트 제목</label>
-          <input
-            type="text"
-            placeholder="ABCDE 프로젝트"
-            className="w-full px-4 py-2 bg-white border rounded-md border-[#D9DBE1]"
-          />
+          <ProejectTitle title={title} setTitle={setTitle}/>
         </div>
 
         {/* 프로젝트 설명 */}
         <div>
           <label className="block mb-2 text-sm font-medium text-[#4F5462]">프로젝트 소개 및 설명</label>
-          <textarea
-            placeholder="Place Holder"
-            className="w-full h-[120px] px-4 py-2 bg-white border rounded-md border-[#D9DBE1]"
-          />
-          <p className="text-right text-xs text-[#949BAD]">( 0 / 364 )</p>
+          <ProjectDescription />  
         </div>
 
         {/* 상태, 공개여부, 일정 */}
