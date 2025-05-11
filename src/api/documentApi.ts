@@ -27,12 +27,12 @@ export const documentApi = {
   },
 
   // 문서 업로드 
-  uploadDocument: async (tid: string, file: File) => {
-    if(!file){
+  uploadDocument: async (tid: string, files: File) => {
+    if(!files){
       console.log("파일 없음");
     }
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("files", files); 
 
     try{
       const response = await axiosInstance.post(`/api/tasks/${tid}/docs`, formData);

@@ -3,7 +3,11 @@ import { axiosInstance } from "../api/lib/axios";
 export interface Comment {
   _id: string;
   tid: string;
-  commenterId: string;
+  parentId?: string;
+  commenterId: {
+    _id: string;
+    name: string;
+  };
   content: string;
   replies?: Comment[];
 }
@@ -33,7 +37,7 @@ export const searchComments = async (tid: string, keyword: string): Promise<Comm
 };
 
 // 코멘트 추가
-export const postComment = async (tid: string, commentData: { content: string }) => {
+export const postComment = async (tid: string, commentData: { content: string; parentId?: string}) => {
   try{
     const response = await axiosInstance.post(`/api/tasks/${tid}/comments`, commentData);
     return response.data?.comments ?? [];

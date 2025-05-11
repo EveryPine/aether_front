@@ -10,9 +10,9 @@ import TaskManager from '../components/TaskManager/TaskManager';
 import { FormProvider } from "react-hook-form"
 import useTask from "../hooks/useTask"
 
-const TaskSetting: React.FC<{ selectedTaskId: string | null }> = ({ selectedTaskId }) => {
-  const methods = useTask(selectedTaskId, false);
-  const { userInfo, handleUpdateTask, formState: { isLoading }, watch } = methods;
+const TaskSetting: React.FC<{ selectedTaskId: string | null; fetchTasks: () => void }> = ({ selectedTaskId, fetchTasks }) => {
+  const methods = useTask(selectedTaskId, false, fetchTasks);
+  const { handleUpdateTask, formState: { isLoading }, watch } = methods;
 
   const [activeTab, setActiveTab] = useState('info')
   const [isAddingManager, setIsAddingManager] = useState(false); // 담당자 추가
@@ -27,16 +27,17 @@ const TaskSetting: React.FC<{ selectedTaskId: string | null }> = ({ selectedTask
     startDate: watch("startDate", ""),
     dueDate: watch("dueDate", ""),
     createdBy: watch("createdBy", ""),
+    creator: watch("creator", ""),
     project: watch("project", ""),
     assignedTo: watch("assignedTo", []),
   };
   
   const renderContent = () => {
-    if (!userInfo || isLoading) return <div>loading</div>;
+    if (isLoading) return <div>loading</div>;
     if (methods.formState.isLoading) return <div>Loading</div>;
     switch (activeTab) {
       case 'info':
-        return <TaskInfo taskInfoValues={taskInfoValues} methods={methods} userInfo={userInfo}  />;
+        return <TaskInfo taskInfoValues={taskInfoValues} methods={methods} />;
       case 'docu':
         return <TaskDocument tid={selectedTaskId!}/>;
       case 'chat':
@@ -44,9 +45,14 @@ const TaskSetting: React.FC<{ selectedTaskId: string | null }> = ({ selectedTask
     case 'user':
         return <TaskManager setIsAddingManager={setIsAddingManager}/>;
       default:
-        return <TaskInfo taskInfoValues={taskInfoValues} methods={methods} userInfo={userInfo}  />;
+        return <TaskInfo taskInfoValues={taskInfoValues} methods={methods}  />;
     }
   };
+  
+  // 새로운 업무를 선택하면 activeTab을 'info'로 초기화
+  useEffect(() => {
+    setActiveTab('info');
+  }, [selectedTaskId]);
 
   return (
     <FormProvider {...methods}>  
@@ -63,9 +69,9 @@ const TaskSetting: React.FC<{ selectedTaskId: string | null }> = ({ selectedTask
               {!isAddingManager && ( // 담당자 추가 시 생성하기 버튼 비활성화
                 <button
                   type="submit"
-                  className="absolute top-[705px] left-[506px] h-8 px-4 py-1 bg-[#ff432b] rounded justify-center items-center gap-1 inline-flex"
+                  className="absolute top-[705px] left-[506px] w-[86px] h-8 px-4 py-1 bg-[#ff432b] rounded justify-center items-center gap-1 inline-flex"
                 >
-                  <div className="w-14 text-[#fcfcff] text-base font-semibold leading-normal">수정하기</div>
+                  <div className="w-14 text-[#fcfcff] text-sm font-semibold leading-normal">수정하기</div>
                 </button>
               )}
             </form>

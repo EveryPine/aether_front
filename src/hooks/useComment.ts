@@ -18,7 +18,7 @@ const useComment = (tid: string, searchKeyword?: string) => {
 
   // 코멘트 생성
   const createComment = useMutation(
-    (commentData: { content: string }) => postComment(tid, commentData),
+    (commentData: { content: string, parentId?:string }) => postComment(tid, commentData),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["comments", tid]); // 새 댓글 등록 후 목록 갱신

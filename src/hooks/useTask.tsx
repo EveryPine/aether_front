@@ -9,22 +9,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const projectId = "679aedec4f051a6eaac0204c"; // 현재 프로젝트 ID (하드코딩)
 
 const taskSchema = z.object({
-  title: z.string().min(1, "업무 제목을 입력해주세요."),
-  description: z.string().min(1, "업무 설명을 입력해주세요."),
+  title: z.string().min(1, ""),
+  description: z.string().min(1, ""),
   isDaily: z.boolean(),
   status: z.string(),
   projectScope: z.string(),
   priority: z.number(),
-  startDate: z.string().optional(),
-  dueDate: z.string().optional(),
+  startDate: z.preprocess((val) => (val === "" ? undefined : val), z.string().optional()),
+  dueDate: z.preprocess((val) => (val === "" ? undefined : val), z.string().optional()),
   createdBy: z.string(),
+  creator: z.string(),
   project: z.string(),
   assignedTo: z.array(z.string()).optional(),
 });
 
 export interface TaskInfoValues extends z.infer<typeof taskSchema> {}
 
-export const useTask = (tid: string | null, isCreate: boolean) => {
+export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () => void) => {
   const queryClient = useQueryClient();
   const { data: userInfo } = useQuery(["userInfo"], () => fetchUserInfo());
   const { data: taskData, isLoading } = useQuery(["taskInfo", tid], () => fetchTaskInfo(tid as string), {
@@ -43,7 +44,8 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
       startDate: "",
       dueDate: "",
       createdBy: "",
-      project: "",
+      creator: "",
+      project: projectId,
       assignedTo: [],
     },
     resolver: zodResolver(taskSchema),
@@ -51,7 +53,7 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
 
   //기존 데이터를 가져오면 reset
   useEffect(() => {
-    if (taskData?.data) {
+    if (taskData?.data && userInfo) {
       methods.reset({
         title: taskData.data.title || "",
         description: taskData.data.description || "",
@@ -59,9 +61,10 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
         status: taskData.data.status || "To Do",
         projectScope: taskData.data.projectScope || "Public",
         priority: taskData.data.priority || 0,
-        startDate: taskData.data.startDate ? new Date(taskData.data.startDate).toISOString().split("T")[0] : "",
-        dueDate: taskData.data.dueDate ? new Date(taskData.data.dueDate).toISOString().split("T")[0] : "",
-        createdBy: taskData.data.createdBy || (userInfo ? `${userInfo.name} (${userInfo.rank})` : ""),  // ✅ 유저 정보 반영
+        startDate: taskData.data.startDate || "",
+        dueDate: taskData.data.dueDate || "",
+        createdBy: taskData.data.createdBy,
+        creator: taskData.data.creator || "",
         project: taskData.data.project || projectId,  // ✅ 프로젝트 ID 반영
         assignedTo: taskData.data.assignedTo || [],
       });
@@ -90,7 +93,9 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
   // 업무 생성
   const handleCreateTask = methods.handleSubmit(async (formData) => {
     try {
+      console.log("전송할 formData:", formData);
       await createTaskMutation.mutateAsync(formData);
+      fetchTasks();
     } catch (error) {
       console.log(error);
     }
@@ -118,8 +123,14 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
       const updatedData = Object.fromEntries(
         Object.entries(formData).filter(([key, value]) => {
           const typedKey = key as keyof TaskInfoValues;
-          const prevValue = taskData?.data?.[typedKey];
+          let prevValue = taskData?.data?.[typedKey];
           
+          // 날짜 포맷 변환
+          if ((typedKey === "startDate" || typedKey === "dueDate") && typeof prevValue === "string") {
+            prevValue = prevValue.split("T")[0];
+          }
+
+          // 담당자 문자열 비교
           if (Array.isArray(value) && Array.isArray(prevValue)) {
             return JSON.stringify(value) !== JSON.stringify(prevValue);
           }
@@ -140,6 +151,7 @@ export const useTask = (tid: string | null, isCreate: boolean) => {
 
     if (Object.keys(updatedData).length > 0) {
         await updateTaskMutation.mutateAsync(updatedData);
+        fetchTasks();
       }
     } catch (error) {
       console.log(error);
