@@ -28,7 +28,7 @@ export interface TaskInfoValues extends z.infer<typeof taskSchema> {}
 export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () => void) => {
   const queryClient = useQueryClient();
   const { data: userInfo } = useQuery(["userInfo"], () => fetchUserInfo());
-  const { data: taskData, isLoading } = useQuery(["taskInfo", tid], () => fetchTaskInfo(tid as string), {
+  const { data: taskData } = useQuery(["taskInfo", tid], () => fetchTaskInfo(tid as string), {
     enabled: !isCreate && !!tid,
     initialData: null,
   });
@@ -108,7 +108,7 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
       const { createdBy, ...filteredUpdate } = updatedData;
       return updateTask(tid as string, filteredUpdate);
     },      {
-      onSuccess: (data) => {
+      onSuccess: (_data) => {
         queryClient.invalidateQueries(["taskInfo", tid]); 
       },
       onError: (error) => {

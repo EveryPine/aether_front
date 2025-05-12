@@ -4,7 +4,7 @@ import Download from '../../assets/Download.svg'
 import DownloadActive from '../../assets/DownloadActive.svg'
 
 const DocumentList: React.FC = () => {
-    const [documents, setDocuments] = useState([
+    const [documents] = useState([
         {
             id: 1,
             author: "최기수",

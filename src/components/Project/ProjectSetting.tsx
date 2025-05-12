@@ -1,5 +1,4 @@
 import React from 'react';
-import { UseFormReturn } from "react-hook-form";
 import ProjectDescription from "./ProjectDescription"
 
 const ProjectSetting: React.FC = () => {

@@ -3,16 +3,15 @@ import Navbar from "../components/Navbar";
 import Breadcrumb from "../components/BreadCrumb";
 import TaskMenu from "../components/KanbanBoard/TaskMenu";
 import TaskCard from "../components/KanbanBoard/TaskCard";
-import TaskSetting from "../components/TaskSetting";
 import ProjectAdd from "../components/ProjectAdd";
-import { useTask } from "../hooks/useTask";
+// import { useTask } from "../hooks/useTask";
 import axiosInstance from "../api/lib/axios";
 
 const TeamSpace: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("프로젝트");
+  // const [activeTab, setActiveTab] = useState("프로젝트");
   const [isProjectAddOpen, setIsProjectAddOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<string | null>(null);
-  const [isTaskSettingOpen, setIsTaskSettingOpen] = useState(false);
+  const [_isTaskSettingOpen, setIsTaskSettingOpen] = useState(false);
 
   const [tasks, setTasks] = useState<{ [key: string]: any[] }>({
     "To Do": [],
@@ -22,7 +21,7 @@ const TeamSpace: React.FC = () => {
   });
 
   const projectId = "679aedec4f051a6eaac0204c";
-  const methods = useTask(null, true);
+  // const methods = useTask(null, true);
 
   const fetchTasks = async () => {
     try {

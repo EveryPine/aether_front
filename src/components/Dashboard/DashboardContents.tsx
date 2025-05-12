@@ -66,7 +66,7 @@ const DashboardContents = () => {
       "Hold": "bg-gray-200 text-gray-600",
     };
     return (
-      <span className={`text-xs font-medium px-2 py-1 rounded-md ${badgeColor[status] || "bg-gray-100 text-gray-600"}`}>
+      <span className={`text-xs font-medium px-2 py-1 rounded-md ${badgeColor[status as keyof typeof badgeColor] || "bg-gray-100 text-gray-600"}`}>
         {status}
       </span>
     );
