@@ -8,7 +8,7 @@ interface ProjecTitleProps {
 
 const ProejectTitle: React.FC<ProjecTitleProps> = ({ title, setTitle }) => {
   return (
-    <div className= "w-[197px] px-4 py-2 bg-[#f3f5f8] rounded-lg shadow-[inset_0px_0px_4px_0px_rgba(26,26,35,0.12)] flex items-center gap-1">
+    <div className= "w-[180px] px-4 py-2 bg-[#f3f5f8] rounded-lg shadow-[inset_0px_0px_4px_0px_rgba(26,26,35,0.12)] flex items-center gap-1">
         <input
             type="text"
             defaultValue={title}
