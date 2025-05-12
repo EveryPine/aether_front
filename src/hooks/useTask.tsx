@@ -25,7 +25,7 @@ const taskSchema = z.object({
 
 export interface TaskInfoValues extends z.infer<typeof taskSchema> {}
 
-export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () => void) => {
+export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () => void, closeTab: () => void) => {
   const queryClient = useQueryClient();
   const { data: userInfo } = useQuery(["userInfo"], () => fetchUserInfo());
   const { data: taskData, isLoading } = useQuery(["taskInfo", tid], () => fetchTaskInfo(tid as string), {
@@ -110,6 +110,7 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
     },      {
       onSuccess: (data) => {
         queryClient.invalidateQueries(["taskInfo", tid]); 
+        if (closeTab) closeTab(); // 수정 성공 시 탭 닫기
       },
       onError: (error) => {
         console.error(error);

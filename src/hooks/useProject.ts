@@ -5,9 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const projectSchema = z.object({
    status: z.string(),
    name: z.string().min(1, ""),
-   description: z.string().min(1, ""),
-//   members: z.array(z.string()).optional(),
-//   status: z.string(),
+   description: z.string().min(1, "").optional(),
    scope: z.string(),
    priority: z.number(),
    startDate: z.preprocess((val) => (val === "" ? undefined : val), z.string().optional()),
