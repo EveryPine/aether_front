@@ -42,7 +42,7 @@ const ProjectSetting: React.FC = () => {
             {/* 공개여부 */}
             <div className="flex self-stretch justify-start items-start gap-12">
               <label className="w-[59px] text-[#949bad] text-base font-medium leading-normal" style={{ marginTop: "7.6px" }} >
-                공개여부
+                공개 여부
               </label>
               <ProjectScope methods={methods}/> 
             </div>
