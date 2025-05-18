@@ -28,9 +28,10 @@ interface Notice {
 
 interface DashboardContentsProps {
   setNotices: Dispatch<SetStateAction<Notice[]>>;
+  notices: Notice[];
 }
 
-const DashboardContents = ({ setNotices }: DashboardContentsProps) => {
+const DashboardContents = ({ setNotices, notices }: DashboardContentsProps) => {
   const navigate = useNavigate();
   const [myTasks, setMyTasks] = useState<Task[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -152,7 +153,7 @@ const DashboardContents = ({ setNotices }: DashboardContentsProps) => {
 
       {/* 오른쪽 열 (메모) */}
       <div>
-        <MemoCard setNotices={setNotices}/>
+        <MemoCard setNotices={setNotices} notices={notices} />
       </div>
     </div>
   );

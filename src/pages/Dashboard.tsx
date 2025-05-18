@@ -28,7 +28,7 @@ const Dashboard = () => {
       <div className="relative z-10 w-full max-w-[1344px] px-8 pt-[60px]">
         <DashboardHeader />
         <Notice notices={notices}/>
-        <DashboardContents setNotices={setNotices}/>
+        <DashboardContents setNotices={setNotices} notices={notices} />
       </div>
     </div>
   );
