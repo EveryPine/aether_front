@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MemoCard from "./MemoCard";
 import axiosInstance from "../../api/lib/axios";
+import { Dispatch, SetStateAction } from "react";
 
 interface Task {
   _id: string;
@@ -19,7 +20,17 @@ interface Project {
   dueDate: string;
 }
 
-const DashboardContents = () => {
+interface Notice {
+  id: string;
+  type: string;
+  body: string;
+}
+
+interface DashboardContentsProps {
+  setNotices: Dispatch<SetStateAction<Notice[]>>;
+}
+
+const DashboardContents = ({ setNotices }: DashboardContentsProps) => {
   const navigate = useNavigate();
   const [myTasks, setMyTasks] = useState<Task[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -141,7 +152,7 @@ const DashboardContents = () => {
 
       {/* 오른쪽 열 (메모) */}
       <div>
-        <MemoCard />
+        <MemoCard setNotices={setNotices}/>
       </div>
     </div>
   );
