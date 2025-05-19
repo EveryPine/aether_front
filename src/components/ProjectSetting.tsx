@@ -10,7 +10,8 @@ import TaskDate from "./TaskInfo/TaskDate";
 import TaskPriority from "./TaskInfo/TaskPriority";
 
 const ProjectSetting: React.FC = () => {
-  const methods = useProject();
+  const teamId = "67fce39dddf4eb5d55ecb3d0";
+  const methods = useProject(teamId, false);
   const [title, setTitle] = useState("");
 
   return (

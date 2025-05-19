@@ -3,53 +3,33 @@ import Navbar from "../components/Navbar";
 import Breadcrumb from "../components/BreadCrumb";
 import TaskMenu from "../components/KanbanBoard/TaskMenu";
 import TaskCard from "../components/KanbanBoard/TaskCard";
-import TaskSetting from "../components/TaskSetting";
 import ProjectAdd from "../components/ProjectAdd";
-import { useTask } from "../hooks/useTask";
-import axiosInstance from "../api/lib/axios";
+import useProject from "../hooks/useProject";
 
 const TeamSpace: React.FC = () => {
   const [activeTab, setActiveTab] = useState("프로젝트");
   const [isProjectAddOpen, setIsProjectAddOpen] = useState(false);
-  const [selectedTask, setSelectedTask] = useState<string | null>(null);
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [isTaskSettingOpen, setIsTaskSettingOpen] = useState(false);
 
-  const [tasks, setTasks] = useState<{ [key: string]: any[] }>({
-    "To Do": [],
-    "In Progress": [],
-    "Done": [],
-    "Issue": [],
-  });
+  const teamId = "67fce39dddf4eb5d55ecb3d0";
+  
+  const { projects } = useProject(teamId, false);
 
-  const projectId = "679aedec4f051a6eaac0204c";
-  const methods = useTask(null, true);
-
-  const fetchTasks = async () => {
-    try {
-      const response = await axiosInstance.get(`/api/tasks/${projectId}`);
-      if (response.data.success) {
-        setTasks({
-          "To Do": response.data.data["To Do"] || [],
-          "In Progress": response.data.data["In Progress"] || [],
-          "Done": response.data.data["Done"] || [],
-          "Issue": response.data.data["Issue"] || [],
-        });
-      }
-    } catch (error) {
-      console.error("팀 업무 조회 실패", error);
-    }
+  const projectState = {
+    "To Do": projects.filter((project) => project.status === "To Do"),
+    "In Progress": projects.filter((project) => project.status === "In Progress"),
+    "Done": projects.filter((project) => project.status === "Done"),
+    "Issue": projects.filter((project) => project.status === "Issue"),
+    "Hold": projects.filter((project) => project.status === "Hold"),
   };
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  const handleTaskClick = (taskId: string) => {
-    if (selectedTask === taskId) {
-      setSelectedTask(null);
+  const handleProjectClick = (projectId: string) => {
+    if (selectedProject === projectId) {
+      setSelectedProject(null);
       setIsTaskSettingOpen(false);
     } else {
-      setSelectedTask(taskId);
+      setSelectedProject(projectId);
       setIsTaskSettingOpen(true);
       setIsProjectAddOpen(false);
     }
@@ -58,7 +38,7 @@ const TeamSpace: React.FC = () => {
   const handleProjectAddClick = () => {
     setIsProjectAddOpen(!isProjectAddOpen);
     setIsTaskSettingOpen(false);
-    setSelectedTask(null);
+    setSelectedProject(null);
   };
 
   return (
@@ -100,18 +80,18 @@ const TeamSpace: React.FC = () => {
                 {isProjectAddOpen ? (
                 <ProjectAdd />
                 ) : (
-                <div className="flex gap-8 overflow-x-auto whitespace-nowrap">
-                    {Object.entries(tasks).map(([status, taskList]) => (
+                <div className="flex gap-4 overflow-x-auto whitespace-nowrap">
+                    {Object.entries(projectState).map(([status, projectList]) => (
                     <div key={status} className="flex flex-col gap-4">
-                        {taskList.map((task, index) => (
+                        {projectList.map((project, index) => (
                         <TaskCard
-                            key={task._id}
-                            title={task.title}
-                            description={task.description}
-                            status={task.status}
-                            onClick={() => handleTaskClick(task._id)}
-                            isSelected={selectedTask === task._id}
-                            className={index === taskList.length - 1 ? "mb-10" : ""}
+                            key={project._id}
+                            title={project.name}
+                            description={project.description ?? ""}
+                            status={project.status}
+                            onClick={() => handleProjectClick(project._id)}
+                            isSelected={selectedProject === project._id}
+                            className={index === projectList.length - 1 ? "mb-10" : ""}
                         />
                         ))}
                     </div>

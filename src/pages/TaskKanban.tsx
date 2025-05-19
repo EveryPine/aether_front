@@ -57,8 +57,6 @@ const TaskKanban: React.FC<TaskKanbanProps> = ({ activeTab, setActiveTab }) => {
   
   const projectId = "679aedec4f051a6eaac0204c"; // 현재 프로젝트 ID (하드코딩)
 
-  const methods = useTask(null, true);
-
   // 업무 데이터 가져오기
   const fetchTasks = async () => {
     try {
