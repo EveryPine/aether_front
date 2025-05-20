@@ -61,7 +61,7 @@ export const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, // ✅ 쿠키 인증 활성화
+  withCredentials: true, //쿠키 인증 활성화
 });
 
 // 요청 인터셉터: 요청 시 자동으로 쿠키 포함
