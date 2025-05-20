@@ -20,7 +20,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ paths = [] }) => {
         lineHeight: "15.84px",
         letterSpacing: "-0.3px",
         color: "#4F5462",
-        backgroundColor: "#fff",
+        backgroundColor: "#fff"
       }}
     >
       {paths.map((item, index) => (
