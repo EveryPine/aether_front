@@ -25,7 +25,7 @@ const taskSchema = z.object({
 
 export interface TaskInfoValues extends z.infer<typeof taskSchema> {}
 
-export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () => void) => {
+export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () => void, closeTab: () => void) => {
   const queryClient = useQueryClient();
   const { data: userInfo } = useQuery(["userInfo"], () => fetchUserInfo());
   const { data: taskData, isLoading } = useQuery(["taskInfo", tid], () => fetchTaskInfo(tid as string), {
@@ -46,7 +46,7 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
       createdBy: "",
       creator: "",
       project: projectId,
-      assignedTo: [],
+      assignedTo: undefined,
     },
     resolver: zodResolver(taskSchema),
   });
@@ -66,7 +66,7 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
         createdBy: taskData.data.createdBy,
         creator: taskData.data.creator || "",
         project: taskData.data.project || projectId,  // ✅ 프로젝트 ID 반영
-        assignedTo: taskData.data.assignedTo || [],
+        assignedTo: taskData.data.assignedTo || undefined,
       });
     }
   }, [taskData, userInfo, projectId, methods]);  // ✅ userInfo, projectId 의존성 추가
@@ -76,7 +76,7 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
   const createTaskMutation = useMutation(
     (newTask: TaskInfoValues) => {
       // createdBy 필드 제거 후 요청
-      const { createdBy, ...filteredTask } = newTask;
+      const { creator, createdBy, ...filteredTask } = newTask;
       return createTask(filteredTask);
     },
     {
@@ -93,7 +93,6 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
   // 업무 생성
   const handleCreateTask = methods.handleSubmit(async (formData) => {
     try {
-      console.log("전송할 formData:", formData);
       await createTaskMutation.mutateAsync(formData);
       fetchTasks();
     } catch (error) {
@@ -110,6 +109,7 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
     },      {
       onSuccess: (data) => {
         queryClient.invalidateQueries(["taskInfo", tid]); 
+        if (closeTab) closeTab(); // 수정 성공 시 탭 닫기
       },
       onError: (error) => {
         console.error(error);
@@ -149,7 +149,13 @@ export const useTask = (tid: string | null, isCreate: boolean, fetchTasks: () =>
     
     delete updatedData.createdBy;
 
-    if (Object.keys(updatedData).length > 0) {
+      if (Object.keys(updatedData).length > 0) {
+
+        // 프로젝트 id 추가
+        if (!updatedData.project) {
+          updatedData.project = projectId;
+        }
+
         await updateTaskMutation.mutateAsync(updatedData);
         fetchTasks();
       }

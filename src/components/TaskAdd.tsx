@@ -9,8 +9,8 @@ import { FormProvider } from "react-hook-form";
 import useTask from "../hooks/useTask";
 import axiosInstance from "../api/lib/axios";
 
-const TaskAdd: React.FC<{ fetchTasks: () => void }> = ({ fetchTasks }) => {
-  const methods = useTask(null, true, fetchTasks);
+const TaskAdd: React.FC<{ closeTab: () => void; fetchTasks: () => void }> = ({ fetchTasks, closeTab }) => {
+  const methods = useTask(null, true, fetchTasks, closeTab);
   const { userInfo, handleSubmit, watch, setValue, handleCreateTask } = methods;
   
   const [activeTab, setActiveTab] = useState('info');
