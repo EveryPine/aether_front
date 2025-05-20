@@ -23,7 +23,7 @@ const Notice = ({ notices }: { notices: Notice[] }) => {
   const currentNotice = notices[currentIdx];
 
   return (
-    <div className="w-[1214px] h-[136px] rounded-[8px] bg-[#FCFCFF] px-[16px] py-[20px] shadow-[0px_0px_28px_0px_rgba(79,84,98,0.12)] my-[32px]">
+    <div className="w-[1244px] h-[136px] rounded-[8px] bg-[#FCFCFF] px-[16px] py-[20px] mx-auto shadow-[0px_0px_28px_0px_rgba(79,84,98,0.12)] my-[32px]">
         <p className="text-gray-700 font-semibold text-[16px] mb-[12px]">공지</p>
 
         <div className="relative h-[60px] w-[1182px] overflow-hidden rounded border border-[#E5EAF2] bg-[#F5F7FA] px-4 py-[2px] flex items-center">
@@ -40,7 +40,7 @@ const Notice = ({ notices }: { notices: Notice[] }) => {
                     NEW
                 </span>
 
-                <span className="flex items-center gap-1 text-[#FF432B] text-[14px] font-semibold bg-[#FFE5E0] px-2 py-[2px] rounded">
+                <span className="flex items-center gap-1 text-[#FF432B] text-[14px] font-light bg-[#FFE5E0] px-2 py-[2px] rounded">
                     <img src={icon} className="w-[14px] h-[14px]" alt="icon" />
                     사내공지
                 </span>

@@ -11,7 +11,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ setActiveTab }) => {
-  const [isExpanded, setIsExpanded] = useState(false); // 🔄 펼침 상태
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
@@ -29,6 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveTab }) => {
         transition: "width 0.3s ease",
         backgroundColor: "#ffffff",
         boxShadow: "2px 0 8px rgba(0,0,0,0.05)",
+        zIndex: 20
       }}
     >
       {/* 상단 프로필 및 아이콘 */}
@@ -48,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveTab }) => {
             justifyContent: isExpanded ? "flex-start" : "center",
             width: "100%",
             alignItems: "center",
-            height: "48px", // 🔥 전체 높이 고정
+            height: "48px",
           }}
         >
           {/* 프로필 이미지 */}
@@ -121,7 +122,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveTab }) => {
           paddingBottom: "70px",
           cursor: "pointer",
         }}
-        onClick={toggleSidebar} // 🔁 로고 클릭 시 확장 토글
+        onClick={toggleSidebar}
       >
         <img src={AetherLogo} alt="Logo" style={{ width: "24px", height: "24px" }} />
       </div>

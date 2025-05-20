@@ -57,7 +57,7 @@ const MemoCard = ({ setNotices, notices }: MemoCardProps) => {
   };
 
   return (
-    <div className="flex flex-col justify-between items-start h-[722px] min-w-[362px] max-w-[402px] p-[20px_16px] rounded-lg shadow bg-white">
+    <div className="flex flex-col justify-between items-start h-[722px] min-w-[394px] max-w-[402px] p-[20px_16px] rounded-lg shadow bg-white">
       {/* 스위치 & 헤더 */}
       <div className="flex items-center gap-2 mb-4">
         <label className="relative inline-flex items-center w-[42px] h-[24px] cursor-pointer">

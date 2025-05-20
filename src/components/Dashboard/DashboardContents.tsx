@@ -88,18 +88,19 @@ const DashboardContents = ({ setNotices, notices }: DashboardContentsProps) => {
     <div className="w-full max-w-[1344px] mt-12 px-4 mx-auto flex gap-8">
       {/* 왼쪽 열 (팀 스페이스 + 참여 프로젝트) */}
       <div className="flex flex-col gap-8">
-        <div className="h-[168px] min-w-[362px] max-w-[402px] bg-white rounded-xl shadow-md p-4">
+        <div className="h-[168px] min-w-[394pxㅌ] max-w-[402px] bg-white rounded-xl shadow-md p-4">
           <h2 className="text-lg font-semibold mb-4">팀 스페이스</h2>
           <div
             className="bg-[#F5F7FA] hover:bg-gray-100 rounded-lg px-6 py-4 cursor-pointer"
             onClick={() => navigate("/teamspace")}
           >
+            {/* 팀 스페이스 하드 코딩 */}
             <p className="text-base font-semibold text-gray-800">Ho감자 팀</p>
             <p className="text-sm text-gray-400">Body Text</p>
           </div>
         </div>
 
-        <div className="h-[522px] min-w-[362px] max-w-[402px] bg-white rounded-xl shadow-md p-4 overflow-y-auto">
+        <div className="h-[522px] min-w-[394px] max-w-[402px] bg-white rounded-xl shadow-md p-4 overflow-y-auto">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">참여 프로젝트</h2>
             <span className="text-sm text-gray-400">우선순위 순 ▾</span>
@@ -125,7 +126,7 @@ const DashboardContents = ({ setNotices, notices }: DashboardContentsProps) => {
       </div>
 
       {/* 가운데 열 (나의 업무) */}
-      <div className="h-[722px] min-w-[362px] max-w-[402px] bg-white rounded-xl shadow-md p-4 overflow-y-auto">
+      <div className="h-[722px] min-w-[394px] max-w-[402px] bg-white rounded-xl shadow-md p-4 overflow-y-auto">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">나의 업무</h2>
           <span className="text-sm text-gray-400">마감일 순 ▾</span>
