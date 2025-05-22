@@ -4,17 +4,24 @@ import Breadcrumb from "../components/BreadCrumb";
 import TaskMenu from "../components/KanbanBoard/TaskMenu";
 import TaskCard from "../components/KanbanBoard/TaskCard";
 import ProjectAdd from "../components/ProjectAdd";
-import useProject from "../hooks/useProject";
+// import { useTask } from "../hooks/useTask";
+import axiosInstance from "../api/lib/axios";
 
 const TeamSpace: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("프로젝트");
+  // const [activeTab, setActiveTab] = useState("프로젝트");
   const [isProjectAddOpen, setIsProjectAddOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<string | null>(null);
-  const [isTaskSettingOpen, setIsTaskSettingOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<string | null>(null);
+  const [_isTaskSettingOpen, setIsTaskSettingOpen] = useState(false);
 
-  const teamId = "67fce39dddf4eb5d55ecb3d0";
-  
-  const { projects } = useProject(teamId, false);
+  const [tasks, setTasks] = useState<{ [key: string]: any[] }>({
+    "To Do": [],
+    "In Progress": [],
+    "Done": [],
+    "Issue": [],
+  });
+
+  const projectId = "679aedec4f051a6eaac0204c";
+  // const methods = useTask(null, true);
 
   const projectState = {
     "To Do": projects.filter((project) => project.status === "To Do"),

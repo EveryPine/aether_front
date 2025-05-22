@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import AlertIcon from '../assets/Alert-red.svg';
 import Close from '../assets/Close.svg';
 import CloseActive from '../assets/Close-Active.svg';

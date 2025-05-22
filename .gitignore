@@ -23,6 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 .env
-
-# Axios config
-src/api/lib/axios.ts

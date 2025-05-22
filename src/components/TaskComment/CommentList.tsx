@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Profile from '../../assets/Profile-small.svg'
 
 const CommentList: React.FC = () => {
-  const [commets, setComments] = useState([
+  const [commets] = useState([
     {
       id: 1,
       name: "최기수",

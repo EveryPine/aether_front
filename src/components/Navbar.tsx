@@ -3,7 +3,7 @@ import React from "react";
 interface NavbarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  tabs?: string[]; // ⬅️ 탭 배열을 props로 받도록 변경
+  tabs?: string[]; 
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -30,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({
             color: activeTab === tab ? "#FF432B" : "#949BAD",
             fontWeight: activeTab === tab ? "bold" : "normal",
             fontSize: "14px",
-            transition: "color 0.3s",
+            transition: "color 0.3s"
           }}
         >
           {tab}

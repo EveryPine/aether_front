@@ -4,7 +4,6 @@ import useComment from "../../hooks/useComment";
 import Profile from '../../assets/Profile-small.svg';
 import Up from '../../assets/Up-monotone.svg';
 import Down from '../../assets/Down-monotone.svg';
-import Brenchsvg from '../../assets/Brench.svg'
 
 interface TaskCommentProps {
   tid: string;
@@ -24,7 +23,7 @@ interface Comment {
 }
 
 
-const TaskComment: React.FC<TaskCommentProps> = ({ tid, userId }) => {
+const TaskComment: React.FC<TaskCommentProps> = ({ tid }) => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [debouncedKeyword, setDebouncedKeyword] = useState("");
 

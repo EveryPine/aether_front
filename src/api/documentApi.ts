@@ -1,5 +1,4 @@
 import { axiosInstance } from "./lib/axios"
-import axios, {AxiosError} from "axios";
 
 export const documentApi = {
 

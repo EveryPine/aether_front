@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import Search from '../Search';
-import { Document, useDocuments, useUploadDocument, useDownloadDocument } from "../../hooks/useDocument";
+import { Document, useDocuments, useDownloadDocument } from "../../hooks/useDocument";
 import Profile from '../../assets/Profile-small.svg'
 import Download from '../../assets/Download.svg'
 import DownloadActive from '../../assets/DownloadActive.svg'
@@ -8,7 +7,7 @@ import Cloud from '../../assets/Cloud.svg'
 import CloudAcive from '../../assets/Cloud-Active.svg'
 
 const AddDocument: React.FC<{ tid: string }> = ({ tid }) => {
-  const [searchKeyword, setSearchKeyword] = useState("");
+  const [searchKeyword] = useState("");
   const [debouncedKeyword, setDebouncedKeyword] = useState("");
 
   useEffect(() => {
@@ -19,19 +18,19 @@ const AddDocument: React.FC<{ tid: string }> = ({ tid }) => {
   }, [searchKeyword]);
 
   const { data: documents = [] } = useDocuments(tid, debouncedKeyword); // 문서 조회
-  const uploadMutation = useUploadDocument(tid); // 문서 업로드
+  // const uploadMutation = useUploadDocument(tid); // 문서 업로드
   const downloadMutation = useDownloadDocument(); // 문서 다운로드
   const [hovered, setHovered] = useState<string | null>(null);
 
-  const handleCommentSearch = (term: string) => {
-    setSearchKeyword(term);
-  };
+  // const handleCommentSearch = (term: string) => {
+  //   setSearchKeyword(term);
+  // };
 
-  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      uploadMutation.mutate(event.target.files[0]);
-    }
-  };
+  // const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.files && event.target.files.length > 0) {
+  //     uploadMutation.mutate(event.target.files[0]);
+  //   }
+  // };
 
   return (
     <div>
