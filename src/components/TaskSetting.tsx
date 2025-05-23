@@ -10,8 +10,8 @@ import TaskManager from '../components/TaskManager/TaskManager';
 import { FormProvider } from "react-hook-form"
 import useTask from "../hooks/useTask"
 
-const TaskSetting: React.FC<{ selectedTaskId: string | null; fetchTasks: () => void }> = ({ selectedTaskId, fetchTasks }) => {
-  const methods = useTask(selectedTaskId, false, fetchTasks);
+const TaskSetting: React.FC<{ selectedTaskId: string | null; closeTab: () => void; fetchTasks: () => void }> = ({ selectedTaskId, fetchTasks, closeTab }) => {
+  const methods = useTask(selectedTaskId, false, fetchTasks, closeTab);
   const { handleUpdateTask, formState: { isLoading }, watch } = methods;
 
   const [activeTab, setActiveTab] = useState('info')
