@@ -8,9 +8,11 @@ import AetherLogo from "../assets/Aether-logo.svg";
 
 interface SidebarProps {
   setActiveTab: (tab: string) => void;
+  activeTab: string;
+  onAlarmClick: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ setActiveTab }) => {
+const Sidebar: React.FC<SidebarProps> = ({ setActiveTab, onAlarmClick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleSidebar = () => {
@@ -84,7 +86,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveTab }) => {
           }}
         >
           {[
-            { icon: Alarm, label: "알림센터" },
+            { icon: Alarm, label: "알림센터", onClick: onAlarmClick },
             { icon: Search, label: "통합검색" },
             { icon: Dash, label: "대시보드" },
             { icon: Setting, label: "환경설정", onClick: () => setActiveTab("프로젝트 설정") },

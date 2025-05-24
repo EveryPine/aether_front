@@ -8,11 +8,17 @@ import SignUp from "./pages/SignUp";
 import AuthRedirect from "./pages/AuthRedirect";
 import Dashboard from "./pages/Dashboard";
 import TeamSpace from "./pages/TeamSpace"
+import Alarm from "./components/Alarm";
 
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("업무");
+  const [isAlarmOpen, setIsAlarmOpen] = useState(false);
+
+  const handleAlarmClick = () => {
+    setIsAlarmOpen(prev => !prev);
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -21,39 +27,34 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/user-info" element={<SignUp />} />
           <Route path="/sign-up" element={<AuthRedirect />} />
-          <Route
-            path="/dashboard"
-            element={
-              <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
-                <Sidebar setActiveTab={setActiveTab} />
-                <div style={{ flex: 1, overflowY: "auto" }}>
-                  <Dashboard />
+          {[
+            "/dashboard",
+            "/teamspace",
+            "/tasks"
+          ].map((path) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <div style={{ display: "flex", height: "100vh", overflow: "hidden", position: "relative" }}>
+                  <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} onAlarmClick={handleAlarmClick} />
+                  <div style={{ flex: 1, overflowY: "auto" }}>
+                    {path === "/dashboard" && <Dashboard />}
+                    {path === "/teamspace" && <TeamSpace />}
+                    {path === "/tasks" && <TaskKanban activeTab={activeTab} setActiveTab={setActiveTab} />}
+                  </div>
+                  <div
+                    className="absolute top-0 right-0 h-full w-[640px] bg-[#F8F9FC] z-50 transition-transform duration-300 ease-in-out"
+                    style={{
+                      transform: isAlarmOpen ? "translateX(0)" : "translateX(100%)",
+                    }}
+                  >
+                    <Alarm />
+                  </div>
                 </div>
-              </div>
-            }
-          />
-          <Route
-            path="/teamspace"
-            element={
-              <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
-                <Sidebar setActiveTab={setActiveTab} />
-                <div style={{ flex: 1, overflowY: "auto" }}>
-                  <TeamSpace />
-                </div>
-              </div>
-            }
-          />
-          <Route
-            path="/tasks"
-            element={
-              <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
-                <Sidebar setActiveTab={setActiveTab} />
-                <div style={{ flex: 1, overflowY: "auto" }}>
-                  <TaskKanban activeTab={activeTab} setActiveTab={setActiveTab} />
-                </div>
-              </div>
-            }
-          />
+              }
+            />
+          ))}
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Router>
