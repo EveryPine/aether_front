@@ -9,6 +9,7 @@ import { FormProvider } from "react-hook-form";
 import useTask from "../hooks/useTask";
 
 const TaskAdd: React.FC<{ fetchTasks: () => void }> = ({ fetchTasks }) => {
+  // useTask 인수 개수 안맞음
   const methods = useTask(null, true, fetchTasks);
   const { userInfo, handleCreateTask } = methods;
   
