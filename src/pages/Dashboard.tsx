@@ -1,4 +1,4 @@
-import {useState} from "React";
+import {useState} from "react";
 import { getGradientByTime } from "../utils/getGradientByTime";
 import DashboardHeader from "../components/Dashboard/DashboardHeader";
 import DashboardContents from "../components/Dashboard/DashboardContents";

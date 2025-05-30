@@ -1,3 +1,4 @@
+import React from 'react';
 import BackgroundImage from "../assets/Login-Logo.svg";
 import GoogleLogo from "../assets/G-logo.svg";
 
